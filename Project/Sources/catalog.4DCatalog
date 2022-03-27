@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE base SYSTEM "http://www.4d.com/dtd/2007/base.dtd" >
+<base name="Sucheditor" uuid="D31B02FD239E4FB090C7483DAEF02376" collation_locale="de">
+	<schema name="DEFAULT_SCHEMA"/>
+	<table name="Tabelle_1" uuid="95CC337403BC47F38FD7797D6F597274" id="1">
+		<field name="ID" uuid="5BC7C027DBF74C4498BACD20235C22BB" type="10" unique="true" autogenerate="true" store_as_UUID="true" not_null="true" id="1"/>
+		<field name="feldalpha" uuid="F57B2117839849419383CCE32F08CB36" type="10" limiting_length="255" id="2"/>
+		<field name="feldlong" uuid="09444E1359F14E2D90248336208CE7BA" type="4" id="3"/>
+		<field name="feldreal" uuid="8C694E05C7E54C86A96B9F80419DAA21" type="6" id="4"/>
+		<field name="felddatum" uuid="BFE5184F0D7946EA9DDEBDC6FE7235BA" type="8" id="5"/>
+		<field name="feldzeit" uuid="1CB60CD5FE294DFF814D9DBC7E9AD17E" type="9" id="6"/>
+		<field name="feldbool" uuid="F6B25014F3E64B43BC17D569345C7246" type="1" id="7"/>
+		<field name="feldtext" uuid="9BD6D42F15C04CF397104AF2C6FFFFDA" type="10" id="8"/>
+		<field name="feldpict" uuid="FDDA7CA054644813A0A5EBDC92748322" type="12" id="9"/>
+		<field name="feldobject" uuid="B7444700CD3647AFAEC35240EC393F8F" type="21" blob_switch_size="2147483647" id="10"/>
+		<field name="feldblob" uuid="E81834E133204B54BA246FA5E31B11DC" type="18" id="11"/>
+		<primary_key field_name="ID" field_uuid="5BC7C027DBF74C4498BACD20235C22BB"/>
+		<table_extra>
+			<editor_table_info displayable_fields_count="14">
+				<color red="255" green="255" blue="255" alpha="0"/>
+				<coordinates left="40" top="40" width="163.35546875" height="337.25"/>
+			</editor_table_info>
+		</table_extra>
+	</table>
+	<index kind="regular" unique_keys="true" uuid="D937C7CD270743C28B7B3DBB058333AB" type="7">
+		<field_ref uuid="5BC7C027DBF74C4498BACD20235C22BB" name="ID">
+			<table_ref uuid="95CC337403BC47F38FD7797D6F597274" name="Tabelle_1"/>
+		</field_ref>
+	</index>
+	<base_extra __stringCompHash="icu:68.1.0" __keywordBuildingHash="icu:68.1.0">
+		<journal_file journal_file_enabled="true"/>
+	</base_extra>
+</base>

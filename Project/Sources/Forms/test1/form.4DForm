@@ -1,0 +1,74 @@
+{
+	"$4d": {
+		"version": "1",
+		"kind": "form"
+	},
+	"windowSizingX": "variable",
+	"windowSizingY": "variable",
+	"windowMinWidth": 0,
+	"windowMinHeight": 0,
+	"windowMaxWidth": 32767,
+	"windowMaxHeight": 32767,
+	"rightMargin": 20,
+	"bottomMargin": 20,
+	"events": [
+		"onLoad",
+		"onPageChange",
+		"onValidate",
+		"onClick",
+		"onDoubleClick",
+		"onOutsideCall",
+		"onBeginDragOver",
+		"onDragOver",
+		"onDrop",
+		"onAfterKeystroke",
+		"onMenuSelect",
+		"onPluginArea",
+		"onAfterEdit",
+		"onTimer",
+		"onBoundVariableChange"
+	],
+	"windowTitle": "Query",
+	"destination": "detailScreen",
+	"pages": [
+		{
+			"objects": {}
+		},
+		{
+			"objects": {
+				"sub": {
+					"type": "subform",
+					"left": 30,
+					"top": 78,
+					"width": 592,
+					"height": 417,
+					"dataSource": "Form:C1466.sub",
+					"scrollbarVertical": "visible",
+					"method": "ObjectMethods/sub.4dm"
+				},
+				"Schaltfläche": {
+					"type": "button",
+					"text": "+",
+					"top": 19,
+					"left": 36,
+					"width": 52,
+					"height": 39,
+					"events": [
+						"onClick"
+					],
+					"method": "ObjectMethods/Schaltfläche.4dm",
+					"style": "regular"
+				}
+			}
+		}
+	],
+	"geometryStamp": 9,
+	"method": "method.4dm",
+	"editor": {
+		"activeView": "View 1",
+		"defaultView": "View 1",
+		"views": {
+			"View 1": {}
+		}
+	}
+}

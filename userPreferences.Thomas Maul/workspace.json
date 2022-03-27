@@ -1,0 +1,55 @@
+{
+	"editors": [
+		{
+			"type": "form",
+			"id": 646,
+			"formName": "test2"
+		},
+		{
+			"type": "method",
+			"id": 2147483637,
+			"codeDescriptor": {
+				"type": 3,
+				"formName": "test1",
+				"methodPath": "/SOURCES/Forms/test1/method.4dm"
+			}
+		},
+		{
+			"type": "explorer"
+		},
+		{
+			"type": "method",
+			"id": 2147483646,
+			"codeDescriptor": {
+				"type": 11,
+				"className": "queryLine",
+				"methodPath": "/SOURCES/Classes/queryLine.4dm"
+			}
+		},
+		{
+			"type": "method",
+			"id": 2147483643,
+			"codeDescriptor": {
+				"type": 11,
+				"className": "queryEditor",
+				"methodPath": "/SOURCES/Classes/queryEditor.4dm"
+			}
+		},
+		{
+			"type": "form",
+			"id": 504,
+			"formName": "test1"
+		},
+		{
+			"type": "method",
+			"id": 2147483631,
+			"codeDescriptor": {
+				"type": 1,
+				"methodName": "QE_Subformmethod"
+			}
+		},
+		{
+			"type": "structure"
+		}
+	]
+}

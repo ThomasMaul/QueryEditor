@@ -1,0 +1,101 @@
+{
+	"Sources/Forms/test/method.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 3,
+		"lastSelectedLine": 15,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-26T13:11:32.545Z"
+	},
+	"Sources/Forms/test/ObjectMethods/Schaltfläche.4dm": {
+		"startSelection": 39,
+		"endSelection": 39,
+		"firstSelectedLine": 13,
+		"lastSelectedLine": 13,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-26T13:14:05.485Z"
+	},
+	"Sources/Classes/_queryeditor.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 0,
+		"lastSelectedLine": 0,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-26T13:22:35.728Z"
+	},
+	"Sources/Classes/queryEditor.4dm": {
+		"startSelection": 40,
+		"endSelection": 40,
+		"firstSelectedLine": 13,
+		"lastSelectedLine": 13,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-27T10:53:01.439Z"
+	},
+	"Sources/Classes/_queryLine.4dm": {
+		"startSelection": 28,
+		"endSelection": 28,
+		"firstSelectedLine": 11,
+		"lastSelectedLine": 11,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-27T08:51:11.748Z"
+	},
+	"Sources/Forms/test1/method.4dm": {
+		"startSelection": 5,
+		"endSelection": 5,
+		"firstSelectedLine": 53,
+		"lastSelectedLine": 53,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-27T10:53:01.166Z"
+	},
+	"Sources/Forms/test1/ObjectMethods/Schaltfläche.4dm": {
+		"startSelection": 35,
+		"endSelection": 35,
+		"firstSelectedLine": 4,
+		"lastSelectedLine": 4,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-26T14:00:49.776Z"
+	},
+	"Sources/Methods/QE_Objectmethod.4dm": {
+		"startSelection": 0,
+		"endSelection": 7,
+		"firstSelectedLine": 0,
+		"lastSelectedLine": 20,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-26T14:29:09.577Z"
+	},
+	"Sources/Forms/test1/ObjectMethods/sub.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 0,
+		"lastSelectedLine": 0,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-26T14:33:24.341Z"
+	},
+	"Sources/Methods/QE_Subformmethod.4dm": {
+		"startSelection": 37,
+		"endSelection": 37,
+		"firstSelectedLine": 1,
+		"lastSelectedLine": 1,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-27T08:57:59.921Z"
+	},
+	"Sources/Classes/queryLine.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 0,
+		"lastSelectedLine": 0,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-27T08:51:11.748Z"
+	}
+}

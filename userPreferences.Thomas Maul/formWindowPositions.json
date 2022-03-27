@@ -1,0 +1,20 @@
+{
+	"Sources/Forms/test/form.4DForm": {
+		"left": 224,
+		"top": 202,
+		"width": 1010,
+		"height": 641
+	},
+	"Sources/Forms/test2/form.4DForm": {
+		"left": 224,
+		"top": 202,
+		"width": 1010,
+		"height": 641
+	},
+	"Sources/Forms/test1/form.4DForm": {
+		"left": 205,
+		"top": 193,
+		"width": 1010,
+		"height": 641
+	}
+}

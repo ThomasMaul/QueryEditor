@@ -1,0 +1,68 @@
+{
+	"Sources/Forms/test/method.4dm": {
+		"left": 695,
+		"top": 318,
+		"width": 965,
+		"height": 750
+	},
+	"Sources/Forms/test/ObjectMethods/Schaltfläche.4dm": {
+		"left": 503,
+		"top": 304,
+		"width": 1066,
+		"height": 750
+	},
+	"Sources/Classes/_queryeditor.4dm": {
+		"left": 455,
+		"top": 367,
+		"width": 1066,
+		"height": 750
+	},
+	"Sources/Classes/queryEditor.4dm": {
+		"left": 114,
+		"top": 226,
+		"width": 1066,
+		"height": 750
+	},
+	"Sources/Classes/_queryLine.4dm": {
+		"left": 587,
+		"top": 192,
+		"width": 866,
+		"height": 816
+	},
+	"Sources/Forms/test1/method.4dm": {
+		"left": 425,
+		"top": 321,
+		"width": 1066,
+		"height": 654
+	},
+	"Sources/Forms/test1/ObjectMethods/Schaltfläche.4dm": {
+		"left": 15,
+		"top": 571,
+		"width": 883,
+		"height": 466
+	},
+	"Sources/Methods/QE_Objectmethod.4dm": {
+		"left": 455,
+		"top": 367,
+		"width": 1066,
+		"height": 750
+	},
+	"Sources/Forms/test1/ObjectMethods/sub.4dm": {
+		"left": 695,
+		"top": 318,
+		"width": 965,
+		"height": 750
+	},
+	"Sources/Methods/QE_Subformmethod.4dm": {
+		"left": 744,
+		"top": 514,
+		"width": 965,
+		"height": 466
+	},
+	"Sources/Classes/queryLine.4dm": {
+		"left": 587,
+		"top": 192,
+		"width": 965,
+		"height": 816
+	}
+}
