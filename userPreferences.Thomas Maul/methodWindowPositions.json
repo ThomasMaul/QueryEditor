@@ -18,8 +18,8 @@
 		"height": 750
 	},
 	"Sources/Classes/queryEditor.4dm": {
-		"left": 114,
-		"top": 226,
+		"left": 427,
+		"top": 192,
 		"width": 1066,
 		"height": 750
 	},
@@ -30,15 +30,15 @@
 		"height": 816
 	},
 	"Sources/Forms/test1/method.4dm": {
-		"left": 425,
-		"top": 321,
+		"left": 603,
+		"top": 309,
 		"width": 1066,
 		"height": 654
 	},
 	"Sources/Forms/test1/ObjectMethods/Schaltfläche.4dm": {
 		"left": 15,
 		"top": 571,
-		"width": 883,
+		"width": 965,
 		"height": 466
 	},
 	"Sources/Methods/QE_Objectmethod.4dm": {
@@ -60,9 +60,21 @@
 		"height": 466
 	},
 	"Sources/Classes/queryLine.4dm": {
-		"left": 587,
-		"top": 192,
+		"left": 30,
+		"top": 157,
 		"width": 965,
 		"height": 816
+	},
+	"Sources/Methods/test.4dm": {
+		"left": 744,
+		"top": 514,
+		"width": 965,
+		"height": 466
+	},
+	"Sources/Forms/test2/method.4dm": {
+		"left": 744,
+		"top": 514,
+		"width": 965,
+		"height": 466
 	}
 }

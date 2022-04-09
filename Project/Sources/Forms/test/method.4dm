@@ -14,6 +14,8 @@ If (FORM Event:C1606.code=On Load:K2:1)
 	$page1:=New object:C1471("objects"; $objects)
 	Form:C1466.code.pages:=New collection:C1472(Null:C1517; $page1)
 	
-	OBJECT SET SUBFORM:C1138(*; "sub"; Form:C1466.code)
+	C_OBJECT:C1216($code)
+	$code:=Form:C1466.code
+	OBJECT SET SUBFORM:C1138(*; "sub"; $code)
 	
 End if 

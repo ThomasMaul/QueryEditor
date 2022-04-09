@@ -58,11 +58,24 @@
 					],
 					"method": "ObjectMethods/Schaltfläche.4dm",
 					"style": "regular"
+				},
+				"Bildschaltfläche": {
+					"type": "pictureButton",
+					"left": 144,
+					"top": 29,
+					"width": 44,
+					"height": 29,
+					"events": [
+						"onClick"
+					],
+					"switchBackWhenReleased": true,
+					"picture": "/RESOURCES/Query/miniDrop.png",
+					"rowCount": 4
 				}
 			}
 		}
 	],
-	"geometryStamp": 9,
+	"geometryStamp": 11,
 	"method": "method.4dm",
 	"editor": {
 		"activeView": "View 1",

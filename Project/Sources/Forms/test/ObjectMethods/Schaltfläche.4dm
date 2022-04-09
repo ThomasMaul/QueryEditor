@@ -11,4 +11,6 @@ $button1.heigth:=20
 
 Form:C1466.code.pages[1].objects["button"+String:C10(Form:C1466.counter)]:=$button1
 
-OBJECT SET SUBFORM:C1138(*; "sub"; Form:C1466.code)
+C_OBJECT:C1216($code)
+$code:=Form:C1466.code
+OBJECT SET SUBFORM:C1138(*; "sub"; $code)

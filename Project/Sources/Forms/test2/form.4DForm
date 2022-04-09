@@ -44,24 +44,71 @@
 					"height": 17,
 					"dataSource": "Form:C1466.Field_1"
 				},
-				"Statisches Bild2": {
-					"type": "picture",
+				"Schaltfläche1": {
+					"type": "button",
+					"text": "",
 					"top": 19,
-					"left": 219,
-					"width": 22,
+					"left": 246,
+					"width": 27,
 					"height": 21,
-					"picture": "/PROJECT/Resources/popup.png",
-					"pictureFormat": "scaled"
+					"events": [
+						"onClick"
+					],
+					"icon": "/PROJECT/Resources/popup.png",
+					"style": "toolbar",
+					"textPlacement": "center",
+					"focusable": true
+				},
+				"Bildschaltfläche": {
+					"type": "pictureButton",
+					"left": 237,
+					"top": 20,
+					"width": 19,
+					"height": 20,
+					"events": [
+						"onClick"
+					],
+					"picture": "/RESOURCES/miniMinus.png",
+					"columnCount": 1,
+					"rowCount": 4,
+					"switchWhenRollover": true,
+					"switchBackWhenReleased": true,
+					"useLastFrameAsDisabled": true
+				},
+				"Combo Box": {
+					"type": "combo",
+					"left": 301,
+					"top": 19,
+					"width": 198,
+					"height": 19,
+					"events": [
+						"onDataChange"
+					],
+					"dataSourceTypeHint": "object",
+					"dataSource": "Form:C1466.combo"
+				},
+				"Popup Drop Down": {
+					"type": "dropdown",
+					"left": 302,
+					"top": 55,
+					"width": 202,
+					"height": 23,
+					"events": [
+						"onDataChange"
+					],
+					"dataSourceTypeHint": "object",
+					"dataSource": "Form:C1466.combo"
 				}
 			}
 		}
 	],
-	"geometryStamp": 12,
+	"geometryStamp": 30,
 	"editor": {
 		"activeView": "View 1",
 		"defaultView": "View 1",
 		"views": {
 			"View 1": {}
 		}
-	}
+	},
+	"method": "method.4dm"
 }

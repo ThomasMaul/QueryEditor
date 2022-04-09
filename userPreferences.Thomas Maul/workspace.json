@@ -1,30 +1,18 @@
 {
 	"editors": [
 		{
-			"type": "form",
-			"id": 646,
-			"formName": "test2"
-		},
-		{
 			"type": "method",
-			"id": 2147483637,
-			"codeDescriptor": {
-				"type": 3,
-				"formName": "test1",
-				"methodPath": "/SOURCES/Forms/test1/method.4dm"
-			}
-		},
-		{
-			"type": "explorer"
-		},
-		{
-			"type": "method",
-			"id": 2147483646,
+			"id": 2147483632,
 			"codeDescriptor": {
 				"type": 11,
 				"className": "queryLine",
 				"methodPath": "/SOURCES/Classes/queryLine.4dm"
 			}
+		},
+		{
+			"type": "form",
+			"id": 220,
+			"formName": "test1"
 		},
 		{
 			"type": "method",
@@ -36,17 +24,25 @@
 			}
 		},
 		{
-			"type": "form",
-			"id": 504,
-			"formName": "test1"
+			"type": "method",
+			"id": 2147483628,
+			"codeDescriptor": {
+				"type": 3,
+				"formName": "test2",
+				"methodPath": "/SOURCES/Forms/test2/method.4dm"
+			}
 		},
 		{
 			"type": "method",
-			"id": 2147483631,
+			"id": 2147483644,
 			"codeDescriptor": {
-				"type": 1,
-				"methodName": "QE_Subformmethod"
+				"type": 3,
+				"formName": "test1",
+				"methodPath": "/SOURCES/Forms/test1/method.4dm"
 			}
+		},
+		{
+			"type": "explorer"
 		},
 		{
 			"type": "structure"

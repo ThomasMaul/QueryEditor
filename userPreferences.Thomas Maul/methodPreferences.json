@@ -2,20 +2,20 @@
 	"Sources/Forms/test/method.4dm": {
 		"startSelection": 0,
 		"endSelection": 0,
-		"firstSelectedLine": 3,
-		"lastSelectedLine": 15,
+		"firstSelectedLine": 16,
+		"lastSelectedLine": 16,
 		"folding": [],
 		"bookmarks": [],
-		"stamp": "2022-03-26T13:11:32.545Z"
+		"stamp": "2022-03-27T12:13:38.218Z"
 	},
 	"Sources/Forms/test/ObjectMethods/Schaltfläche.4dm": {
-		"startSelection": 39,
-		"endSelection": 39,
-		"firstSelectedLine": 13,
+		"startSelection": 35,
+		"endSelection": 0,
+		"firstSelectedLine": 15,
 		"lastSelectedLine": 13,
 		"folding": [],
 		"bookmarks": [],
-		"stamp": "2022-03-26T13:14:05.485Z"
+		"stamp": "2022-03-27T12:13:21.873Z"
 	},
 	"Sources/Classes/_queryeditor.4dm": {
 		"startSelection": 0,
@@ -27,13 +27,15 @@
 		"stamp": "2022-03-26T13:22:35.728Z"
 	},
 	"Sources/Classes/queryEditor.4dm": {
-		"startSelection": 40,
-		"endSelection": 40,
-		"firstSelectedLine": 13,
-		"lastSelectedLine": 13,
-		"folding": [],
+		"startSelection": 56,
+		"endSelection": 56,
+		"firstSelectedLine": 78,
+		"lastSelectedLine": 78,
+		"folding": [
+			24
+		],
 		"bookmarks": [],
-		"stamp": "2022-03-27T10:53:01.439Z"
+		"stamp": "2022-04-09T12:35:23.471Z"
 	},
 	"Sources/Classes/_queryLine.4dm": {
 		"startSelection": 28,
@@ -47,20 +49,20 @@
 	"Sources/Forms/test1/method.4dm": {
 		"startSelection": 5,
 		"endSelection": 5,
-		"firstSelectedLine": 53,
-		"lastSelectedLine": 53,
+		"firstSelectedLine": 59,
+		"lastSelectedLine": 59,
 		"folding": [],
 		"bookmarks": [],
-		"stamp": "2022-03-27T10:53:01.166Z"
+		"stamp": "2022-03-27T19:02:37.317Z"
 	},
 	"Sources/Forms/test1/ObjectMethods/Schaltfläche.4dm": {
-		"startSelection": 35,
-		"endSelection": 35,
+		"startSelection": 0,
+		"endSelection": 0,
 		"firstSelectedLine": 4,
 		"lastSelectedLine": 4,
 		"folding": [],
 		"bookmarks": [],
-		"stamp": "2022-03-26T14:00:49.776Z"
+		"stamp": "2022-03-27T12:14:00.371Z"
 	},
 	"Sources/Methods/QE_Objectmethod.4dm": {
 		"startSelection": 0,
@@ -81,21 +83,39 @@
 		"stamp": "2022-03-26T14:33:24.341Z"
 	},
 	"Sources/Methods/QE_Subformmethod.4dm": {
-		"startSelection": 37,
-		"endSelection": 37,
+		"startSelection": 2,
+		"endSelection": 2,
 		"firstSelectedLine": 1,
 		"lastSelectedLine": 1,
 		"folding": [],
 		"bookmarks": [],
-		"stamp": "2022-03-27T08:57:59.921Z"
+		"stamp": "2022-03-27T12:23:11.743Z"
 	},
 	"Sources/Classes/queryLine.4dm": {
 		"startSelection": 0,
 		"endSelection": 0,
-		"firstSelectedLine": 0,
-		"lastSelectedLine": 0,
+		"firstSelectedLine": 63,
+		"lastSelectedLine": 63,
 		"folding": [],
 		"bookmarks": [],
-		"stamp": "2022-03-27T08:51:11.748Z"
+		"stamp": "2022-04-09T12:42:00.366Z"
+	},
+	"Sources/Methods/test.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 1,
+		"lastSelectedLine": 1,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-03-27T18:40:09.909Z"
+	},
+	"Sources/Forms/test2/method.4dm": {
+		"startSelection": 65,
+		"endSelection": 65,
+		"firstSelectedLine": 1,
+		"lastSelectedLine": 1,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2022-04-01T14:42:29.717Z"
 	}
 }
