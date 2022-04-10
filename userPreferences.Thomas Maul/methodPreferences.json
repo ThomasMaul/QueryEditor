@@ -27,15 +27,16 @@
 		"stamp": "2022-03-26T13:22:35.728Z"
 	},
 	"Sources/Classes/queryEditor.4dm": {
-		"startSelection": 56,
-		"endSelection": 56,
-		"firstSelectedLine": 78,
-		"lastSelectedLine": 78,
+		"startSelection": 9,
+		"endSelection": 9,
+		"firstSelectedLine": 80,
+		"lastSelectedLine": 80,
 		"folding": [
-			24
+			25,
+			108
 		],
 		"bookmarks": [],
-		"stamp": "2022-04-09T12:35:23.471Z"
+		"stamp": "2022-04-09T18:59:51.792Z"
 	},
 	"Sources/Classes/_queryLine.4dm": {
 		"startSelection": 28,
@@ -47,13 +48,13 @@
 		"stamp": "2022-03-27T08:51:11.748Z"
 	},
 	"Sources/Forms/test1/method.4dm": {
-		"startSelection": 5,
-		"endSelection": 5,
-		"firstSelectedLine": 59,
-		"lastSelectedLine": 59,
+		"startSelection": 10,
+		"endSelection": 10,
+		"firstSelectedLine": 61,
+		"lastSelectedLine": 61,
 		"folding": [],
 		"bookmarks": [],
-		"stamp": "2022-03-27T19:02:37.317Z"
+		"stamp": "2022-04-10T17:53:01.736Z"
 	},
 	"Sources/Forms/test1/ObjectMethods/Schaltfläche.4dm": {
 		"startSelection": 0,
@@ -92,13 +93,13 @@
 		"stamp": "2022-03-27T12:23:11.743Z"
 	},
 	"Sources/Classes/queryLine.4dm": {
-		"startSelection": 0,
-		"endSelection": 0,
-		"firstSelectedLine": 63,
-		"lastSelectedLine": 63,
+		"startSelection": 19,
+		"endSelection": 19,
+		"firstSelectedLine": 74,
+		"lastSelectedLine": 74,
 		"folding": [],
 		"bookmarks": [],
-		"stamp": "2022-04-09T12:42:00.366Z"
+		"stamp": "2022-04-10T18:36:33.238Z"
 	},
 	"Sources/Methods/test.4dm": {
 		"startSelection": 0,

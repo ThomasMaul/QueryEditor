@@ -22,6 +22,11 @@
 			</editor_table_info>
 		</table_extra>
 	</table>
+	<index kind="regular" uuid="492DB88D5CCD400FB4CFFFC215958475" type="7">
+		<field_ref uuid="8C694E05C7E54C86A96B9F80419DAA21" name="feldreal">
+			<table_ref uuid="95CC337403BC47F38FD7797D6F597274" name="Tabelle_1"/>
+		</field_ref>
+	</index>
 	<index kind="regular" unique_keys="true" uuid="D937C7CD270743C28B7B3DBB058333AB" type="7">
 		<field_ref uuid="5BC7C027DBF74C4498BACD20235C22BB" name="ID">
 			<table_ref uuid="95CC337403BC47F38FD7797D6F597274" name="Tabelle_1"/>

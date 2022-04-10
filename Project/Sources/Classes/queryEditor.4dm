@@ -5,6 +5,7 @@ Class constructor($class : 4D:C1709.DataClass)
 	This:C1470.fieldlist:=This:C1470._getDSClassDetails(This:C1470.table)
 	This:C1470.popupmenu:=This:C1470._getTableMenu()
 	This:C1470.conditionpopup:=This:C1470._getConditionMenu()
+	Form:C1466.conditionpopup:=This:C1470.conditionpopup
 	
 	
 Function getNextCounter()->$counter : Integer
@@ -53,15 +54,14 @@ Function _getDSClassDetails($class : 4D:C1709.DataClass)->$fields : Collection
 		$f:=$class[$field]
 		$fields.push(New object:C1471("name"; $field; \
 			"kind"; $f.kind; \
-			"type"; $f.fieldType))
+			"type"; $f.fieldType; \
+			"indexed"; $f.indexed))
 	End for each 
 	
 Function _getTableMenu->$menuref : Text
 	$txt_suffix:=Choose:C955((FORM Get color scheme:C1761="dark"); "_dark"; "")
 	$menuref:=Create menu:C408
 	For each ($field; This:C1470.fieldlist)
-		INSERT MENU ITEM:C412($menuref; -1; $field.name)
-		$id:=0
 		Case of 
 			: ($field.type=Is alpha field:K8:1)
 				$id:=1
@@ -87,11 +87,19 @@ Function _getTableMenu->$menuref : Text
 				$id:=12
 			: ($field.type=Is object:K8:27)
 				$id:=14
+			: ($field.type=Is subtable:K8:11)
+				$id:=-1
 			Else 
-				
+				$id:=-1
 		End case 
-		SET MENU ITEM ICON:C984($MenuRef; -1; "Path:/RESOURCES/Query/Field_"+String:C10($id)+$txt_suffix+".png")
-		SET MENU ITEM PARAMETER:C1004($MenuRef; -1; $field.name)
+		If ($id>=0)
+			INSERT MENU ITEM:C412($menuref; -1; $field.name)
+			SET MENU ITEM ICON:C984($MenuRef; -1; "Path:/RESOURCES/Query/Field_"+String:C10($id)+$txt_suffix+".png")
+			SET MENU ITEM PARAMETER:C1004($MenuRef; -1; $field.name)
+			If ($field.indexed)
+				SET MENU ITEM STYLE:C425($menuref; -1; Bold:K14:2)
+			End if 
+		End if 
 	End for each 
 	
 Function findQueryLine($line : Integer)->$queryline : cs:C1710.queryLine

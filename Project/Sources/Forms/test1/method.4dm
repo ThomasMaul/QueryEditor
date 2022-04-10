@@ -7,13 +7,13 @@ Case of
 			End if 
 		End if 
 		
+		Form:C1466.sub:=New object:C1471
 		Form:C1466.editor:=cs:C1710.queryEditor.new(Form:C1466.table)
 		$counter:=Form:C1466.editor.getNextCounter()
 		$line:=cs:C1710.queryLine.new(New object:C1471("name"; "anfang"; "id"; $counter))
 		Form:C1466.editor.addQueryLine(0; $line)
 		
 		
-		Form:C1466.sub:=New object:C1471
 		Form:C1466.editor.renderForm("sub")
 		If (Form:C1466.editor.querylines.length<=1)
 			SET TIMER:C645(1)
@@ -54,7 +54,16 @@ Case of
 						var $queryline : cs:C1710.queryLine
 						$queryline:=Form:C1466.editor.findQueryLine($line)
 						$queryline.setValue($paramRef)
+						Form:C1466.editor.renderForm("sub")
+						
+					: ($item="condition")
+						$index:=Form:C1466.sub["cond_combo_"+String:C10($line)].index
+						$queryline:=Form:C1466.editor.findQueryLine($line)
+						$queryline.setCondition($index)
+						Form:C1466.editor.renderForm("sub")
 				End case 
+				
+				
 				
 			Else 
 				TRACE:C157

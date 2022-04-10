@@ -92,17 +92,26 @@
 					"left": 302,
 					"top": 55,
 					"width": 202,
-					"height": 23,
+					"height": 18,
 					"events": [
 						"onDataChange"
 					],
 					"dataSourceTypeHint": "object",
-					"dataSource": "Form:C1466.combo"
+					"dataSource": "Form:C1466.combo",
+					"fontSize": 10
+				},
+				"Text": {
+					"type": "text",
+					"text": "text default",
+					"top": 67,
+					"left": 28,
+					"width": 38,
+					"height": 16
 				}
 			}
 		}
 	],
-	"geometryStamp": 30,
+	"geometryStamp": 33,
 	"editor": {
 		"activeView": "View 1",
 		"defaultView": "View 1",

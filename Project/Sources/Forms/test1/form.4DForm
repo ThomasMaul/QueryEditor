@@ -38,44 +38,18 @@
 			"objects": {
 				"sub": {
 					"type": "subform",
-					"left": 30,
-					"top": 78,
-					"width": 592,
+					"left": 10,
+					"top": 43,
+					"width": 753,
 					"height": 417,
 					"dataSource": "Form:C1466.sub",
 					"scrollbarVertical": "visible",
 					"method": "ObjectMethods/sub.4dm"
-				},
-				"Schaltfläche": {
-					"type": "button",
-					"text": "+",
-					"top": 19,
-					"left": 36,
-					"width": 52,
-					"height": 39,
-					"events": [
-						"onClick"
-					],
-					"method": "ObjectMethods/Schaltfläche.4dm",
-					"style": "regular"
-				},
-				"Bildschaltfläche": {
-					"type": "pictureButton",
-					"left": 144,
-					"top": 29,
-					"width": 44,
-					"height": 29,
-					"events": [
-						"onClick"
-					],
-					"switchBackWhenReleased": true,
-					"picture": "/RESOURCES/Query/miniDrop.png",
-					"rowCount": 4
 				}
 			}
 		}
 	],
-	"geometryStamp": 11,
+	"geometryStamp": 16,
 	"method": "method.4dm",
 	"editor": {
 		"activeView": "View 1",

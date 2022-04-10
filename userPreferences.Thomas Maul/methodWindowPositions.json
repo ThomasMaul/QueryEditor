@@ -18,8 +18,8 @@
 		"height": 750
 	},
 	"Sources/Classes/queryEditor.4dm": {
-		"left": 427,
-		"top": 192,
+		"left": 575,
+		"top": 175,
 		"width": 1066,
 		"height": 750
 	},
@@ -60,8 +60,8 @@
 		"height": 466
 	},
 	"Sources/Classes/queryLine.4dm": {
-		"left": 30,
-		"top": 157,
+		"left": 178,
+		"top": 215,
 		"width": 965,
 		"height": 816
 	},

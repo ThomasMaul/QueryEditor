@@ -194,6 +194,11 @@
       <criterion id="5" label="criteria_BlobIsLowerOrEqual" type="3"/>      
     </type>
 
+    <type id="38"> <!-- object -->
+      <criterion id="41" label="criteria_BlobIsEmpty" type="0"/>
+      <criterion id="42" label="criteria_BlobIsNotEmpty" type="0"/>
+      <criterion type="-1"/>    
+    </type>
   </criteria>
 
   <ope id="128" theme="Op_stringOperators">
