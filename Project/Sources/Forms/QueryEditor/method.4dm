@@ -7,6 +7,7 @@ Case of
 			End if 
 		End if 
 		
+		Form:C1466.height:=1
 		Form:C1466.sub:=New object:C1471
 		Form:C1466.editor:=cs:C1710.queryEditor.new(Form:C1466.table)
 		$counter:=Form:C1466.editor.getNextCounter()

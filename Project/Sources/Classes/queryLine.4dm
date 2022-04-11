@@ -13,6 +13,7 @@ Class constructor($data : Object)  // $ID
 	This:C1470.value2:=""
 	This:C1470.listentry:=0
 	This:C1470.setValue(0)
+	This:C1470.height:=30
 	
 Function renderObjects($data : Object)->$objects : Object
 	$counter:=Num:C11($data.counter)
@@ -23,13 +24,13 @@ Function renderObjects($data : Object)->$objects : Object
 	This:C1470.listentry:=$counter
 	
 	$x:=20
-	$heightdiff:=30
+	$y:=10+(($counter-1)*This:C1470.height)
 	
 	$object:=New object:C1471
 	$object.type:="input"  //_"+String($counter)
 	$object.dataSource:="Form:C1466.field_"+String:C10(This:C1470.id)
 	$object.left:=$x
-	$object.top:=20+($counter*$heightdiff)
+	$object.top:=$y
 	$object.width:=150
 	$object.height:=17
 	$subcounter+=1
@@ -45,7 +46,7 @@ Function renderObjects($data : Object)->$objects : Object
 	$object.switchBackWhenReleased:=True:C214
 	$object.picture:="/RESOURCES/Query/miniDrop.png"
 	$object.left:=$x
-	$object.top:=18+($counter*$heightdiff)
+	$object.top:=$y-2
 	$object.width:=20
 	$object.height:=20
 	$subcounter+=1
@@ -57,7 +58,7 @@ Function renderObjects($data : Object)->$objects : Object
 	$object.fontSize:=10
 	$object.dataSource:="Form:C1466.cond_combo_"+String:C10(This:C1470.id)
 	$object.left:=$x
-	$object.top:=19+($counter*$heightdiff)
+	$object.top:=$y-1
 	$object.width:=150
 	$object.height:=20
 	$subcounter+=1
@@ -95,7 +96,7 @@ Function renderObjects($data : Object)->$objects : Object
 		$object.type:="input"
 		$object.dataSource:="Form:C1466.value1_"+String:C10(This:C1470.id)
 		$object.left:=$x
-		$object.top:=19+($counter*$heightdiff)
+		$object.top:=$y-1
 		$object.width:=$width1
 		$object.height:=20
 		$subcounter+=1
@@ -109,7 +110,7 @@ Function renderObjects($data : Object)->$objects : Object
 			$object.fontSize:=10
 			$object.text:=Get localized string:C991("operator_range")
 			$object.left:=$x+$width1+5
-			$object.top:=22+($counter*$heightdiff)
+			$object.top:=$y+2
 			$object.width:=50
 			$object.height:=20
 			$subcounter+=1
@@ -121,7 +122,7 @@ Function renderObjects($data : Object)->$objects : Object
 			$object.type:="input"
 			$object.dataSource:="Form:C1466.value2_"+String:C10(This:C1470.id)
 			$object.left:=$x
-			$object.top:=19+($counter*$heightdiff)
+			$object.top:=$y-1
 			$object.width:=$width2
 			$object.height:=20
 			$subcounter+=1
@@ -147,7 +148,7 @@ Function renderObjects($data : Object)->$objects : Object
 	$object.switchBackWhenReleased:=True:C214
 	$object.useLastFrameAsDisabled:=True:C214
 	$object.left:=$x
-	$object.top:=18+($counter*$heightdiff)
+	$object.top:=$y-2
 	$object.width:=20
 	$object.height:=20
 	$subcounter+=1
@@ -163,7 +164,7 @@ Function renderObjects($data : Object)->$objects : Object
 	$object.switchBackWhenReleased:=True:C214
 	$object.useLastFrameAsDisabled:=True:C214
 	$object.left:=$x
-	$object.top:=18+($counter*$heightdiff)
+	$object.top:=$y-2
 	$object.width:=20
 	$object.height:=20
 	$subcounter+=1
