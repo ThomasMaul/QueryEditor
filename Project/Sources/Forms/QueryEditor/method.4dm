@@ -1,5 +1,6 @@
+$event:=FORM Event:C1606.code
 Case of 
-	: (FORM Event:C1606.code=On Load:K2:1)
+	: ($event=On Load:K2:1)
 		If (Form:C1466.table=Null:C1517)
 			$col:=OB Keys:C1719(ds:C1482)
 			If ($col.length>0)
@@ -13,20 +14,24 @@ Case of
 		$counter:=Form:C1466.editor.getNextCounter()
 		$line:=cs:C1710.queryLine.new(New object:C1471("name"; "anfang"; "id"; $counter))
 		Form:C1466.editor.addQueryLine(0; $line)
-		
-		
 		Form:C1466.editor.renderForm("sub")
 		If (Form:C1466.editor.querylines.length<=1)
 			SET TIMER:C645(1)
 		End if 
 		
-	: (FORM Event:C1606.code=On Timer:K2:25)
+		// property popup aufbauen, load, save...
+		
+	: ($event=On Unload:K2:2)
+		RELEASE MENU:C978(Form:C1466.editor.popupmenu)
+		
+		
+	: ($event=On Timer:K2:25)
 		SET TIMER:C645(0)
 		If (Form:C1466.editor.querylines.length<=1)
-			EXECUTE METHOD IN SUBFORM:C1085("sub"; "QE_Subformmethod")  //Formula(QE_Subformmethod).source)
+			EXECUTE METHOD IN SUBFORM:C1085("sub"; Formula:C1597(QE_Subformmethod).source)
 		End if 
 		
-	: (FORM Event:C1606.code=On Clicked:K2:4)
+	: ($event=On Clicked:K2:4)
 		
 		$name:=FORM Event:C1606.objectName
 		If ($name="ob_@")
