@@ -6,6 +6,7 @@ Class constructor($class : 4D:C1709.DataClass)
 	This:C1470.popupmenu:=This:C1470._getTableMenu()
 	This:C1470.conditionpopup:=This:C1470._getConditionMenu()
 	Form:C1466.conditionpopup:=This:C1470.conditionpopup
+	This:C1470.height:=30
 	
 	
 Function getNextCounter()->$counter : Integer
@@ -27,16 +28,27 @@ Function renderForm($subformname : Text)
 	$form:=New object:C1471
 	$objects:=New object:C1471()
 	$counter:=0
+	$max_y:=0
 	For each ($line; This:C1470.querylines)
 		$counter+=1
 		$lineobjects:=$line.renderObjects(New object:C1471("counter"; $counter))
 		For each ($object; $lineobjects)
 			$objects[$object]:=$lineobjects[$object]
+			$y:=Num:C11($objects[$object].top)+Num:C11($objects[$object].height)
+			If ($y>$max_y)
+				$max_y:=$y
+			End if 
 		End for each 
 		$objects[$line.id]:=$object
 	End for each 
 	$page1:=New object:C1471("objects"; $objects)
 	$form.pages:=New collection:C1472(Null:C1517; $page1)
+	$maxlines:=(Screen height:C188-300)/This:C1470.height
+	If (This:C1470.querylines.length<$maxlines)
+		$newheight:=This:C1470.querylines.length-Form:C1466.height
+		Form:C1466.height:=This:C1470.querylines.length
+		RESIZE FORM WINDOW:C890(0; $newheight*This:C1470.height)
+	End if 
 	OBJECT SET SUBFORM:C1138(*; $subformname; $form)
 	
 	
