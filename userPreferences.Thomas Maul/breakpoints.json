@@ -5,5 +5,14 @@
 			"type": 1,
 			"methodName": "test"
 		}
+	},
+	{
+		"line": 128,
+		"method": {
+			"type": 10,
+			"className": "queryLine",
+			"functionName": "renderObjects",
+			"methodPath": "/SOURCES/Classes/queryLine.4dm"
+		}
 	}
 ]

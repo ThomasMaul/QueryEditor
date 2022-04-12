@@ -93,13 +93,13 @@
 		"stamp": "2022-03-27T12:23:11.743Z"
 	},
 	"Sources/Classes/queryLine.4dm": {
-		"startSelection": 19,
-		"endSelection": 19,
-		"firstSelectedLine": 74,
-		"lastSelectedLine": 74,
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 145,
+		"lastSelectedLine": 145,
 		"folding": [],
 		"bookmarks": [],
-		"stamp": "2022-04-10T18:36:33.238Z"
+		"stamp": "2022-04-10T19:12:48.551Z"
 	},
 	"Sources/Methods/test.4dm": {
 		"startSelection": 0,

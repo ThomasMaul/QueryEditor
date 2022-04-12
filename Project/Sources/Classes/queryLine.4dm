@@ -128,7 +128,26 @@ Function renderObjects($data : Object)->$objects : Object
 			$objects["ob_"+String:C10($counter)+"_value2"]:=$object
 			
 		: (This:C1470.combotype=3)
-			$width1:=100
+			$object:=New object:C1471
+			$object.type:="dropdown"
+			$object.fontSize:=10
+			$object.dataSource:="Form:C1466.combo2_"+String:C10(This:C1470.id)
+			$object.left:=$x+$width1+5
+			$object.top:=19+($counter*$heightdiff)
+			$object.width:=150
+			$object.height:=20
+			$subcounter+=1
+			$objects["ob_"+String:C10($counter)+"_popup2"]:=$object
+			//popup fill depending of type
+			// date, pict, time, blob
+			$oPop:=New object:C1471
+			STRING LIST TO ARRAY:C511("TimeCriteriaBis"; $strings)
+			
+			$oPop.values:=Form:C1466.conditionpopup[String:C10(This:C1470.fieldtype)].extract("text")
+			$oPop.index:=0
+			Form:C1466.sub["combo2_"+String:C10(This:C1470.id)]:=$oPop
+			
+			
 		: (This:C1470.combotype=4)
 			$width1:=0
 		: (This:C1470.combotype=5)
