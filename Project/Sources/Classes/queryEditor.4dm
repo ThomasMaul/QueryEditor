@@ -7,6 +7,7 @@ Class constructor($class : 4D:C1709.DataClass)
 	This:C1470.conditionpopup:=This:C1470._getConditionMenu()
 	Form:C1466.conditionpopup:=This:C1470.conditionpopup
 	This:C1470.height:=30
+	This:C1470._buildListContents()
 	
 	
 Function getNextCounter()->$counter : Integer
@@ -43,11 +44,15 @@ Function renderForm($subformname : Text)
 	End for each 
 	$page1:=New object:C1471("objects"; $objects)
 	$form.pages:=New collection:C1472(Null:C1517; $page1)
+	//TODO: check 2nd screen height - where is the window?
 	$maxlines:=(Screen height:C188-300)/This:C1470.height
 	If (This:C1470.querylines.length<$maxlines)
 		$newheight:=This:C1470.querylines.length-Form:C1466.height
 		Form:C1466.height:=This:C1470.querylines.length
 		RESIZE FORM WINDOW:C890(0; $newheight*This:C1470.height)
+		OBJECT SET SCROLLBAR:C843(*; $subformname; False:C215; False:C215)
+	Else 
+		OBJECT SET SCROLLBAR:C843(*; $subformname; False:C215; True:C214)
 	End if 
 	OBJECT SET SUBFORM:C1138(*; $subformname; $form)
 	
@@ -163,4 +168,71 @@ Function _getConditionMenu()->$object
 	End if 
 	DOM CLOSE XML:C722($xml)
 	
+Function _buildListContents()
+	$Lists:=New object:C1471
+	
+	$lists.operators:=New collection:C1472
+	$lists.operators.push(Get localized string:C991("operator_and"))
+	$lists.operators.push(Get localized string:C991("operator_or"))
+	$lists.operators.push(Get localized string:C991("operator_except"))
+	
+	$lists.criteria_text:=New collection:C1472
+	$lists.criteria_text.push(Get localized string:C991("criteria_Text2a_AllWords"))
+	$lists.criteria_text.push(Get localized string:C991("criteria_Text2a_SomeWords"))
+	
+	$lists.criteria_date_a:=New collection:C1472
+	$lists.criteria_date_a.push(Get localized string:C991("criteria_DateBis_Days"))
+	$lists.criteria_date_a.push(Get localized string:C991("criteria_DateBis_Weeks"))
+	$lists.criteria_date_a.push(Get localized string:C991("criteria_DateBis_Months"))
+	$lists.criteria_date_a.push(Get localized string:C991("criteria_DateBis_Years"))
+	
+	$lists.criteria_date_b:=New collection:C1472
+	$lists.criteria_date_b.push(Get localized string:C991("criteria_DateTer_W1"))
+	$lists.criteria_date_b.push(Get localized string:C991("criteria_DateTer_W2"))
+	$lists.criteria_date_b.push(Get localized string:C991("criteria_DateTer_W3"))
+	$lists.criteria_date_b.push(Get localized string:C991("criteria_DateTer_Month"))
+	$lists.criteria_date_b.push(Get localized string:C991("criteria_DateTer_Quarter"))
+	$lists.criteria_date_b.push(Get localized string:C991("criteria_DateTer_Year"))
+	
+	$lists.criteria_time_a:=New collection:C1472
+	$lists.criteria_time_a.push(Get localized string:C991("criteria_TimeBis_Hours"))
+	$lists.criteria_time_a.push(Get localized string:C991("criteria_TimeBis_Minuts"))
+	$lists.criteria_time_a.push(Get localized string:C991("criteria_TimeBis_Seconds"))
+	
+	$lists.criteria_duration_a:=New collection:C1472
+	$lists.criteria_duration_a.push(Get localized string:C991("criteria_DurationHours"))
+	$lists.criteria_duration_a.push(Get localized string:C991("criteria_DurationMinutes"))
+	$lists.criteria_duration_a.push(Get localized string:C991("criteria_DurationSeconds"))
+	
+	$lists.criteria_pict_a:=New collection:C1472
+	$lists.criteria_pict_a.push(Get localized string:C991("criteria_pict2a_AllWords"))
+	$lists.criteria_pict_a.push(Get localized string:C991("criteria_Pict2a_SomeWords"))
+	
+	$lists.criteria_pict_b:=New collection:C1472
+	$lists.criteria_pict_b.push(Get localized string:C991("criteria_pict2b_Bytes"))
+	$lists.criteria_pict_b.push(Get localized string:C991("criteria_pict2b_KBytes"))
+	$lists.criteria_pict_b.push(Get localized string:C991("criteria_pict2b_MBytes"))
+	$lists.criteria_pict_b.push(Get localized string:C991("criteria_pict2b_GBytes"))
+	
+	$lists.criteria_blob_a:=New collection:C1472
+	$lists.criteria_blob_a.push(Get localized string:C991("criteria_BlobBis_Byte"))
+	$lists.criteria_blob_a.push(Get localized string:C991("criteria_BlobBis_KByte"))
+	$lists.criteria_blob_a.push(Get localized string:C991("criteria_BlobBis_MByte"))
+	$lists.criteria_blob_a.push(Get localized string:C991("criteria_BlobBis_GByte"))
+	
+	This:C1470.lists:=$Lists
+	
+Function createQueryObject()->$object
+	// builds the real query operation
+	
+	$object:=New object:C1471
+	$statement:=""
+	$para:=New object:C1471
+	
+	For each ($line; This:C1470.querylines)
+		$statement+=$line.createQueryStatement($para)
+	End for each 
+	
+	$object.query_statement:=$statement
+	$object.para:=$para
 	

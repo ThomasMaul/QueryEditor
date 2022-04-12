@@ -9,8 +9,8 @@
 	"windowMinHeight": 0,
 	"windowMaxWidth": 32767,
 	"windowMaxHeight": 32767,
-	"rightMargin": 20,
-	"bottomMargin": 20,
+	"rightMargin": 15,
+	"bottomMargin": 15,
 	"events": [
 		"onLoad",
 		"onPageChange",
@@ -38,9 +38,9 @@
 			"objects": {
 				"sub": {
 					"type": "subform",
-					"left": 10,
+					"left": 3,
 					"top": 28,
-					"width": 753,
+					"width": 828,
 					"height": 32,
 					"dataSource": "Form:C1466.sub",
 					"scrollbarVertical": "visible",
@@ -49,8 +49,8 @@
 				},
 				"bottom.b.cancel": {
 					"type": "button",
-					"top": 67,
-					"left": 543,
+					"top": 71,
+					"left": 626,
 					"width": 100,
 					"height": 20,
 					"sizingX": "fixed",
@@ -63,8 +63,8 @@
 				},
 				"bottom.b.query": {
 					"type": "button",
-					"top": 67,
-					"left": 663,
+					"top": 71,
+					"left": 740,
 					"width": 100,
 					"height": 20,
 					"sizingX": "fixed",
@@ -135,7 +135,7 @@
 				"reset": {
 					"type": "button",
 					"top": 2,
-					"left": 745,
+					"left": 822,
 					"width": 18,
 					"height": 18,
 					"visibility": "hidden",
@@ -149,11 +149,20 @@
 					"events": [
 						"onClick"
 					]
+				},
+				"Eingabe": {
+					"type": "input",
+					"left": 13,
+					"top": 105,
+					"width": 827,
+					"height": 353,
+					"enterable": false,
+					"dataSource": "Form:C1466.preview"
 				}
 			}
 		}
 	],
-	"geometryStamp": 30,
+	"geometryStamp": 69,
 	"method": "method.4dm",
 	"editor": {
 		"activeView": "View 1",

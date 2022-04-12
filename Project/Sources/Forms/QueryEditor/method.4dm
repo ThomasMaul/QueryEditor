@@ -44,7 +44,7 @@ Case of
 				Case of 
 					: ($item="+")
 						$counter:=Form:C1466.editor.getNextCounter()
-						Form:C1466.editor.addQueryLine($line; cs:C1710.queryLine.new(New object:C1471("id"; $id; "name"; String:C10(Current time:C178))))
+						Form:C1466.editor.addQueryLine($line; cs:C1710.queryLine.new(New object:C1471("id"; $counter; "name"; String:C10(Current time:C178))))
 						Form:C1466.editor.renderForm("sub")
 						
 					: ($item="-")
@@ -67,9 +67,17 @@ Case of
 						$queryline:=Form:C1466.editor.findQueryLine($line)
 						$queryline.setCondition($index)
 						Form:C1466.editor.renderForm("sub")
+						
+					: ($item="popup2")
+						$index:=Form:C1466.sub["combo2_"+String:C10($line)].index
+						$queryline:=Form:C1466.editor.findQueryLine($line)
+						$queryline.setPopup2($index)
+						Form:C1466.editor.renderForm("sub")
 				End case 
 				
-				
+				// debug
+				$object:=Form:C1466.editor.createQueryObject()
+				Form:C1466.preview:=JSON Stringify:C1217($object; *)
 				
 			Else 
 				TRACE:C157

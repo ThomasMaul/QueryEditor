@@ -16,6 +16,22 @@
           <source>Query</source>
           <target>Suchen</target>
         </trans-unit>
+        <trans-unit id="12" resname="bLoad">
+          <source>Load</source>
+          <target>Laden</target>
+        </trans-unit>
+        <trans-unit id="13" resname="bSave">
+          <source>Save</source>
+          <target>Sichern</target>
+        </trans-unit>
+        <trans-unit id="14" resname="bCopy">
+          <source>Copy formula in Pasteboard</source>
+          <target>Formel in Zwischenablage kopieren</target>
+        </trans-unit>    
+        <trans-unit id="13" resname="QueryNot">
+          <source>Not</source>
+          <target>Not</target>
+        </trans-unit>                    
       </group>
     </body>
   </file>

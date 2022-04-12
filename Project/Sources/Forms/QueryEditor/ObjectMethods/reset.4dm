@@ -1,1 +1,1 @@
-query_RESET 
+//query_RESET

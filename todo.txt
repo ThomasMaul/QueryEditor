@@ -1,0 +1,10 @@
+testweise suche zusammensetzen
+
+eingabe typ kontrolle
+vorschlagstext für leere Felder
+
+letzte Option, Textliste, popup mit eingabefeld
+type ahead für feldnamen
+
+buttons ganz oben
+
