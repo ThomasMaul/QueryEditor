@@ -157,12 +157,13 @@
 					"width": 827,
 					"height": 353,
 					"enterable": false,
-					"dataSource": "Form:C1466.preview"
+					"dataSource": "Form:C1466.preview",
+					"sizingY": "move"
 				}
 			}
 		}
 	],
-	"geometryStamp": 69,
+	"geometryStamp": 70,
 	"method": "method.4dm",
 	"editor": {
 		"activeView": "View 1",

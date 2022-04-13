@@ -230,7 +230,7 @@ Function createQueryObject()->$object
 	$para:=New object:C1471
 	
 	For each ($line; This:C1470.querylines)
-		$statement+=$line.createQueryStatement($para)
+		$statement+=($line.createQueryStatement($para)+" and ")
 	End for each 
 	
 	$object.query_statement:=$statement

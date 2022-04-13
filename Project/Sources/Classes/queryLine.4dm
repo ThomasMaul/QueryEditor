@@ -195,7 +195,7 @@ Function renderObjects($data : Object)->$objects : Object
 			$subcounter+=1
 			$objects["ob_"+String:C10($counter)+"_text2"]:=$object
 			
-		: (This:C1470.combotype=0)
+		: ((This:C1470.combotype=0) & (This:C1470.fieldtype=Is date:K8:7))  // date today/tomorrow
 			$object:=New object:C1471
 			$object.type:="text"
 			$object.fontSize:=9
@@ -279,14 +279,12 @@ Function setCondition($value : Integer)
 Function setPopup2($value : Integer)
 	This:C1470.popup2:=$value
 	
-Function _calculateDatePreview()->$preview : Text
+Function _calculateDatePreview($data : Object)->$preview : Text
 	var $dat_1; $dat_2; $dat_3 : Date
 	
 	$Lon_popup_3:=This:C1470.popup2
-	If ($Lon_popup_3=0)
-		$Lon_popup_3:=1
-	End if 
 	$Lon_criteriaID:=This:C1470.comboid
+	$Lon_value:=Num:C11(Form:C1466.sub["value1_"+String:C10(This:C1470.id)])
 	Case of 
 		: ($Lon_criteriaID=11)  // today
 			$Dat_1:=Current date:C33
@@ -301,15 +299,15 @@ Function _calculateDatePreview()->$preview : Text
 			$Lon_month:=Month of:C24(Current date:C33)
 			$Lon_year:=Year of:C25(Current date:C33)
 			Case of 
-				: ($Lon_popup_3<=3)  //"Week ( "sun-sat" or "mon-sat" or "mon-fri"
+				: ($Lon_popup_3<=2)  //"Week ( "sun-sat" or "mon-sat" or "mon-fri"
 					Case of   // which part of the week
-						: ($Lon_popup_3=1)  // Sunday to Saturday
+						: ($Lon_popup_3=0)  // Sunday to Saturday
 							$Dat_2:=Add to date:C393(Current date:C33; 0; 0; (-1)*$Lon_dayNumber)  //find sunday
 							$Dat_3:=$Dat_2+6  // add 6 to find saturday
-						: ($Lon_popup_3=2)  // Monday to Sunday
+						: ($Lon_popup_3=1)  // Monday to Sunday
 							$Dat_2:=Add to date:C393(Current date:C33; 0; 0; ((-1)*$Lon_dayNumber)+1)  //find monday
 							$Dat_3:=$Dat_2+6  // add 6 to find sunday
-						: ($Lon_popup_3=3)
+						: ($Lon_popup_3=2)
 							$Dat_2:=Add to date:C393(Current date:C33; 0; 0; ((-1)*$Lon_dayNumber)+1)  //find monday
 							$Dat_3:=$Dat_2+4  // add 4 to find friday
 					End case 
@@ -324,7 +322,7 @@ Function _calculateDatePreview()->$preview : Text
 							$Dat_3:=$Dat_3+7
 					End case 
 					
-				: ($Lon_popup_3=4)  //"Month"
+				: ($Lon_popup_3=3)  //"Month"
 					Case of 
 						: ($Lon_criteriaID=12)  // current (week)
 							// do nothing
@@ -343,7 +341,7 @@ Function _calculateDatePreview()->$preview : Text
 					End case 
 					$Dat_2:=Add to date:C393(!00-00-00!; $Lon_year; $Lon_month; 1)
 					$Dat_3:=Add to date:C393(!00-00-00!; $Lon_year; $Lon_month+1; 1)-1
-				: ($Lon_popup_3=5)  //"Quarter")
+				: ($Lon_popup_3=4)  //"Quarter")
 					Case of 
 						: ($Lon_criteriaID=22)  //previous (quarter)
 							$Lon_month:=$Lon_month-3
@@ -372,7 +370,7 @@ Function _calculateDatePreview()->$preview : Text
 							$Dat_2:=Add to date:C393(!00-00-00!; $Lon_year; 10; 1)
 							$Dat_3:=Add to date:C393(!00-00-00!; $Lon_year+1; 1; 1)-1
 					End case 
-				: ($Lon_popup_3=6)  //"Year"
+				: ($Lon_popup_3=5)  //"Year"
 					Case of 
 						: ($Lon_criteriaID=22)  //previous (year)
 							$Lon_year:=$Lon_year-1
@@ -385,95 +383,169 @@ Function _calculateDatePreview()->$preview : Text
 		: ($Lon_criteriaID=23)  //"Is within THE last")  (N days month years)
 			$Dat_3:=Current date:C33
 			Case of 
-				: ($Lon_popup_2=1)  //"Days"
+				: ($Lon_popup_3=0)  //"Days"
 					$Dat_2:=Add to date:C393($Dat_3; 0; 0; (-1)*$Lon_value)
-				: ($Lon_popup_2=2)  //"Weeks"
+				: ($Lon_popup_3=1)  //"Weeks"
 					$Dat_2:=Add to date:C393($Dat_3; 0; 0; (-7)*$Lon_value)
-				: ($Lon_popup_2=3)  //Monthes"
+				: ($Lon_popup_3=2)  //Monthes"
 					$Dat_2:=Add to date:C393($Dat_3; 0; (-1)*$Lon_value; 0)
-				: ($Lon_popup_2=4)  //"Years"
+				: ($Lon_popup_3=3)  //"Years"
 					$Dat_2:=Add to date:C393($Dat_3; (-1)*$Lon_value; 0; 0)
 			End case 
 		: ($Lon_criteriaID=33)  //"Is within the next" (N days month years)
 			$Dat_2:=Current date:C33
 			Case of 
-				: ($Lon_popup_2=1)  //"Days"
+				: ($Lon_popup_3=0)  //"Days"
 					$Dat_3:=Add to date:C393($Dat_2; 0; 0; $Lon_value)
-				: ($Lon_popup_2=2)  //"Weeks"
-				: ($Lon_popup_2=3)  //Monthes"
+				: ($Lon_popup_3=1)  //"Weeks"
+				: ($Lon_popup_3=2)  //Monthes"
 					$Dat_3:=Add to date:C393($Dat_2; 0; $Lon_value; 0)
-				: ($Lon_popup_2=4)  //"Years"
+				: ($Lon_popup_3=3)  //"Years"
 					$Dat_3:=Add to date:C393($Dat_2; $Lon_value; 0; 0)
 			End case 
 	End case 
-	$preview:="("+String:C10($Dat_2)+" - "+String:C10($Dat_3)+")"
+	If (($dat_1#!00-00-00!) & ($dat_2=!00-00-00!) & ($dat_3=!00-00-00!))
+		$preview:="("+String:C10($dat_1)+")"
+	Else 
+		$preview:="("+String:C10($Dat_2)+" - "+String:C10($Dat_3)+")"
+	End if 
+	If ($data#Null:C1517)
+		$data.dat1:=$dat_1
+		$data.dat2:=$dat_2
+		$data.dat3:=$dat_3
+	End if 
 	
 Function createQueryStatement($para : Object)->$statement : Text
 	var $value : Variant
 	
 	$statement:=This:C1470.name+" "
 	$comperator:=""
-	$id:=This:C1470.comboid
+	$id:=Abs:C99(This:C1470.comboid)  // negative values for time
 	$type:=This:C1470.fieldtype
+	
+	
+	// exceptions first for empty/not empty
 	Case of 
-		: ($id=1)
-			$comperator:="=="
-		: ($id=2)
-			$comperator:="#"
-		: (($id=3) | ($id=7))
-			$comperator:=">="
-		: (($id=4) | ($id=8))
-			$comperator:=">"
-		: ($id=5)
-			$comperator:="<="
-		: ($id=6)
-			$comperator:="<"
-		: ($id=15)
-			$comperator:="IN"
+		: (($id=41) && (($type=Is picture:K8:10) | ($type=Is BLOB:K8:12)))
+			$statement+="== null"
+		: (($id=42) && (($type=Is picture:K8:10) | ($type=Is BLOB:K8:12)))
+			$statement+="!= null"
 			
-		: ((($id=11) | ($id=9) | ($id=10) | ($id=41)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))  // contains
-			$comperator:="=="
-		: ((($id=12) | ($id=42)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))
-			$comperator:="#"
-		: ((($id=13) | ($id=14)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))
-			$comperator:="%"
+		: ((($id=3) | ($id=5)) && (($type=Is picture:K8:10) | ($type=Is BLOB:K8:12)))  // size > or <
+			// need to create formula, value * unit
+			$size:=Num:C11(Form:C1466.sub["value1_"+String:C10(This:C1470.id)])
+			$unit:=This:C1470.popup2
+			Case of 
+				: ($unit=1)
+					$size*=1024
+				: ($unit=2)
+					$size*=1024*1024
+				: ($unit=3)
+					$size*=1024*1024*1024
+			End case 
+			Case of 
+				: (($id=3) & ($type=Is picture:K8:10))
+					$statement:="eval(picture size(this."+This:C1470.name+")>="+String:C10($size)+")"
+				: (($id=5) & ($type=Is picture:K8:10))
+					$statement:="eval(picture size(this."+This:C1470.name+")<="+String:C10($size)+")"
+				: (($id=3) & ($type=Is BLOB:K8:12))
+					$statement:="eval(blob size(this."+This:C1470.name+")>="+String:C10($size)+")"
+				: (($id=5) & ($type=Is BLOB:K8:12))
+					$statement:="eval(blob size(this."+This:C1470.name+")<="+String:C10($size)+")"
+			End case 
+			
+		Else   // everything else
+			
+			Case of 
+				: (($id=0) | ($id=1))
+					$comperator:="=="
+				: ($id=2)
+					$comperator:="#"
+				: (($id=3) | ($id=7) | ($id=12) | ($id=22) | ($id=32) | ($id=23) | ($id=33))
+					$comperator:=">="
+				: (($id=4) | ($id=8))
+					$comperator:=">"
+				: ($id=5)
+					$comperator:="<="
+				: ($id=6)
+					$comperator:="<"
+				: ($id=15)
+					$comperator:="IN"
+					
+				: ((($id=11) | ($id=9) | ($id=10) | ($id=41)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))  // contains
+					$comperator:="=="
+				: ((($id=12) | ($id=42)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))
+					$comperator:="#"
+				: ((($id=13) | ($id=14)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))
+					$comperator:="%"
+			End case 
+			
+			$statement+=($comperator+" :value_"+String:C10(This:C1470.id))
+			If ($id=14)
+				$not:=Get localized string:C991("QueryNot")
+				$statement:=$not+"("+$statement+")"
+			End if 
+			If (($id=15) | ($id=13))
+				$value:=New collection:C1472
+				$value:=Split string:C1554(Form:C1466.sub["value1_"+String:C10(This:C1470.id)]; ";")
+			Else 
+				$value:=Form:C1466.sub["value1_"+String:C10(This:C1470.id)]
+			End if 
+			Case of 
+				: (($id=0) && ($type=Is boolean:K8:9))
+					$value:=False:C215
+				: (($id=1) && ($type=Is boolean:K8:9))
+					$value:=True:C214
+					
+				: ((($id=11) | ($id=12)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))  // contains
+					$value:="@"+$value+"@"
+				: (($id=9)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3))
+					$value:="@"+$value
+				: (($id=10) | ($id=7)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3))
+					$value+="@"
+				: ((($id=41) | ($id=42)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))  // contains
+					$value:=""
+				: ((($id=11) | ($id=21) | ($id=31)) && ($type=Is date:K8:7))  // contains
+					$data:=New object:C1471
+					$preview:=This:C1470._calculateDatePreview($data)
+					$value:=$data.dat1
+				: ((($id=12) | ($id=22) | ($id=32) | ($id=23) | ($id=33)) && ($type=Is date:K8:7))  // date in
+					$data:=New object:C1471
+					$preview:=This:C1470._calculateDatePreview($data)
+					$value:=$data.dat2
+					$value2:=$data.dat3
+			End case 
+			$para["value_"+String:C10(This:C1470.id)]:=$value
+			
+			Case of 
+				: (($id=7) | ($id=8))
+					$statement:="("+$statement+")&("+This:C1470.name+" <"
+					If ($id=7)
+						$statement+="="
+					End if 
+					$statement+=(" :value2_"+String:C10(This:C1470.id))+")"
+					$value2:=String:C10(Form:C1466.sub["value2_"+String:C10(This:C1470.id)])
+					If (($id=7) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))
+						$value2+="@"
+					End if 
+					$para["value2_"+String:C10(This:C1470.id)]:=$value2
+					
+				: ((($id=12) | ($id=22) | ($id=32) | ($id=23) | ($id=33)) && ($type=Is date:K8:7))  // date
+					$statement:="("+$statement+")&("+This:C1470.name+" <="
+					$statement+=(" :value2_"+String:C10(This:C1470.id))+")"
+					$para["value2_"+String:C10(This:C1470.id)]:=$value2
+					
+				: ((($id=23) | ($id=33)) && ($type=Is time:K8:8))
+					$statement:="("+$statement+")&("+This:C1470.name+" <="
+					$statement+=(" :value2_"+String:C10(This:C1470.id))+")"
+					If ($id=23)
+						$para["value_"+String:C10(This:C1470.id)]:=Current time:C178-Time:C179($value)
+						$para["value2_"+String:C10(This:C1470.id)]:=Current time:C178
+					Else 
+						$para["value_"+String:C10(This:C1470.id)]:=Current time:C178
+						$para["value2_"+String:C10(This:C1470.id)]:=Current time:C178+Time:C179($value)
+					End if 
+			End case 
+			
 	End case 
-	
-	$statement+=($comperator+" :value_"+String:C10(This:C1470.id))
-	If ($id=14)
-		$not:=Get localized string:C991("QueryNot")
-		$statement:=$not+"("+$statement+")"
-	End if 
-	If (($id=15) | ($id=13))
-		$value:=New collection:C1472
-		$value:=Split string:C1554(Form:C1466.sub["value1_"+String:C10(This:C1470.id)]; ";")
-	Else 
-		$value:=Form:C1466.sub["value1_"+String:C10(This:C1470.id)]
-	End if 
-	Case of 
-		: ((($id=11) | ($id=12)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))  // contains
-			$value:="@"+$value+"@"
-		: (($id=9)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3))
-			$value:="@"+$value
-		: (($id=10) | ($id=7)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3))
-			$value+="@"
-		: ((($id=41) | ($id=42)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))  // contains
-			$value:=""
-	End case 
-	$para["value_"+String:C10(This:C1470.id)]:=$value
-	
-	If (($id=7) | ($id=8))
-		$statement:="("+$statement+")&("+This:C1470.name+" <"
-		If ($id=7)
-			$statement+="="
-		End if 
-		$statement+=(" :value2_"+String:C10(This:C1470.id))+")"
-		$value2:=Form:C1466.sub["value2_"+String:C10(This:C1470.id)]
-		If ($id=7)
-			$value2+="@"
-		End if 
-		$para["value2_"+String:C10(This:C1470.id)]:=$value2
-	End if 
-	
-	
 	
