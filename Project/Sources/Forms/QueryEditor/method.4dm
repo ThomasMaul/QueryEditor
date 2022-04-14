@@ -28,7 +28,7 @@ Case of
 	: ($event=On Timer:K2:25)
 		SET TIMER:C645(0)
 		If (Form:C1466.editor.querylines.length<=1)
-			EXECUTE METHOD IN SUBFORM:C1085("sub"; Formula:C1597(QE_Subformmethod).source)
+			EXECUTE METHOD IN SUBFORM:C1085("sub"; Formula:C1597(QE_Subformmethod).source; *; "disable")
 		End if 
 		
 	: ($event=On Clicked:K2:4)
@@ -73,6 +73,17 @@ Case of
 						$queryline:=Form:C1466.editor.findQueryLine($line)
 						$queryline.setPopup2($index)
 						Form:C1466.editor.renderForm("sub")
+						
+					: ($item="operator")
+						$index:=Form:C1466.sub["operator_"+String:C10($line)].index
+						$queryline:=Form:C1466.editor.findQueryLine($line)
+						$queryline.setOperator($index)
+						
+					: ($item="clickbutton")
+						$index:=Form:C1466.sub["clickbutton_"+String:C10($line)].index
+						$queryline:=Form:C1466.editor.findQueryLine($line)
+						// now we need to open an entry window, on close set content into object...
+						$queryline.itemlist_entrywindow()
 				End case 
 				
 				// debug

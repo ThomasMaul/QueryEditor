@@ -8,6 +8,10 @@ Class constructor($class : 4D:C1709.DataClass)
 	Form:C1466.conditionpopup:=This:C1470.conditionpopup
 	This:C1470.height:=30
 	This:C1470._buildListContents()
+	This:C1470.operators:=New collection:C1472(Get localized string:C991("operator_and"); \
+		Get localized string:C991("operator_or"); \
+		Get localized string:C991("operator_except"))
+	
 	
 	
 Function getNextCounter()->$counter : Integer
@@ -230,7 +234,20 @@ Function createQueryObject()->$object
 	$para:=New object:C1471
 	
 	For each ($line; This:C1470.querylines)
-		$statement+=($line.createQueryStatement($para)+" and ")
+		If ($line.listentry=1)
+			// nothing
+		Else 
+			Case of 
+				: ($line.operator=0)
+					$operator:=" and "
+				: ($line.operator=1)
+					$operator:=" or "
+				: ($line.operator=2)
+					$operator:=" and not "
+			End case 
+			$statement+=$operator
+		End if 
+		$statement+="("+$line.createQueryStatement($para)+")"
 	End for each 
 	
 	$object.query_statement:=$statement
