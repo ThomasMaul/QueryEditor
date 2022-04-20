@@ -64,6 +64,7 @@ Function renderForm($subformname : Text)
 	Else 
 		OBJECT SET SCROLLBAR:C843(*; $subformname; False:C215; True:C214)
 	End if 
+	Form:C1466.sub:=New object:C1471("editor"; Form:C1466.editor)
 	OBJECT SET SUBFORM:C1138(*; $subformname; $form)
 	
 Function handleFormEvent($event : Object)
@@ -88,35 +89,34 @@ Function handleFormEvent($event : Object)
 						SET TIMER:C645(1)
 					End if 
 					
-				: ($item="fieldlist")
+				: (($item="1") | ($item="fieldlist"))
 					$paramRef:=Dynamic pop up menu:C1006(This:C1470.popupmenu)
-					// finde queryline
-					var $queryline : cs:C1710.queryLine
-					$queryline:=This:C1470.findQueryLine($line)
-					$queryline.setValue($paramRef)
-					This:C1470.renderForm(This:C1470.sub)
+					If ($paramRef#"")
+						var $queryline : cs:C1710.queryLine
+						$queryline:=This:C1470.findQueryLine($line)
+						$queryline.setValue($paramRef)
+						This:C1470.renderForm(This:C1470.sub)
+					End if 
 					
 				: ($item="condition")
-					$index:=Form:C1466.sub["cond_combo_"+String:C10($line)].index
 					$queryline:=This:C1470.findQueryLine($line)
+					$index:=$queryline.getCondCombo()
 					$queryline.setCondition($index)
 					This:C1470.renderForm(This:C1470.sub)
 					
 				: ($item="popup2")
-					$index:=Form:C1466.sub["combo2_"+String:C10($line)].index
 					$queryline:=This:C1470.findQueryLine($line)
+					$index:=$queryline.getCombo2()
 					$queryline.setPopup2($index)
 					This:C1470.renderForm("sub")
 					
 				: ($item="operator")
-					$index:=Form:C1466.sub["operator_"+String:C10($line)].index
 					$queryline:=This:C1470.findQueryLine($line)
+					$index:=$queryline.getOperatorIndex()
 					$queryline.setOperator($index)
 					
 				: ($item="clickbutton")
-					$index:=Form:C1466.sub["clickbutton_"+String:C10($line)].index
 					$queryline:=This:C1470.findQueryLine($line)
-					// now we need to open an entry window, on close set content into object...
 					$queryline.itemlist_entrywindow()
 			End case 
 			

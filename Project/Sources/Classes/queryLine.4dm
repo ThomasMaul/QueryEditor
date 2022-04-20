@@ -4,6 +4,16 @@ Class constructor($data : Object)  // $ID
 	Else 
 		This:C1470.id:=Form:C1466.editor.getNextCounter()
 	End if 
+	
+	// line content storage
+	This:C1470._field:=""
+	This:C1470._cond_combo:=New object:C1471
+	This:C1470._value1:=""
+	This:C1470._value2:=""
+	This:C1470._combo2:=New object:C1471
+	This:C1470._operator:=New object:C1471
+	
+	
 	This:C1470.ds_class:=""
 	This:C1470.name:=String:C10($data.name)
 	This:C1470.displayName:=This:C1470.name
@@ -13,6 +23,7 @@ Class constructor($data : Object)  // $ID
 	This:C1470.popup2:=0
 	This:C1470.height:=30
 	This:C1470.operator:=0
+	
 	
 Function renderObjects($data : Object)->$objects : Object
 	$counter:=Num:C11($data.counter)
@@ -40,7 +51,7 @@ Function renderObjects($data : Object)->$objects : Object
 		$object:=New object:C1471
 		$object.type:="dropdown"
 		$object.fontSize:=10
-		$object.dataSource:="Form:C1466.operator_"+String:C10(This:C1470.id)
+		$object.dataSource:="Form:C1466.editor.querylines["+String:C10($counter-1)+"]._operator"
 		$object.left:=5
 		$object.top:=$y-1
 		$object.width:=65
@@ -50,14 +61,14 @@ Function renderObjects($data : Object)->$objects : Object
 		$oPop:=New object:C1471
 		$oPop.values:=Form:C1466.editor.operators.copy()
 		$oPop.index:=This:C1470.operator
-		Form:C1466.sub["operator_"+String:C10(This:C1470.id)]:=$oPop
+		This:C1470._operator:=$oPop
 	End if 
 	
 	// ## entry field name
 	$object:=New object:C1471
 	$object.type:="input"  //_"+String($counter)
 	$object.enterable:=False:C215
-	$object.dataSource:="Form:C1466.field_"+String:C10(This:C1470.id)
+	$object.dataSource:="Form:C1466.editor.querylines["+String:C10($counter-1)+"]._field"
 	$object.left:=$x
 	$object.top:=$y
 	$object.width:=230
@@ -86,7 +97,7 @@ Function renderObjects($data : Object)->$objects : Object
 	$object:=New object:C1471
 	$object.type:="dropdown"
 	$object.fontSize:=10
-	$object.dataSource:="Form:C1466.cond_combo_"+String:C10(This:C1470.id)
+	$object.dataSource:="Form:C1466.editor.querylines["+String:C10($counter-1)+"]._cond_combo"
 	$object.left:=$x
 	$object.top:=$y-1
 	$object.width:=160
@@ -126,40 +137,40 @@ Function renderObjects($data : Object)->$objects : Object
 		$object:=New object:C1471
 		$object.type:="input"
 		$fieldtype:=This:C1470.fieldtype
-		$valuetype:=Value type:C1509(Form:C1466.sub["value1_"+String:C10(This:C1470.id)])
+		$valuetype:=Value type:C1509(This:C1470._value1)
 		$id:=Abs:C99(This:C1470.comboid)  // negative values for time
 		Case of 
 			: (($fieldtype=Is alpha field:K8:1) | ($fieldtype=Is text:K8:3))
 				If (($valuetype#Is alpha field:K8:1) & ($valuetype#Is text:K8:3))
-					Form:C1466.sub["value1_"+String:C10(This:C1470.id)]:=""
+					This:C1470._value1:=""
 				End if 
 			: (($fieldtype=Is real:K8:4) | ($fieldtype=Is longint:K8:6) | ($fieldtype=Is integer:K8:5) | ($fieldtype=Is integer 64 bits:K8:25))
 				If (($valuetype#Is real:K8:4) & ($valuetype#Is longint:K8:6) & ($valuetype#Is integer:K8:5) & ($valuetype#Is integer 64 bits:K8:25))
-					Form:C1466.sub["value1_"+String:C10(This:C1470.id)]:=0
+					This:C1470._value1:=0
 				End if 
 			: (($fieldtype=Is time:K8:8) && ($id<10))
 				If ($valuetype#Is text:K8:3)
-					Form:C1466.sub["value1_"+String:C10(This:C1470.id)]:=String:C10(Current time:C178)
+					This:C1470._value1:=String:C10(Current time:C178)
 				Else 
-					$time:=Time:C179(Form:C1466.sub["value1_"+String:C10(This:C1470.id)])
-					If (Form:C1466.sub["value1_"+String:C10(This:C1470.id)]#Time string:C180($time))
-						Form:C1466.sub["value1_"+String:C10(This:C1470.id)]:=String:C10(Current time:C178)
+					$time:=Time:C179(This:C1470._value1)
+					If (This:C1470._value1#Time string:C180($time))
+						This:C1470._value1:=String:C10(Current time:C178)
 					End if 
 				End if 
 			: ($fieldtype=Is time:K8:8)
 				If ($valuetype#Is real:K8:4)
-					Form:C1466.sub["value1_"+String:C10(This:C1470.id)]:=1
+					This:C1470._value1:=1
 				End if 
 			: (($fieldtype=Is date:K8:7) && ($id<10))
 				If ($valuetype#Is date:K8:7)
-					Form:C1466.sub["value1_"+String:C10(This:C1470.id)]:=Current date:C33
+					This:C1470._value1:=Current date:C33
 				End if 
 			: ($fieldtype=Is date:K8:7)
 				If ($valuetype#Is real:K8:4)
-					Form:C1466.sub["value1_"+String:C10(This:C1470.id)]:=1
+					This:C1470._value1:=1
 				End if 
 		End case 
-		$object.dataSource:="Form:C1466.value1_"+String:C10(This:C1470.id)
+		$object.dataSource:="Form:C1466.editor.querylines["+String:C10($counter-1)+"]._value1"
 		$filter:=This:C1470.getTextFilter()
 		If ($filter#"")
 			$object.entryFilter:=$filter
@@ -196,32 +207,32 @@ Function renderObjects($data : Object)->$objects : Object
 			$object.type:="input"
 			$object.fontSize:=10
 			$fieldtype:=This:C1470.fieldtype
-			$valuetype:=Value type:C1509(Form:C1466.sub["value2_"+String:C10(This:C1470.id)])
+			$valuetype:=Value type:C1509(This:C1470._value2)
 			$id:=Abs:C99(This:C1470.comboid)  // negative values for time
 			Case of 
 				: (($fieldtype=Is alpha field:K8:1) | ($fieldtype=Is text:K8:3))
 					If (($valuetype#Is alpha field:K8:1) & ($valuetype#Is text:K8:3))
-						Form:C1466.sub["value2_"+String:C10(This:C1470.id)]:=""
+						This:C1470._value2:=""
 					End if 
 				: (($fieldtype=Is real:K8:4) | ($fieldtype=Is longint:K8:6) | ($fieldtype=Is integer:K8:5) | ($fieldtype=Is integer 64 bits:K8:25))
 					If (($valuetype#Is real:K8:4) & ($valuetype#Is longint:K8:6) & ($valuetype#Is integer:K8:5) & ($valuetype#Is integer 64 bits:K8:25))
-						Form:C1466.sub["value2_"+String:C10(This:C1470.id)]:=0
+						This:C1470._value2:=0
 					End if 
 				: ($fieldtype=Is time:K8:8)
 					If ($valuetype#Is text:K8:3)
-						Form:C1466.sub["value2_"+String:C10(This:C1470.id)]:=String:C10(Current time:C178)
+						This:C1470._value2:=String:C10(Current time:C178)
 					Else 
-						$time:=Time:C179(Form:C1466.sub["value1_"+String:C10(This:C1470.id)])
-						If (Form:C1466.sub["value2_"+String:C10(This:C1470.id)]#Time string:C180($time))
-							Form:C1466.sub["value2_"+String:C10(This:C1470.id)]:=String:C10(Current time:C178)
+						$time:=Time:C179(This:C1470._value2)
+						If (This:C1470._value2#Time string:C180($time))
+							This:C1470._value2:=String:C10(Current time:C178)
 						End if 
 					End if 
 				: ($fieldtype=Is date:K8:7)
 					If ($valuetype#Is date:K8:7)
-						Form:C1466.sub["value2_"+String:C10(This:C1470.id)]:=Current date:C33
+						This:C1470._value2:=Current date:C33
 					End if 
 			End case 
-			$object.dataSource:="Form:C1466.value2_"+String:C10(This:C1470.id)
+			$object.dataSource:="Form:C1466.editor.querylines["+String:C10($counter-1)+"]._value2"
 			$object.left:=$x
 			$object.top:=$y+2
 			$object.width:=$width2
@@ -233,7 +244,7 @@ Function renderObjects($data : Object)->$objects : Object
 			$object:=New object:C1471
 			$object.type:="dropdown"
 			$object.fontSize:=10
-			$object.dataSource:="Form:C1466.combo2_"+String:C10(This:C1470.id)
+			$object.dataSource:="Form:C1466.editor.querylines["+String:C10($counter-1)+"]._combo2"
 			$object.left:=$x+$width1+5
 			$object.top:=$y-1
 			$object.width:=150
@@ -259,14 +270,14 @@ Function renderObjects($data : Object)->$objects : Object
 					$oPop.values:=Form:C1466.editor.lists.criteria_blob_a
 			End case 
 			$oPop.index:=This:C1470.popup2
-			Form:C1466.sub["combo2_"+String:C10(This:C1470.id)]:=$oPop
+			This:C1470._combo2:=$oPop
 			
 			
 		: (This:C1470.combotype=4)
 			$object:=New object:C1471
 			$object.type:="dropdown"
 			$object.fontSize:=10
-			$object.dataSource:="Form:C1466.combo2_"+String:C10(This:C1470.id)
+			$object.dataSource:="Form:C1466.editor.querylines["+String:C10($counter-1)+"]._combo2"
 			$object.left:=$x+$width1
 			$object.top:=$y-1
 			$object.width:=130
@@ -280,7 +291,7 @@ Function renderObjects($data : Object)->$objects : Object
 					$oPop.values:=Form:C1466.editor.lists.criteria_date_b
 			End case 
 			$oPop.index:=This:C1470.popup2
-			Form:C1466.sub["combo2_"+String:C10(This:C1470.id)]:=$oPop
+			This:C1470._combo2:=$oPop
 			
 			$object:=New object:C1471
 			$object.type:="text"
@@ -396,11 +407,11 @@ Function getTextFilter()->$Txt_filter : Text
 	
 Function setValue($value : Variant)
 	If (Value type:C1509($value)=Is text:K8:3)
-		Form:C1466.sub["field_"+String:C10(This:C1470.id)]:=$value
+		This:C1470._field:=$value
 		$field:=Form:C1466.editor.table[$value]
 	Else 
 		$fieldname:=Form:C1466.editor.fieldlist[0].name
-		Form:C1466.sub["field_"+String:C10(This:C1470.id)]:=$fieldname
+		This:C1470._field:=$fieldname
 		$field:=Form:C1466.editor.table[$fieldname]
 	End if 
 	This:C1470.fieldtype:=$field.fieldType
@@ -416,7 +427,7 @@ Function setValue($value : Variant)
 	$oPop:=New object:C1471
 	$oPop.values:=Form:C1466.conditionpopup[String:C10(This:C1470.fieldtype)].extract("text")
 	$oPop.index:=0
-	Form:C1466.sub["cond_combo_"+String:C10(This:C1470.id)]:=$oPop
+	This:C1470._cond_combo:=$oPop
 	This:C1470.setCondition($oPop.index)
 	
 Function setCondition($value : Integer)
@@ -429,12 +440,21 @@ Function setPopup2($value : Integer)
 Function setOperator($value : Integer)
 	This:C1470.operator:=$value
 	
+Function getCondCombo()->$index : Integer
+	$index:=This:C1470._cond_combo.index
+	
+Function getCombo2()->$index : Integer
+	$index:=This:C1470._combo2.index
+	
+Function getOperatorIndex()->$index : Integer
+	$index:=This:C1470._operator.index
+	
 Function _calculateDatePreview($data : Object)->$preview : Text
 	var $dat_1; $dat_2; $dat_3 : Date
 	
 	$Lon_popup_3:=This:C1470.popup2
 	$Lon_criteriaID:=This:C1470.comboid
-	$Lon_value:=Num:C11(Form:C1466.sub["value1_"+String:C10(This:C1470.id)])
+	$Lon_value:=Num:C11(This:C1470._value1)
 	Case of 
 		: ($Lon_criteriaID=11)  // today
 			$Dat_1:=Current date:C33
@@ -637,9 +657,9 @@ Function createQueryStatement($para : Object)->$statement : Text
 			End if 
 			If (($id=15) | ($id=13))
 				$value:=New collection:C1472
-				$value:=Split string:C1554(Form:C1466.sub["value1_"+String:C10(This:C1470.id)]; ";")
+				$value:=Split string:C1554(This:C1470._value1; ";")
 			Else 
-				$value:=Form:C1466.sub["value1_"+String:C10(This:C1470.id)]
+				$value:=This:C1470._value1
 			End if 
 			Case of 
 				: (($id=0) && ($type=Is boolean:K8:9))
@@ -674,7 +694,7 @@ Function createQueryStatement($para : Object)->$statement : Text
 						$statement+="="
 					End if 
 					$statement+=(" :value2_"+String:C10(This:C1470.id))+")"
-					$value2:=String:C10(Form:C1466.sub["value2_"+String:C10(This:C1470.id)])
+					$value2:=String:C10(This:C1470._value2)
 					If (($id=7) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))
 						$value2+="@"
 					End if 
@@ -711,6 +731,6 @@ Function itemlist_entrywindow()
 	//  needs to execute in subform
 	$old:=Replace string:C233(Form:C1466.sub["value1_"+String:C10(This:C1470.id)]; ";"; Char:C90(13))
 	EXECUTE METHOD IN SUBFORM:C1085("sub"; Formula:C1597(QE_Subformmethod).source; $result; "popup"; "ob_"+String:C10(This:C1470.id)+"_value1"; $old)
-	Form:C1466.sub["value1_"+String:C10(This:C1470.id)]:=Replace string:C233($result; Char:C90(13); ";")
+	This:C1470._value1:=Replace string:C233($result; Char:C90(13); ";")
 	
 	
