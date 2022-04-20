@@ -2,6 +2,14 @@
 suche text wörter alle/einige
 eingabe mit space zerlegen, und mit und bzw oder in viele suchen aufteilen, klammer außenrum
 
+Datasource über Form.sub.objectname
+oder Form.editor...line[5].popup?
+dann in klasse direkt abfragebar?
+
+
+
+suche and not testen
+
 
 
 relationen 

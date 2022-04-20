@@ -12,24 +12,30 @@ Class constructor($class : 4D:C1709.DataClass)
 		Get localized string:C991("operator_or"); \
 		Get localized string:C991("operator_except"))
 	
-	
+Function close()
+	RELEASE MENU:C978(This:C1470.popupmenu)
 	
 Function getNextCounter()->$counter : Integer
 	This:C1470.counter+=1
 	$counter:=This:C1470.counter
 	
-Function addQueryLine($pos : Integer; $lineobject : cs:C1710._queryLine)
+Function addQueryLine($pos : Integer; $lineobject : cs:C1710.queryLine)
 	If ($lineobject#Null:C1517)
 		This:C1470.querylines.insert($pos; $lineobject)
 	Else 
 		$counter:=This:C1470.getNextCounter()
-		This:C1470.querylines.insert($pos; cs:C1710.queryLine.new(New object:C1471("id"; $counter)))
+		This:C1470.querylines.insert($counter; cs:C1710.queryLine.new(New object:C1471("id"; $counter)))
 	End if 
 	
 Function deleteQueryLine($pos : Integer)
 	This:C1470.querylines.remove($pos)
 	
+Function findQueryLine($line : Integer)->$queryline : cs:C1710.queryLine
+	$col:=This:C1470.querylines.query("listentry=:1"; $line)
+	$queryline:=$col.length=1 ? $col[0] : Null:C1517
+	
 Function renderForm($subformname : Text)
+	This:C1470.sub:=$subformname
 	$form:=New object:C1471
 	$objects:=New object:C1471()
 	$counter:=0
@@ -60,6 +66,67 @@ Function renderForm($subformname : Text)
 	End if 
 	OBJECT SET SUBFORM:C1138(*; $subformname; $form)
 	
+Function handleFormEvent($event : Object)
+	$name:=$event.objectName
+	If ($name="ob_@")
+		$sub:=Substring:C12($Name; 4)
+		$pos:=Position:C15("_"; $sub)
+		$line:=Num:C11(Substring:C12($sub; 1; $pos-1))
+		$item:=Substring:C12($sub; $pos+1)
+		
+		If (($line#0) & ($item#""))
+			Case of 
+				: ($item="+")
+					$counter:=This:C1470.getNextCounter()
+					This:C1470.addQueryLine($line; cs:C1710.queryLine.new(New object:C1471("id"; $counter; "name"; String:C10(Current time:C178))))
+					This:C1470.renderForm(This:C1470.sub)
+					
+				: ($item="-")
+					This:C1470.deleteQueryLine($line-1)
+					This:C1470.renderForm(This:C1470.sub)
+					If (This:C1470.querylines.length<=1)
+						SET TIMER:C645(1)
+					End if 
+					
+				: ($item="fieldlist")
+					$paramRef:=Dynamic pop up menu:C1006(This:C1470.popupmenu)
+					// finde queryline
+					var $queryline : cs:C1710.queryLine
+					$queryline:=This:C1470.findQueryLine($line)
+					$queryline.setValue($paramRef)
+					This:C1470.renderForm(This:C1470.sub)
+					
+				: ($item="condition")
+					$index:=Form:C1466.sub["cond_combo_"+String:C10($line)].index
+					$queryline:=This:C1470.findQueryLine($line)
+					$queryline.setCondition($index)
+					This:C1470.renderForm(This:C1470.sub)
+					
+				: ($item="popup2")
+					$index:=Form:C1466.sub["combo2_"+String:C10($line)].index
+					$queryline:=This:C1470.findQueryLine($line)
+					$queryline.setPopup2($index)
+					This:C1470.renderForm("sub")
+					
+				: ($item="operator")
+					$index:=Form:C1466.sub["operator_"+String:C10($line)].index
+					$queryline:=This:C1470.findQueryLine($line)
+					$queryline.setOperator($index)
+					
+				: ($item="clickbutton")
+					$index:=Form:C1466.sub["clickbutton_"+String:C10($line)].index
+					$queryline:=This:C1470.findQueryLine($line)
+					// now we need to open an entry window, on close set content into object...
+					$queryline.itemlist_entrywindow()
+			End case 
+			
+		Else 
+			TRACE:C157
+		End if 
+		
+	Else 
+		// not a line in the query editor...
+	End if 
 	
 Function getQueryLine($pos : Integer)->$object : cs:C1710.queryLine
 	If (($pos>=0) & ($pos<This:C1470.querylines.length))
@@ -122,10 +189,6 @@ Function _getTableMenu->$menuref : Text
 			End if 
 		End if 
 	End for each 
-	
-Function findQueryLine($line : Integer)->$queryline : cs:C1710.queryLine
-	$col:=This:C1470.querylines.query("listentry=:1"; $line)
-	$queryline:=$col.length=1 ? $col[0] : Null:C1517
 	
 Function _getConditionMenu()->$object
 	// creates object für Query editions, as used in popup
