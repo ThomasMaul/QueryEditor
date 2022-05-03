@@ -1,0 +1,3 @@
+Class extends DataClass
+
+alias

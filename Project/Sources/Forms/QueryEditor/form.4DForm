@@ -73,7 +73,8 @@
 					"defaultButton": true,
 					"events": [
 						"onClick"
-					]
+					],
+					"method": "ObjectMethods/bottom.b.query.4dm"
 				},
 				"top.button.action": {
 					"type": "button",

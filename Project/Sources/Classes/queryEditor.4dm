@@ -3,7 +3,8 @@ Class constructor($class : 4D:C1709.DataClass)
 	This:C1470.querylines:=New collection:C1472
 	This:C1470.counter:=0
 	This:C1470.fieldlist:=This:C1470._getDSClassDetails(This:C1470.table)
-	This:C1470.popupmenu:=This:C1470._getTableMenu()
+	This:C1470.popupsubmenu:=New collection:C1472
+	This:C1470.popupmenu:=This:C1470._getTableMenu(This:C1470.fieldlist)
 	This:C1470.conditionpopup:=This:C1470._getConditionMenu()
 	Form:C1466.conditionpopup:=This:C1470.conditionpopup
 	This:C1470.height:=30
@@ -13,6 +14,9 @@ Class constructor($class : 4D:C1709.DataClass)
 		Get localized string:C991("operator_except"))
 	
 Function close()
+	For each ($sub; This:C1470.popupsubmenu)
+		RELEASE MENU:C978($sub)
+	End for each 
 	RELEASE MENU:C978(This:C1470.popupmenu)
 	
 Function getNextCounter()->$counter : Integer
@@ -143,13 +147,14 @@ Function _getDSClassDetails($class : 4D:C1709.DataClass)->$fields : Collection
 		$fields.push(New object:C1471("name"; $field; \
 			"kind"; $f.kind; \
 			"type"; $f.fieldType; \
+			"relatedDataClass"; Form:C1466.ds[String:C10($f.relatedDataClass)]; \
 			"indexed"; $f.indexed))
 	End for each 
 	
-Function _getTableMenu->$menuref : Text
+Function _getTableMenu($fieldlist : Collection; $level : Integer; $tablename : Text)->$menuref : Text
 	$txt_suffix:=Choose:C955((FORM Get color scheme:C1761="dark"); "_dark"; "")
 	$menuref:=Create menu:C408
-	For each ($field; This:C1470.fieldlist)
+	For each ($field; $fieldlist)
 		Case of 
 			: ($field.type=Is alpha field:K8:1)
 				$id:=1
@@ -173,20 +178,48 @@ Function _getTableMenu->$menuref : Text
 				$id:=11
 			: ($field.type=Is picture:K8:10)
 				$id:=12
+			: (($field.type=Is object:K8:27) & ($field.kind="relatedEntity"))
+				If ($level<3)
+					$id:=13
+				Else 
+					$i:=-1
+				End if 
 			: ($field.type=Is object:K8:27)
 				$id:=14
 			: ($field.type=Is subtable:K8:11)
 				$id:=-1
+			: ($field.type=42)  // relation many
+				If ($level<3)
+					$id:=13
+				End if 
 			Else 
 				$id:=-1
 		End case 
 		If ($id>=0)
-			INSERT MENU ITEM:C412($menuref; -1; $field.name)
+			If ($id=13)  // relation many to one
+				If ($field.relatedDataClass.getInfo().name#This:C1470.table.getInfo().name)  // not going back to ourself...
+					$subfieldlist:=This:C1470._getDSClassDetails($field.relatedDataClass)
+					$subname:=$field.name
+					If ($tablename#"")
+						$subname:=$tablename+"."+$subname
+					End if 
+					$submenu:=This:C1470._getTableMenu($subfieldlist; $level+1; $subname)
+					This:C1470.popupsubmenu.push($submenu)
+					INSERT MENU ITEM:C412($menuref; -1; $field.name; $submenu)
+				End if 
+			Else 
+				INSERT MENU ITEM:C412($menuref; -1; $field.name)
+			End if 
 			SET MENU ITEM ICON:C984($MenuRef; -1; "Path:/RESOURCES/Query/Field_"+String:C10($id)+$txt_suffix+".png")
-			SET MENU ITEM PARAMETER:C1004($MenuRef; -1; $field.name)
+			If ($level>0)
+				SET MENU ITEM PARAMETER:C1004($MenuRef; -1; $tablename+"."+$field.name)
+			Else 
+				SET MENU ITEM PARAMETER:C1004($MenuRef; -1; $field.name)
+			End if 
 			If ($field.indexed)
 				SET MENU ITEM STYLE:C425($menuref; -1; Bold:K14:2)
 			End if 
+			
 		End if 
 	End for each 
 	

@@ -405,17 +405,43 @@ Function getTextFilter()->$Txt_filter : Text
 			$Txt_filter:="&\"0-9;-;+"
 	End case 
 	
+Function getRelationField($base : Object; $name : Text)->$field : Object
+	$pos:=Position:C15("."; $name)
+	If ($pos>0)
+		$relation:=Substring:C12($name; 1; $pos-1)
+		$fieldname:=Substring:C12($name; $pos+1)
+		$table:=$base[$relation]
+		$pos2:=Position:C15("."; $fieldname)
+		If ($pos2>0)
+			$field:=This:C1470.getRelationField($table; $fieldname)
+		Else 
+			$field:=$table[$fieldname]
+		End if 
+	Else 
+		ASSERT:C1129(True:C214; "internal error")
+	End if 
+	
 Function setValue($value : Variant)
 	If (Value type:C1509($value)=Is text:K8:3)
 		This:C1470._field:=$value
-		$field:=Form:C1466.editor.table[$value]
+		$pos:=Position:C15("."; $value)
+		If ($pos>0)  // relation  
+			$field:=This:C1470.getRelationField(Form:C1466.editor.table; $value)
+			$fieldname:=$field.name
+			This:C1470.displayName:=$value
+			This:C1470.fieldtype:=$field.fieldType
+		Else 
+			$field:=Form:C1466.editor.table[$value]
+			This:C1470.fieldtype:=$field.fieldType
+			This:C1470.displayName:=$field.name
+		End if 
 	Else 
 		$fieldname:=Form:C1466.editor.fieldlist[0].name
 		This:C1470._field:=$fieldname
 		$field:=Form:C1466.editor.table[$fieldname]
+		This:C1470.fieldtype:=$field.fieldType
+		This:C1470.displayName:=$field.name
 	End if 
-	This:C1470.fieldtype:=$field.fieldType
-	This:C1470.displayName:=$field.name
 	This:C1470.name:=This:C1470.displayName
 	
 	Case of 
