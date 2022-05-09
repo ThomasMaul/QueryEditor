@@ -1,0 +1,311 @@
+{
+	"_method_": {
+		"RunQuery": {
+			"Syntax": "**RunQuery**(*queryIn* : Object)->query : Object",
+			"Params": [
+				[
+					"queryIn",
+					"Object",
+					"->"
+				],
+				[
+					"query",
+					"Object",
+					"<-"
+				]
+			],
+			"Summary": ""
+		}
+	},
+	"queryEditor": {
+		"new()": {
+			"Syntax": "**.new**(*class* : 4D.DataClass)",
+			"Params": [
+				[
+					"class",
+					"4D.DataClass",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"createQueryObject()": {
+			"Syntax": "**.createQueryObject**()->object : Variant",
+			"Params": [
+				[
+					"object",
+					"Variant",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"getQueryLine()": {
+			"Syntax": "**.getQueryLine**(*pos* : Integer)->object : cs.QueryEditor.queryLine",
+			"Params": [
+				[
+					"pos",
+					"Integer",
+					"->"
+				],
+				[
+					"object",
+					"cs.QueryEditor.queryLine",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"handleFormEvent()": {
+			"Syntax": "**.handleFormEvent**(*event* : Object)",
+			"Params": [
+				[
+					"event",
+					"Object",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"renderForm()": {
+			"Syntax": "**.renderForm**(*subformname* : Text)",
+			"Params": [
+				[
+					"subformname",
+					"Text",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"deleteQueryLine()": {
+			"Syntax": "**.deleteQueryLine**(*pos* : Integer)",
+			"Params": [
+				[
+					"pos",
+					"Integer",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"close()": {
+			"Syntax": "**.close**()",
+			"Params": [],
+			"Summary": ""
+		},
+		"getNextCounter()": {
+			"Syntax": "**.getNextCounter**()->counter : Integer",
+			"Params": [
+				[
+					"counter",
+					"Integer",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"addQueryLine()": {
+			"Syntax": "**.addQueryLine**(*pos* : Integer; *lineobject* : cs.QueryEditor.queryLine)",
+			"Params": [
+				[
+					"pos",
+					"Integer",
+					"->"
+				],
+				[
+					"lineobject",
+					"cs.QueryEditor.queryLine",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"findQueryLine()": {
+			"Syntax": "**.findQueryLine**(*line* : Integer)->queryline : cs.QueryEditor.queryLine",
+			"Params": [
+				[
+					"line",
+					"Integer",
+					"->"
+				],
+				[
+					"queryline",
+					"cs.QueryEditor.queryLine",
+					"<-"
+				]
+			],
+			"Summary": ""
+		}
+	},
+	"queryLine": {
+		"new()": {
+			"Syntax": "**.new**(*data* : Object)",
+			"Params": [
+				[
+					"data",
+					"Object",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"createQueryStatement()": {
+			"Syntax": "**.createQueryStatement**(*para* : Object)->statement : Text",
+			"Params": [
+				[
+					"para",
+					"Object",
+					"->"
+				],
+				[
+					"statement",
+					"Text",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"itemlist_entrywindow()": {
+			"Syntax": "**.itemlist_entrywindow**()",
+			"Params": [],
+			"Summary": ""
+		},
+		"getOperatorIndex()": {
+			"Syntax": "**.getOperatorIndex**()->index : Integer",
+			"Params": [
+				[
+					"index",
+					"Integer",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"setOperator()": {
+			"Syntax": "**.setOperator**(*value* : Integer)",
+			"Params": [
+				[
+					"value",
+					"Integer",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"getCombo2()": {
+			"Syntax": "**.getCombo2**()->index : Integer",
+			"Params": [
+				[
+					"index",
+					"Integer",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"getPlaceholder()": {
+			"Syntax": "**.getPlaceholder**()->Txt_placeholder : Text",
+			"Params": [
+				[
+					"Txt_placeholder",
+					"Text",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"getCondCombo()": {
+			"Syntax": "**.getCondCombo**()->index : Integer",
+			"Params": [
+				[
+					"index",
+					"Integer",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"setPopup2()": {
+			"Syntax": "**.setPopup2**(*value* : Integer)",
+			"Params": [
+				[
+					"value",
+					"Integer",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"setCondition()": {
+			"Syntax": "**.setCondition**(*value* : Integer)",
+			"Params": [
+				[
+					"value",
+					"Integer",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"renderObjects()": {
+			"Syntax": "**.renderObjects**(*data* : Object)->objects : Object",
+			"Params": [
+				[
+					"data",
+					"Object",
+					"->"
+				],
+				[
+					"objects",
+					"Object",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"setValue()": {
+			"Syntax": "**.setValue**(*value* : Variant)",
+			"Params": [
+				[
+					"value",
+					"Variant",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"getRelationField()": {
+			"Syntax": "**.getRelationField**(*base* : Object; *name* : Text)->field : Object",
+			"Params": [
+				[
+					"base",
+					"Object",
+					"->"
+				],
+				[
+					"name",
+					"Text",
+					"->"
+				],
+				[
+					"field",
+					"Object",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"getTextFilter()": {
+			"Syntax": "**.getTextFilter**()->Txt_filter : Text",
+			"Params": [
+				[
+					"Txt_filter",
+					"Text",
+					"<-"
+				]
+			],
+			"Summary": ""
+		}
+	}
+}

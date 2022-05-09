@@ -140,15 +140,24 @@ Function renderObjects($data : Object)->$objects : Object
 		$valuetype:=Value type:C1509(This:C1470._value1)
 		$id:=Abs:C99(This:C1470.comboid)  // negative values for time
 		Case of 
-			: (($fieldtype=Is alpha field:K8:1) | ($fieldtype=Is text:K8:3))
+				// numeric fields but search in list: text entry!
+			: (($fieldtype=Is alpha field:K8:1) | ($fieldtype=Is text:K8:3) | ($id=15))
 				If (($valuetype#Is alpha field:K8:1) & ($valuetype#Is text:K8:3))
 					This:C1470._value1:=""
+				End if 
+			: (($fieldtype=Is picture:K8:10) & (($id=14) | ($id=13)))
+				If (($valuetype#Is alpha field:K8:1) & ($valuetype#Is text:K8:3))
+					This:C1470._value1:=""
+				End if 
+			: ((($fieldtype=Is picture:K8:10) | ($fieldtype=Is BLOB:K8:12)) & (($id=3) | ($id=5)))
+				If (($valuetype#Is real:K8:4) & ($valuetype#Is longint:K8:6) & ($valuetype#Is integer:K8:5) & ($valuetype#Is integer 64 bits:K8:25))
+					This:C1470._value1:=0
 				End if 
 			: (($fieldtype=Is real:K8:4) | ($fieldtype=Is longint:K8:6) | ($fieldtype=Is integer:K8:5) | ($fieldtype=Is integer 64 bits:K8:25))
 				If (($valuetype#Is real:K8:4) & ($valuetype#Is longint:K8:6) & ($valuetype#Is integer:K8:5) & ($valuetype#Is integer 64 bits:K8:25))
 					This:C1470._value1:=0
 				End if 
-			: (($fieldtype=Is time:K8:8) && ($id<10))
+			: (($fieldtype=Is time:K8:8) && ($id<10) && (This:C1470.comboid>0))
 				If ($valuetype#Is text:K8:3)
 					This:C1470._value1:=String:C10(Current time:C178)
 				Else 
@@ -210,7 +219,7 @@ Function renderObjects($data : Object)->$objects : Object
 			$valuetype:=Value type:C1509(This:C1470._value2)
 			$id:=Abs:C99(This:C1470.comboid)  // negative values for time
 			Case of 
-				: (($fieldtype=Is alpha field:K8:1) | ($fieldtype=Is text:K8:3))
+				: (($fieldtype=Is alpha field:K8:1) | ($fieldtype=Is text:K8:3) | ($id=15))
 					If (($valuetype#Is alpha field:K8:1) & ($valuetype#Is text:K8:3))
 						This:C1470._value2:=""
 					End if 
@@ -480,7 +489,7 @@ Function _calculateDatePreview($data : Object)->$preview : Text
 	
 	$Lon_popup_3:=This:C1470.popup2
 	$Lon_criteriaID:=This:C1470.comboid
-	$Lon_value:=Num:C11(This:C1470._value1)
+	$Lon_value:=This:C1470._value1
 	Case of 
 		: ($Lon_criteriaID=11)  // today
 			$Dat_1:=Current date:C33
@@ -612,7 +621,7 @@ Function _calculateDatePreview($data : Object)->$preview : Text
 	End if 
 	
 Function createQueryStatement($para : Object)->$statement : Text
-	var $value : Variant
+	var $value; $value2 : Variant
 	
 	$statement:=This:C1470.name+" "
 	$comperator:=""
@@ -622,14 +631,14 @@ Function createQueryStatement($para : Object)->$statement : Text
 	
 	// exceptions first for empty/not empty
 	Case of 
-		: (($id=41) && (($type=Is picture:K8:10) | ($type=Is BLOB:K8:12)))
+		: (($id=41) && (($type=Is picture:K8:10) | ($type=Is BLOB:K8:12) | ($type=Is object:K8:27)))
 			$statement+="== null"
-		: (($id=42) && (($type=Is picture:K8:10) | ($type=Is BLOB:K8:12)))
+		: (($id=42) && (($type=Is picture:K8:10) | ($type=Is BLOB:K8:12) | ($type=Is object:K8:27)))
 			$statement+="!= null"
 			
 		: ((($id=3) | ($id=5)) && (($type=Is picture:K8:10) | ($type=Is BLOB:K8:12)))  // size > or <
 			// need to create formula, value * unit
-			$size:=Num:C11(Form:C1466.sub["value1_"+String:C10(This:C1470.id)])
+			$size:=Num:C11(This:C1470._value1)
 			$unit:=This:C1470.popup2
 			Case of 
 				: ($unit=1)
@@ -672,7 +681,7 @@ Function createQueryStatement($para : Object)->$statement : Text
 					$comperator:="=="
 				: ((($id=12) | ($id=42)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))
 					$comperator:="#"
-				: ((($id=13) | ($id=14)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))
+				: ((($id=13) | ($id=14)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3) | ($type=Is picture:K8:10)))
 					$comperator:="%"
 			End case 
 			
@@ -681,12 +690,16 @@ Function createQueryStatement($para : Object)->$statement : Text
 				$not:=Get localized string:C991("QueryNot")
 				$statement:=$not+"("+$statement+")"
 			End if 
-			If (($id=15) | ($id=13))
-				$value:=New collection:C1472
-				$value:=Split string:C1554(This:C1470._value1; ";")
-			Else 
-				$value:=This:C1470._value1
-			End if 
+			Case of 
+				: ($id=15)
+					$value:=New collection:C1472
+					$value:=Split string:C1554(String:C10(This:C1470._value1); ";")  // list
+				: (($id=13) | ($id=14))
+					$value:=New collection:C1472
+					$value:=Split string:C1554(This:C1470._value1; " ")  // words
+				Else 
+					$value:=This:C1470._value1
+			End case 
 			Case of 
 				: (($id=0) && ($type=Is boolean:K8:9))
 					$value:=False:C215
@@ -696,9 +709,9 @@ Function createQueryStatement($para : Object)->$statement : Text
 				: ((($id=11) | ($id=12)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))  // contains
 					$value:="@"+$value+"@"
 				: (($id=9)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3))
-					$value:="@"+$value
+					$value:=$value+"@"
 				: (($id=10) | ($id=7)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3))
-					$value+="@"
+					$value:="@"+$value
 				: ((($id=41) | ($id=42)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))  // contains
 					$value:=""
 				: ((($id=11) | ($id=21) | ($id=31)) && ($type=Is date:K8:7))  // contains
@@ -720,9 +733,9 @@ Function createQueryStatement($para : Object)->$statement : Text
 						$statement+="="
 					End if 
 					$statement+=(" :value2_"+String:C10(This:C1470.id))+")"
-					$value2:=String:C10(This:C1470._value2)
+					$value2:=This:C1470._value2
 					If (($id=7) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))
-						$value2+="@"
+						$value2:=String:C10($value2)+"@"
 					End if 
 					$para["value2_"+String:C10(This:C1470.id)]:=$value2
 					
@@ -748,14 +761,52 @@ Function createQueryStatement($para : Object)->$statement : Text
 						$para["value_"+String:C10(This:C1470.id)]:=String:C10(Current time:C178)
 						$para["value2_"+String:C10(This:C1470.id)]:=Time string:C180(Current time:C178+$time)
 					End if 
+				: (This:C1470.comboid<0)
+					$time:=Num:C11($value)
+					Case of 
+						: (This:C1470.popup2=0)  //  hour
+							$time*=3600
+						: (This:C1470.popup2=1)  // minute
+							$time*=60
+					End case 
+					$para["value_"+String:C10(This:C1470.id)]:=String:C10($time)  // not exakt time, but duration
 			End case 
-			
 	End case 
+	
+	If (($id=13) | ($id=14))  // exception keyword search, needs to be expanded
+		$or:=(This:C1470._combo2.index=1)
+		Case of 
+			: ($value.length=0)
+				$para["value_"+String:C10(This:C1470.id)]:=""
+			: ($value.length=1)
+				$para["value_"+String:C10(This:C1470.id)]:=$value[0]
+			Else 
+				// we need to add one statement per line
+				$orig_statement:=$statement
+				$statement:="("
+				$subcounter:=0
+				OB REMOVE:C1226($para; "value_"+String:C10(This:C1470.id))
+				For each ($word; $value)
+					$subcounter+=1
+					If ($subcounter>1)
+						If ($or)
+							$statement+=" or "
+						Else 
+							$statement+=" and "
+						End if 
+					End if 
+					$newstatement:="("+Replace string:C233($orig_statement; "value_"+String:C10(This:C1470.id); "value"+String:C10($subcounter)+"_"+String:C10(This:C1470.id))
+					$para["value"+String:C10($subcounter)+"_"+String:C10(This:C1470.id)]:=$word
+					$statement+=($newstatement+")")
+				End for each 
+				$statement+=")"
+		End case 
+	End if 
 	
 Function itemlist_entrywindow()
 	// opens a popup window with text entry
 	//  needs to execute in subform
-	$old:=Replace string:C233(Form:C1466.sub["value1_"+String:C10(This:C1470.id)]; ";"; Char:C90(13))
+	$old:=Replace string:C233(This:C1470._value1; ";"; Char:C90(13))
 	EXECUTE METHOD IN SUBFORM:C1085("sub"; Formula:C1597(QE_Subformmethod).source; $result; "popup"; "ob_"+String:C10(This:C1470.id)+"_value1"; $old)
 	This:C1470._value1:=Replace string:C233($result; Char:C90(13); ";")
 	
