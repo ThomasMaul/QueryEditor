@@ -99,8 +99,6 @@
 					"left": 217,
 					"width": 160,
 					"height": 25,
-					"fontFamily": ".Helvetica Neue DeskInterface",
-					"fontSize": 11,
 					"focusable": false,
 					"text": ":xliff:LastQueries",
 					"icon": "/RESOURCES/",
@@ -119,8 +117,6 @@
 					"left": 38,
 					"width": 180,
 					"height": 25,
-					"fontFamily": ".Helvetica Neue DeskInterface",
-					"fontSize": 11,
 					"focusable": false,
 					"text": "x_x_x",
 					"icon": "/RESOURCES/",
@@ -160,12 +156,12 @@
 					"enterable": false,
 					"dataSource": "Form:C1466.preview",
 					"sizingY": "move",
-					"visibility": "visible"
+					"visibility": "hidden"
 				}
 			}
 		}
 	],
-	"geometryStamp": 77,
+	"geometryStamp": 79,
 	"method": "method.4dm",
 	"editor": {
 		"activeView": "View 1",
@@ -173,5 +169,6 @@
 		"views": {
 			"View 1": {}
 		}
-	}
+	},
+	"formSizeAnchor": "bottom.b.query"
 }

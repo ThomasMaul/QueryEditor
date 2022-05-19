@@ -349,3 +349,39 @@ Function createQueryObject()->$object
 	$object.query_statement:=$statement
 	$object.para:=$para
 	
+Function createSaveObject()->$object
+	// builds an object to save the current query
+	$object:=New object:C1471
+	$object.table:=This:C1470.table.getInfo().name
+	$object.version:=1
+	$object.lines:=New collection:C1472
+	For each ($line; This:C1470.querylines)
+		$object.lines.push($line.createSaveObject())
+	End for each 
+	
+Function useSaveObject($object)
+	// clear existing query, start new one
+	This:C1470.querylines:=New collection:C1472
+	
+	If (Num:C11($object.version)#1)
+		ALERT:C41(Get localized string:C991("Errors_fileVersionUnhandled"))
+		return 
+	End if 
+	
+	// check if table and fields exists
+	If (Form:C1466.ds[$object.table]#Null:C1517)
+		$class:=Form:C1466.ds[$object.table]
+	Else 
+		ALERT:C41(Get localized string:C991("Alerts_theQueryContainsATableThatDoesNotExist"))
+		return 
+	End if 
+	This:C1470.table:=$class
+	This:C1470.counter:=0
+	This:C1470.fieldlist:=This:C1470._getDSClassDetails(This:C1470.table)
+	This:C1470.popupsubmenu:=New collection:C1472
+	This:C1470.popupmenu:=This:C1470._getTableMenu(This:C1470.fieldlist)
+	For each ($line; $object.lines)
+		This:C1470.querylines.push(cs:C1710.queryLine.new($line))
+	End for each 
+	This:C1470.renderForm(This:C1470.sub)
+	

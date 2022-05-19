@@ -13,6 +13,32 @@ Case of
 	: ($Mnu_choice="bCopy")
 		$object:=Form:C1466.editor.createQueryObject()
 		SET TEXT TO PASTEBOARD:C523(JSON Stringify:C1217($object; *))
+		
+	: ($Mnu_choice="bSave")
+		$object:=Form:C1466.editor.createSaveObject()
+		$text:=JSON Stringify:C1217($object; *)
+		$doc:=Select document:C905(System folder:C487(Documents folder:K41:18)+"Query.4QE"; "4qe"; Get localized string:C991("QE_SaveMessage"); File name entry:K24:17+Use sheet window:K24:11)
+		If (OK=1)
+			TEXT TO DOCUMENT:C1237(document; $text)
+		End if 
+		
+	: ($Mnu_choice="bLoad")
+		$doc:=Select document:C905(System folder:C487(Documents folder:K41:18)+"Query.4QE"; "4qe"; Get localized string:C991("QE_SaveMessage"); Use sheet window:K24:11)
+		If (OK=1)
+			$text:=Document to text:C1236(document)
+			If ($text="{@}")
+				$object:=JSON Parse:C1218($text)
+				If ($object#Null:C1517)
+					If (Num:C11($object.version)#1)
+						ALERT:C41(Get localized string:C991("Errors_fileVersionUnhandled"))
+					Else 
+						Form:C1466.editor.useSaveObject($object)
+					End if 
+				End if 
+			Else 
+				ALERT:C41(Get localized string:C991("Errors_anErrorOccurredWhileOpeningTheFile"))
+			End if 
+		End if 
 End case 
 
 //mnu_APPEND_ITEM($Mnu_main; ":xliff:bLoad..."; "load")

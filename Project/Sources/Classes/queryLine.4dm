@@ -2,27 +2,37 @@ Class constructor($data : Object)  // $ID
 	If ($data.id#Null:C1517)
 		This:C1470.id:=String:C10($data.id)
 	Else 
-		This:C1470.id:=Form:C1466.editor.getNextCounter()
+		This:C1470.id:=String:C10(Form:C1466.editor.getNextCounter())
 	End if 
 	
-	// line content storage
-	This:C1470._field:=""
 	This:C1470._cond_combo:=New object:C1471
-	This:C1470._value1:=""
-	This:C1470._value2:=""
 	This:C1470._combo2:=New object:C1471
 	This:C1470._operator:=New object:C1471
 	
-	
-	This:C1470.ds_class:=""
-	This:C1470.name:=String:C10($data.name)
-	This:C1470.displayName:=This:C1470.name
-	This:C1470.fieldtype:=1
 	This:C1470.listentry:=0
-	This:C1470.setValue(0)
-	This:C1470.popup2:=0
+	This:C1470.popup2:=Num:C11($data.compare2)
+	This:C1470.operator:=Num:C11($data.operator)
+	This:C1470.comboid:=Num:C11($data.compare)
 	This:C1470.height:=30
-	This:C1470.operator:=0
+	
+	// line content storage
+	If (String:C10($data.field)#"")
+		This:C1470.setValue($data.field)
+		$oPop:=New object:C1471
+		$oPop.values:=Form:C1466.editor.operators.copy()
+		$oPop.index:=This:C1470.operator
+		This:C1470._operator:=$oPop
+		This:C1470.buildConditionPopup($data.compare)
+	Else 
+		This:C1470._field:=""
+		This:C1470.name:=This:C1470._field
+		This:C1470.displayName:=This:C1470.name
+		This:C1470.fieldtype:=1
+		This:C1470.setValue(0)
+	End if 
+	This:C1470._value1:=$data.value1
+	This:C1470._value2:=$data.value2
+	
 	
 	
 Function renderObjects($data : Object)->$objects : Object
@@ -260,7 +270,6 @@ Function renderObjects($data : Object)->$objects : Object
 			$object.height:=19
 			$subcounter+=1
 			$objects["ob_"+String:C10($counter)+"_popup2"]:=$object
-			
 			$oPop:=New object:C1471
 			Case of 
 				: ((This:C1470.fieldtype=Is text:K8:3) | (This:C1470.fieldtype=Is alpha field:K8:1))
@@ -280,7 +289,6 @@ Function renderObjects($data : Object)->$objects : Object
 			End case 
 			$oPop.index:=This:C1470.popup2
 			This:C1470._combo2:=$oPop
-			
 			
 		: (This:C1470.combotype=4)
 			$object:=New object:C1471
@@ -468,6 +476,14 @@ Function setValue($value : Variant)
 Function setCondition($value : Integer)
 	This:C1470.combotype:=Form:C1466.conditionpopup[String:C10(This:C1470.fieldtype)][$value].type
 	This:C1470.comboid:=Form:C1466.conditionpopup[String:C10(This:C1470.fieldtype)][$value].id
+	
+Function buildConditionPopup($value : Integer)
+	$oPop:=New object:C1471
+	$oPop.values:=Form:C1466.conditionpopup[String:C10(This:C1470.fieldtype)].extract("text")
+	$indices:=Form:C1466.conditionpopup[String:C10(This:C1470.fieldtype)].indices("id=:1"; $value)
+	$oPop.index:=($indices.length>0) ? $indices[0] : 1
+	This:C1470._cond_combo:=$oPop
+	This:C1470.setCondition($oPop.index)
 	
 Function setPopup2($value : Integer)
 	This:C1470.popup2:=$value
@@ -810,4 +826,15 @@ Function itemlist_entrywindow()
 	EXECUTE METHOD IN SUBFORM:C1085("sub"; Formula:C1597(QE_Subformmethod).source; $result; "popup"; "ob_"+String:C10(This:C1470.id)+"_value1"; $old)
 	This:C1470._value1:=Replace string:C233($result; Char:C90(13); ";")
 	
+Function createSaveObject()->$object
+	// builds an object to save the current query line
+	$object:=New object:C1471
+	$object._combo2:=New object:C1471
+	$object._operator:=New object:C1471
+	$object.field:=This:C1470._field
+	$object.operator:=This:C1470.operator
+	$object.compare:=This:C1470.comboid
+	$object.value1:=This:C1470._value1
+	$object.value2:=This:C1470._value2
+	$object.compare2:=This:C1470.popup2
 	
