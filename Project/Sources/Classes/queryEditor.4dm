@@ -1,8 +1,6 @@
 Class constructor($class : 4D:C1709.DataClass)
 	This:C1470.table:=$class
-	This:C1470.querylines:=New collection:C1472
-	This:C1470.counter:=0
-	This:C1470.fieldlist:=This:C1470._getDSClassDetails(This:C1470.table)
+	This:C1470.reset()
 	This:C1470.popupsubmenu:=New collection:C1472
 	This:C1470.popupmenu:=This:C1470._getTableMenu(This:C1470.fieldlist)
 	This:C1470.conditionpopup:=This:C1470._getConditionMenu()
@@ -12,6 +10,11 @@ Class constructor($class : 4D:C1709.DataClass)
 	This:C1470.operators:=New collection:C1472(Get localized string:C991("operator_and"); \
 		Get localized string:C991("operator_or"); \
 		Get localized string:C991("operator_except"))
+	
+Function reset()
+	This:C1470.querylines:=New collection:C1472
+	This:C1470.counter:=0
+	This:C1470.fieldlist:=This:C1470._getDSClassDetails(This:C1470.table)
 	
 Function close()
 	For each ($sub; This:C1470.popupsubmenu)
@@ -348,6 +351,14 @@ Function createQueryObject()->$object
 	
 	$object.query_statement:=$statement
 	$object.para:=$para
+	
+Function clearTextQueryLine()->$statement
+	$query:=This:C1470.createQueryObject()
+	$statement:=$query.query_statement
+	For each ($para; $query.para)
+		$statement:=Replace string:C233($statement; ":"+$para; String:C10($query.para[$para]))
+	End for each 
+	
 	
 Function createSaveObject()->$object
 	// builds an object to save the current query

@@ -28,9 +28,13 @@
           <source>Copy formula in Pasteboard</source>
           <target>Formel in Zwischenablage kopieren</target>
         </trans-unit>    
-        <trans-unit id="13" resname="QueryNot">
+        <trans-unit id="15" resname="QueryNot">
           <source>Not</source>
           <target>Not</target>
+        </trans-unit>
+        <trans-unit id="16" resname="bReset">
+          <source>Reset</source>
+          <target>Zurücksetzen</target>
         </trans-unit>                    
       </group>
     </body>

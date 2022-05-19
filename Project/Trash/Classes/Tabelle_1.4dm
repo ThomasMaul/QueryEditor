@@ -1,3 +1,0 @@
-Class extends DataClass
-
-alias

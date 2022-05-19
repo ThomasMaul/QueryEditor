@@ -693,7 +693,7 @@ Function createQueryStatement($para : Object)->$statement : Text
 				: ($id=15)
 					$comperator:="IN"
 					
-				: ((($id=11) | ($id=9) | ($id=10) | ($id=41)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))  // contains
+				: ((($id=11) | ($id=9) | ($id=10) | ($id=41)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3) | ($type=Is date:K8:7)))  // contains
 					$comperator:="=="
 				: ((($id=12) | ($id=42)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))
 					$comperator:="#"
