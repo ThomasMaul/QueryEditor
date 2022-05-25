@@ -1,13 +1,5 @@
-//%attributes = {}
-$win:=Open form window:C675("test3")
-DIALOG:C40("test3"; *)
-
 $queryIn:=New object:C1471("tablename"; "Customer")
 //; "queryTarget"; 0)  // to disable search in selection
-//$entsel:=ds.Customer
-//$query:=New object:C1471("tablename"; "Customer")
-
-
 $query:=RunQuery($queryIn)
 If (OK=1)
 	$settings:=New object:C1471("parameters"; $query.para)
@@ -16,4 +8,3 @@ If (OK=1)
 	// 3 = add to selection, 4 = remove from selection
 	$entsel:=ds:C1482.Customer.query($query.query_statement; $settings)
 End if 
-

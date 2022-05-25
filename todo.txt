@@ -1,21 +1,13 @@
-Open/save to disk
 
+Objectfield = query in attribute?
 
+field list - translation? virtual?
 
-
-buttons ganz oben
-fenstertyp wechseln?
-
-suchhistory
-
-eingabe objectfeld
-
-feldliste vorgegeben, übersetzung?
 Overwrite Load/Save (store in record, etc)
 
 Query with formula
 
-gruppen mit and/or/except
+build groups with and/or/except and ()
 
 
 

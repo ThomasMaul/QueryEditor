@@ -22,6 +22,10 @@
 			"title": ":xliff:CommonMenuFile",
 			"items": [
 				{
+					"title": "test",
+					"method": "test"
+				},
+				{
 					"title": ":xliff:CommonMenuItemQuit",
 					"shortcutAccel": true,
 					"shortcutKey": "Q",
@@ -88,6 +92,10 @@
 				{
 					"title": ":xliff:CommonMenuItemDesign",
 					"action": "design"
+				},
+				{
+					"title": "test",
+					"method": "test"
 				}
 			]
 		}

@@ -16,6 +16,19 @@ Case of
 				End if 
 		End case 
 		
+		If (Form:C1466.queryTarget=Null:C1517)
+			Form:C1466.queryTarget:=1
+		End if 
+		If (Form:C1466.queryTarget>0)
+			OBJECT SET TITLE:C194(*; "top.button.destination"; Get localized string:C991("queryDest_"+String:C10(Form:C1466.queryTarget)))
+		Else 
+			OBJECT SET VISIBLE:C603(*; "top.button.destination"; False:C215)
+		End if 
+		If (Storage:C1525.QueryEditor.history=Null:C1517)
+			OBJECT SET VISIBLE:C603(*; "top.button.recent"; False:C215)
+		End if 
+		
+		
 		Form:C1466.height:=1
 		Form:C1466.sub:=New object:C1471
 		Form:C1466.editor:=cs:C1710.queryEditor.new(Form:C1466.table)

@@ -5,7 +5,11 @@
 			"destination": "detailScreen"
 		},
 		"QueryEditor": {
-			"timeStamp": "2022-05-19T09:56:25Z",
+			"timeStamp": "2022-05-25T08:46:56Z",
+			"destination": "detailScreen"
+		},
+		"test3": {
+			"timeStamp": "2022-05-25T08:44:37Z",
 			"destination": "detailScreen"
 		},
 		"test2": {
