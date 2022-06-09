@@ -31,3 +31,18 @@ Rewritten as class, created for usage with ORDA
 - overwrite Load/Save, to get object to store in record instead of file
 - enhanced object field support, query in attribute
 - support grouping (field = 5 or field = 6) and (otherfield=4 or otherfield=7)
+
+
+## Usage
+```
+$table:=ds.Customer
+$tablename:=$table.getInfo().name
+$queryIn:=New object("tablename"; $tablename)  // pass table name
+$query:=RunQuery($queryIn)
+If ($query.OK=1)  // user clicked OK, else Cancel
+	$settings:=New object("parameters"; $query.para)  // contains all needed parameters
+	Form.listbox:=$table.query($query.query_statement; $settings)
+	// run the query - here to use in listbox
+	// query_statement contains the ready to use text based query statement
+End if 
+``
