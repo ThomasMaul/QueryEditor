@@ -422,12 +422,12 @@ Function getTextFilter()->$Txt_filter : Text
 			$Txt_filter:="&\"0-9;-;+"
 	End case 
 	
-Function getRelationField($base : Object; $name : Text)->$field : Object
+Function getRelationField($base : 4D:C1709.DataClass; $name : Text)->$field : Object
 	$pos:=Position:C15("."; $name)
 	If ($pos>0)
 		$relation:=Substring:C12($name; 1; $pos-1)
 		$fieldname:=Substring:C12($name; $pos+1)
-		$table:=$base[$relation]
+		$table:=ds:C1482[$base[$relation].relatedDataClass]
 		$pos2:=Position:C15("."; $fieldname)
 		If ($pos2>0)
 			$field:=This:C1470.getRelationField($table; $fieldname)

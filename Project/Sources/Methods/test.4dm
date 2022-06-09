@@ -1,8 +1,6 @@
 //%attributes = {}
-$win:=Open form window:C675("test3")
-DIALOG:C40("test3"; *)
 
-$queryIn:=New object:C1471("tablename"; "Customer")
+$queryIn:=New object:C1471("tablename"; "Test")
 //; "queryTarget"; 0)  // to disable search in selection
 //$entsel:=ds.Customer
 //$query:=New object:C1471("tablename"; "Customer")

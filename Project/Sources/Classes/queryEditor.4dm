@@ -212,17 +212,16 @@ Function _getTableMenu($fieldlist : Collection; $level : Integer; $tablename : T
 				End if 
 			Else 
 				INSERT MENU ITEM:C412($menuref; -1; $field.name)
+				If ($level>0)
+					SET MENU ITEM PARAMETER:C1004($MenuRef; -1; $tablename+"."+$field.name)
+				Else 
+					SET MENU ITEM PARAMETER:C1004($MenuRef; -1; $field.name)
+				End if 
 			End if 
 			SET MENU ITEM ICON:C984($MenuRef; -1; "Path:/RESOURCES/Query/Field_"+String:C10($id)+$txt_suffix+".png")
-			If ($level>0)
-				SET MENU ITEM PARAMETER:C1004($MenuRef; -1; $tablename+"."+$field.name)
-			Else 
-				SET MENU ITEM PARAMETER:C1004($MenuRef; -1; $field.name)
-			End if 
 			If ($field.indexed)
 				SET MENU ITEM STYLE:C425($menuref; -1; Bold:K14:2)
 			End if 
-			
 		End if 
 	End for each 
 	
@@ -358,7 +357,6 @@ Function clearTextQueryLine()->$statement
 	For each ($para; $query.para)
 		$statement:=Replace string:C233($statement; ":"+$para; String:C10($query.para[$para]))
 	End for each 
-	
 	
 Function createSaveObject()->$object
 	// builds an object to save the current query

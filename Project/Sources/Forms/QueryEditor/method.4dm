@@ -1,6 +1,7 @@
 $event:=FORM Event:C1606.code
 Case of 
 	: ($event=On Load:K2:1)
+		
 		// use first table if unset
 		If (Form:C1466.ds=Null:C1517)  // pass another ds for remote datastore
 			Form:C1466.ds:=ds:C1482
@@ -38,7 +39,11 @@ Case of
 			SET TIMER:C645(1)
 		End if 
 		
-		// property popup aufbauen, load, save...
+		
+		$oPop:=New object:C1471
+		$oPop.values:=Form:C1466.conditionpopup[String:C10(1)].extract("text")
+		$oPop.index:=0
+		Form:C1466.test:=$oPop
 		
 	: ($event=On Unload:K2:2)
 		Form:C1466.editor.close()

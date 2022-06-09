@@ -29,6 +29,39 @@
 			],
 			"Summary": ""
 		},
+		"createSaveObject()": {
+			"Syntax": "**.createSaveObject**()->object : Variant",
+			"Params": [
+				[
+					"object",
+					"Variant",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"clearTextQueryLine()": {
+			"Syntax": "**.clearTextQueryLine**()->statement : Variant",
+			"Params": [
+				[
+					"statement",
+					"Variant",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"useSaveObject()": {
+			"Syntax": "**.useSaveObject**(*object* : Variant)",
+			"Params": [
+				[
+					"object",
+					"Variant",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
 		"createQueryObject()": {
 			"Syntax": "**.createQueryObject**()->object : Variant",
 			"Params": [
@@ -78,33 +111,6 @@
 			],
 			"Summary": ""
 		},
-		"deleteQueryLine()": {
-			"Syntax": "**.deleteQueryLine**(*pos* : Integer)",
-			"Params": [
-				[
-					"pos",
-					"Integer",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"close()": {
-			"Syntax": "**.close**()",
-			"Params": [],
-			"Summary": ""
-		},
-		"getNextCounter()": {
-			"Syntax": "**.getNextCounter**()->counter : Integer",
-			"Params": [
-				[
-					"counter",
-					"Integer",
-					"<-"
-				]
-			],
-			"Summary": ""
-		},
 		"addQueryLine()": {
 			"Syntax": "**.addQueryLine**(*pos* : Integer; *lineobject* : cs.QueryEditor.queryLine)",
 			"Params": [
@@ -121,6 +127,11 @@
 			],
 			"Summary": ""
 		},
+		"reset()": {
+			"Syntax": "**.reset**()",
+			"Params": [],
+			"Summary": ""
+		},
 		"findQueryLine()": {
 			"Syntax": "**.findQueryLine**(*line* : Integer)->queryline : cs.QueryEditor.queryLine",
 			"Params": [
@@ -133,6 +144,33 @@
 					"queryline",
 					"cs.QueryEditor.queryLine",
 					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"getNextCounter()": {
+			"Syntax": "**.getNextCounter**()->counter : Integer",
+			"Params": [
+				[
+					"counter",
+					"Integer",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"close()": {
+			"Syntax": "**.close**()",
+			"Params": [],
+			"Summary": ""
+		},
+		"deleteQueryLine()": {
+			"Syntax": "**.deleteQueryLine**(*pos* : Integer)",
+			"Params": [
+				[
+					"pos",
+					"Integer",
+					"->"
 				]
 			],
 			"Summary": ""
@@ -237,6 +275,60 @@
 			],
 			"Summary": ""
 		},
+		"getRelationField()": {
+			"Syntax": "**.getRelationField**(*base* : 4D.DataClass; *name* : Text)->field : Object",
+			"Params": [
+				[
+					"base",
+					"4D.DataClass",
+					"->"
+				],
+				[
+					"name",
+					"Text",
+					"->"
+				],
+				[
+					"field",
+					"Object",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"setValue()": {
+			"Syntax": "**.setValue**(*value* : Variant)",
+			"Params": [
+				[
+					"value",
+					"Variant",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"buildConditionPopup()": {
+			"Syntax": "**.buildConditionPopup**(*value* : Integer)",
+			"Params": [
+				[
+					"value",
+					"Integer",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"createSaveObject()": {
+			"Syntax": "**.createSaveObject**()->object : Variant",
+			"Params": [
+				[
+					"object",
+					"Variant",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
 		"setCondition()": {
 			"Syntax": "**.setCondition**(*value* : Integer)",
 			"Params": [
@@ -258,38 +350,6 @@
 				],
 				[
 					"objects",
-					"Object",
-					"<-"
-				]
-			],
-			"Summary": ""
-		},
-		"setValue()": {
-			"Syntax": "**.setValue**(*value* : Variant)",
-			"Params": [
-				[
-					"value",
-					"Variant",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"getRelationField()": {
-			"Syntax": "**.getRelationField**(*base* : Object; *name* : Text)->field : Object",
-			"Params": [
-				[
-					"base",
-					"Object",
-					"->"
-				],
-				[
-					"name",
-					"Text",
-					"->"
-				],
-				[
-					"field",
 					"Object",
 					"<-"
 				]

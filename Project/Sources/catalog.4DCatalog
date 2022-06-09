@@ -27,6 +27,7 @@
 		<field name="ID" uuid="0061659325C949D288E2D9F4E8EEF40E" type="10" unique="true" autogenerate="true" store_as_UUID="true" not_null="true" id="1"/>
 		<field name="Customer_ID" uuid="B1B5AC99F06142C1B26229E4AFD5811C" type="10" store_as_UUID="true" id="2"/>
 		<field name="Feld_3" uuid="7F7FC3F36C174C1FBA95E14CCFB47E13" type="4" id="3"/>
+		<field name="mydate" uuid="E3A429BF6829405F85E9BCD9DDBCE66D" type="8" id="4"/>
 		<primary_key field_name="ID" field_uuid="0061659325C949D288E2D9F4E8EEF40E"/>
 		<table_extra>
 			<editor_table_info displayable_fields_count="7">
