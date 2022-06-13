@@ -16,4 +16,19 @@ Else
 		Storage:C1525.QueryEditor.historySave.push(OB Copy:C1225($query; ck shared:K85:29; Storage:C1525.QueryEditor))
 	End use 
 End if 
+
+If (This:C1470.tableselection#Null:C1517)  // run the query here and return result in Form.query
+	Case of 
+		: ((This:C1470.queryTarget=1) | (This:C1470.queryTarget=0))  // in table
+			Form:C1466.query.resultselection:=This:C1470.table.query($query.query_statement; $settings)
+		: (This:C1470.queryTarget=2)  // in selection
+			Form:C1466.query.resultselection:=This:C1470.tableselection.query($query.query_statement; $settings)
+		: (This:C1470.queryTarget=3)  // add to selection
+			$result:=This:C1470.table.query($query.query_statement; $settings)
+			Form:C1466.query.resultselection:=This:C1470.tableselection.or($result)
+		: (This:C1470.queryTarget=3)  // remove from selection
+			$result:=This:C1470.table.query($query.query_statement; $settings)
+			Form:C1466.query.resultselection:=This:C1470.tableselection.minus($result)
+	End case 
+End if 
 ACCEPT:C269

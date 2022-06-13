@@ -1,10 +1,9 @@
 //%attributes = {}
 
-$queryIn:=New object:C1471("tablename"; "Test")
-//; "queryTarget"; 0)  // to disable search in selection
-//$entsel:=ds.Customer
-//$query:=New object:C1471("tablename"; "Customer")
-
+$queryIn:=New object:C1471("tablename"; "Customer")
+//$queryIn:=New object("tablename"; "Customer"; "queryTarget"; 0)  // to disable search in selection
+$entsel:=ds:C1482.Customer.all  // to search in selection
+$queryIn:=New object:C1471("tableselection"; $entsel)
 
 $query:=RunQuery($queryIn)
 If (OK=1)

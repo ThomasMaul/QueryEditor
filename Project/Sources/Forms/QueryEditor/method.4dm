@@ -1,22 +1,6 @@
 $event:=FORM Event:C1606.code
 Case of 
 	: ($event=On Load:K2:1)
-		
-		// use first table if unset
-		If (Form:C1466.ds=Null:C1517)  // pass another ds for remote datastore
-			Form:C1466.ds:=ds:C1482
-		End if 
-		
-		Case of 
-			: ((Form:C1466.table=Null:C1517) & (String:C10(Form:C1466.tablename)#""))
-				Form:C1466.table:=ds:C1482[Form:C1466.tablename]
-			: (Form:C1466.table=Null:C1517)
-				$col:=OB Keys:C1719(Form:C1466.ds)
-				If ($col.length>0)
-					Form:C1466.table:=Form:C1466.ds[$col[0]]
-				End if 
-		End case 
-		
 		If (Form:C1466.queryTarget=Null:C1517)
 			Form:C1466.queryTarget:=1
 		End if 
@@ -32,7 +16,7 @@ Case of
 		
 		Form:C1466.height:=1
 		Form:C1466.sub:=New object:C1471
-		Form:C1466.editor:=cs:C1710.queryEditor.new(Form:C1466.table)
+		Form:C1466.editor:=cs:C1710.queryEditor.new(Form:C1466)
 		Form:C1466.editor.addQueryLine()
 		Form:C1466.editor.renderForm("sub")
 		If (Form:C1466.editor.querylines.length<=1)

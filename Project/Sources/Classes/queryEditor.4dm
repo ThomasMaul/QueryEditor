@@ -1,5 +1,32 @@
-Class constructor($class : 4D:C1709.DataClass)
-	This:C1470.table:=$class
+Class constructor($form : Object)
+	
+	If (($form.ds#Null:C1517) && (OB Instance of:C1731($Form.ds; cs:C1710.DataStore)))
+		This:C1470.ds:=$form.ds
+	Else 
+		This:C1470.ds:=ds:C1482
+	End if 
+	
+	Case of 
+		: (($Form.table#Null:C1517) && (OB Instance of:C1731($Form.table; 4D:C1709.DataClass)))
+			This:C1470.table:=$Form.table
+		: (String:C10($form.tablename)#"")
+			This:C1470.table:=This:C1470.ds[$Form.tablename]
+		: (($form.tableptr#Null:C1517) && (Value type:C1509($form.tableptr)=Is pointer:K8:14))
+			This:C1470.table:=ds:C1482[Table name:C256($form.tableptr)]  // only works with local datastore, not with remote
+		: (($form.tableselection#Null:C1517) && (OB Instance of:C1731($form.tableselection; 4D:C1709.EntitySelection)))
+			This:C1470.table:=$form.tableselection.getDataClass()
+			This:C1470.tableselection:=$form.tableselection
+			
+		Else 
+			$col:=OB Keys:C1719(This:C1470.ds)
+			If ($col.length>0)
+				This:C1470.table:=This:C1470.ds[$col[0]]
+			Else 
+				ASSERT:C1129(False:C215; "Cannot work in structure without tables")
+				return 
+			End if 
+	End case 
+	
 	This:C1470.reset()
 	This:C1470.popupsubmenu:=New collection:C1472
 	This:C1470.popupmenu:=This:C1470._getTableMenu(This:C1470.fieldlist)
@@ -147,11 +174,13 @@ Function _getDSClassDetails($class : 4D:C1709.DataClass)->$fields : Collection
 	$fields:=New collection:C1472
 	For each ($field; $fieldnames)
 		$f:=$class[$field]
-		$fields.push(New object:C1471("name"; $field; \
+		$data:=New object:C1471("name"; $field; \
 			"kind"; $f.kind; \
 			"type"; $f.fieldType; \
-			"relatedDataClass"; Form:C1466.ds[String:C10($f.relatedDataClass)]; \
-			"indexed"; $f.indexed))
+			"indexed"; $f.indexed; \
+			"relatedDataClass"; This:C1470.ds[String:C10($f.relatedDataClass)])
+		
+		$fields.push($data)
 	End for each 
 	
 Function _getTableMenu($fieldlist : Collection; $level : Integer; $tablename : Text)->$menuref : Text
@@ -378,8 +407,8 @@ Function useSaveObject($object)
 	End if 
 	
 	// check if table and fields exists
-	If (Form:C1466.ds[$object.table]#Null:C1517)
-		$class:=Form:C1466.ds[$object.table]
+	If (This:C1470.ds[$object.table]#Null:C1517)
+		$class:=This:C1470.ds[$object.table]
 	Else 
 		ALERT:C41(Get localized string:C991("Alerts_theQueryContainsATableThatDoesNotExist"))
 		return 
