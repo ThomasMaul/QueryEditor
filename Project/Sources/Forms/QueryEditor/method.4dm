@@ -42,6 +42,6 @@ Case of
 	: ($event=On Clicked:K2:4)
 		Form:C1466.editor.handleFormEvent(FORM Event:C1606)
 		
-		//$object:=Form.editor.createQueryObject()
-		//Form.preview:=JSON Stringify($object; *)
+		$object:=Form:C1466.editor.createQueryObject()
+		Form:C1466.preview:=JSON Stringify:C1217($object; *)
 End case 

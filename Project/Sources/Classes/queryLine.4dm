@@ -78,7 +78,7 @@ Function renderObjects($data : Object)->$objects : Object
 	$object:=New object:C1471
 	$object.type:="input"  //_"+String($counter)
 	$object.enterable:=False:C215
-	$object.dataSource:="Form:C1466.editor.querylines["+String:C10($counter-1)+"]._field"
+	$object.dataSource:="Form:C1466.editor.querylines["+String:C10($counter-1)+"].displayName"  //_field"
 	$object.left:=$x
 	$object.top:=$y
 	$object.width:=230
@@ -422,7 +422,7 @@ Function getTextFilter()->$Txt_filter : Text
 			$Txt_filter:="&\"0-9;-;+"
 	End case 
 	
-Function getRelationField($base : 4D:C1709.DataClass; $name : Text)->$field : Object
+Function getRelationField($base : 4D:C1709.DataClass; $name : Text; $commingFromTable : Text)->$field : Object
 	$pos:=Position:C15("."; $name)
 	If ($pos>0)
 		$relation:=Substring:C12($name; 1; $pos-1)
@@ -430,12 +430,26 @@ Function getRelationField($base : 4D:C1709.DataClass; $name : Text)->$field : Ob
 		$table:=ds:C1482[$base[$relation].relatedDataClass]
 		$pos2:=Position:C15("."; $fieldname)
 		If ($pos2>0)
-			$field:=This:C1470.getRelationField($table; $fieldname)
+			$field:=This:C1470.getRelationField($table; $fieldname; $relation+".")
+			//$field.table:=$relation
 		Else 
 			$field:=$table[$fieldname]
+			$field.table:=$commingFromTable+$relation
 		End if 
 	Else 
 		ASSERT:C1129(True:C214; "internal error")
+	End if 
+	
+Function findVirtualName($virtName : Text)->$displayName : Text
+	$virtnames:=Form:C1466.editor.virt_fieldllist.query("structure=:1"; $virtName)
+	If ($virtnames.length>0)
+		$displayName:=$virtnames[0].display
+		$pos:=This:C1470._lastPosition("."; $virtName)
+		If ($pos>0)  // relation  
+			$displayName:=This:C1470.findVirtualName(Substring:C12($virtName; 1; $pos-1))+"."+$displayName
+		End if 
+	Else 
+		$displayName:=$virtName
 	End if 
 	
 Function setValue($value : Variant)
@@ -445,21 +459,54 @@ Function setValue($value : Variant)
 		If ($pos>0)  // relation  
 			$field:=This:C1470.getRelationField(Form:C1466.editor.table; $value)
 			$fieldname:=$field.name
-			This:C1470.displayName:=$value
+			If (Form:C1466.editor.virt_fieldllist#Null:C1517)
+				This:C1470.displayName:=This:C1470.findVirtualName($value)
+				
+				
+				////#####
+				//$virtnames:=Form.editor.virt_fieldllist.query("structure=:1"; $value)
+				//If ($virtnames.length>0)
+				//$virtTnames:=Form.editor.virt_fieldllist.query("structure=:1"; $field.table)
+				//If ($virtTnames.length>0)
+				//This.displayName:=$virtTnames[0].display+"."+$virtnames[0].display
+				//Else 
+				//This.displayName:=$field.table+"."+$virtnames[0].display
+				//End if 
+				////###### hier fehlt zweite Ebene, für mehrfache Verschachtelung!!!
+				//// über Function geht virtuell name, die sich von vorne bis hinten durchkaspert?
+				//// als Ersatz von virttnames, gleich über liste gehen
+				//// $value ist customers.invoices.Feld3, das zerlegen und mit Display ersetzen
+				//// customers.invoices.Feld3, customers.invoices, customers
+				//// ergibt Customers.Invoices.Nr
+				//Else 
+				//This.displayName:=$value
+				//End if 
+			Else 
+				This:C1470.displayName:=$value
+			End if 
 			This:C1470.fieldtype:=$field.fieldType
 		Else 
-			$field:=Form:C1466.editor.table[$value]
-			This:C1470.fieldtype:=$field.fieldType
-			This:C1470.displayName:=$field.name
+			$fields:=Form:C1466.editor.fieldlist.query("name=:1"; $value)
+			If ($fields.length>0)
+				$field:=$fields[0]
+			Else 
+				$field:=Form:C1466.editor.fieldlist[0]
+			End if 
+			//$field:=Form.editor.table[$value]
+			This:C1470.fieldtype:=$field.type  //fieldType
+			This:C1470.displayName:=$field.displayName
 		End if 
 	Else 
-		$fieldname:=Form:C1466.editor.fieldlist[0].name
-		This:C1470._field:=$fieldname
-		$field:=Form:C1466.editor.table[$fieldname]
+		$field:=Form:C1466.editor.fieldlist[0]
+		This:C1470._field:=$field.name
 		This:C1470.fieldtype:=$field.fieldType
-		This:C1470.displayName:=$field.name
+		If ($field.displayName#Null:C1517)
+			This:C1470.displayName:=$field.displayName
+		Else 
+			This:C1470.displayName:=$field.name
+		End if 
 	End if 
-	This:C1470.name:=This:C1470.displayName
+	This:C1470.name:=This:C1470._field
 	
 	Case of 
 		: ((This:C1470.fieldtype=8) | (This:C1470.fieldtype=9) | (This:C1470.fieldtype=25))
@@ -636,10 +683,14 @@ Function _calculateDatePreview($data : Object)->$preview : Text
 		$data.dat3:=$dat_3
 	End if 
 	
-Function createQueryStatement($para : Object)->$statement : Text
+Function createQueryStatement($para : Object; $clearText : Boolean)->$statement : Text
 	var $value; $value2 : Variant
 	
-	$statement:=This:C1470.name+" "
+	If (Bool:C1537($clearText))
+		$statement:=This:C1470.displayName+" "
+	Else 
+		$statement:=This:C1470.name+" "
+	End if 
 	$comperator:=""
 	$id:=Abs:C99(This:C1470.comboid)  // negative values for time
 	$type:=This:C1470.fieldtype
@@ -837,4 +888,16 @@ Function createSaveObject()->$object
 	$object.value1:=This:C1470._value1
 	$object.value2:=This:C1470._value2
 	$object.compare2:=This:C1470.popup2
+	
+Function _lastPosition($whatChar : Text; $in : Text)->$where : Integer
+	ASSERT:C1129(Length:C16($in)>0; "Internal Error: Search Text must not be empty")
+	$pos:=Length:C16($in)
+	$length:=Length:C16($whatChar)
+	While ($pos>0)
+		If (Substring:C12($in; $pos; $length)=$whatChar)
+			return $pos
+		End if 
+		$pos-=1
+	End while 
+	$were:=-1
 	

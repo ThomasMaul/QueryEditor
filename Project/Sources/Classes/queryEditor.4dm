@@ -27,6 +27,10 @@ Class constructor($form : Object)
 			End if 
 	End case 
 	
+	If ($form.fieldlist#Null:C1517)
+		This:C1470.virt_fieldllist:=$form.fieldlist
+	End if 
+	
 	This:C1470.reset()
 	This:C1470.popupsubmenu:=New collection:C1472
 	This:C1470.popupmenu:=This:C1470._getTableMenu(This:C1470.fieldlist)
@@ -169,7 +173,7 @@ Function getQueryLine($pos : Integer)->$object : cs:C1710.queryLine
 		$object:=Null:C1517
 	End if 
 	
-Function _getDSClassDetails($class : 4D:C1709.DataClass)->$fields : Collection
+Function _getDSClassDetails($class : 4D:C1709.DataClass; $relatedTableName : Text)->$fields : Collection
 	$fieldnames:=OB Keys:C1719($class)
 	$fields:=New collection:C1472
 	For each ($field; $fieldnames)
@@ -180,10 +184,24 @@ Function _getDSClassDetails($class : 4D:C1709.DataClass)->$fields : Collection
 			"indexed"; $f.indexed; \
 			"relatedDataClass"; This:C1470.ds[String:C10($f.relatedDataClass)])
 		
-		$fields.push($data)
+		If (This:C1470.virt_fieldllist#Null:C1517)
+			If ($relatedTableName#"")
+				$searchforName:=$relatedTableName+"."+$field
+			Else 
+				$searchforName:=$field
+			End if 
+			$virt:=This:C1470.virt_fieldllist.query("structure=:1"; $searchforName)
+			If ($virt.length>0)
+				$data.displayName:=$virt[0].display
+				$fields.push($data)
+			End if 
+		Else 
+			$data.displayName:=$data.name
+			$fields.push($data)
+		End if 
 	End for each 
 	
-Function _getTableMenu($fieldlist : Collection; $level : Integer; $tablename : Text)->$menuref : Text
+Function _getTableMenu($fieldlist : Collection; $level : Integer; $tablename : Text; $structureTablename : Text)->$menuref : Text
 	$txt_suffix:=Choose:C955((FORM Get color scheme:C1761="dark"); "_dark"; "")
 	$menuref:=Create menu:C408
 	For each ($field; $fieldlist)
@@ -229,18 +247,23 @@ Function _getTableMenu($fieldlist : Collection; $level : Integer; $tablename : T
 		End case 
 		If ($id>=0)
 			If ($id=13)  // relation many to one
-				If ($field.relatedDataClass.getInfo().name#This:C1470.table.getInfo().name)  // not going back to ourself...
-					$subfieldlist:=This:C1470._getDSClassDetails($field.relatedDataClass)
-					$subname:=$field.name
+				If (($field.relatedDataClass.getInfo().name#This:C1470.table.getInfo().name) && \
+					($field.relatedDataClass.getInfo().name#$structureTablename))  // not going back to ourself...
+					If ($tablename#"")
+						$subfieldlist:=This:C1470._getDSClassDetails($field.relatedDataClass; $tablename+"."+$field.name)
+					Else 
+						$subfieldlist:=This:C1470._getDSClassDetails($field.relatedDataClass; $field.name)
+					End if 
+					$subname:=$field.name  //displayName
 					If ($tablename#"")
 						$subname:=$tablename+"."+$subname
 					End if 
-					$submenu:=This:C1470._getTableMenu($subfieldlist; $level+1; $subname)
+					$submenu:=This:C1470._getTableMenu($subfieldlist; $level+1; $subname; $field.relatedDataClass.getInfo().name)
 					This:C1470.popupsubmenu.push($submenu)
-					INSERT MENU ITEM:C412($menuref; -1; $field.name; $submenu)
+					INSERT MENU ITEM:C412($menuref; -1; $field.displayName; $submenu)
 				End if 
 			Else 
-				INSERT MENU ITEM:C412($menuref; -1; $field.name)
+				INSERT MENU ITEM:C412($menuref; -1; $field.displayName)
 				If ($level>0)
 					SET MENU ITEM PARAMETER:C1004($MenuRef; -1; $tablename+"."+$field.name)
 				Else 
@@ -353,7 +376,7 @@ Function _buildListContents()
 	
 	This:C1470.lists:=$Lists
 	
-Function createQueryObject()->$object
+Function createQueryObject($clearText : Boolean)->$object
 	// builds the real query operation
 	
 	$object:=New object:C1471
@@ -374,14 +397,14 @@ Function createQueryObject()->$object
 			End case 
 			$statement+=$operator
 		End if 
-		$statement+="("+$line.createQueryStatement($para)+")"
+		$statement+="("+$line.createQueryStatement($para; $clearText)+")"
 	End for each 
 	
 	$object.query_statement:=$statement
 	$object.para:=$para
 	
 Function clearTextQueryLine()->$statement
-	$query:=This:C1470.createQueryObject()
+	$query:=This:C1470.createQueryObject(True:C214)
 	$statement:=$query.query_statement
 	For each ($para; $query.para)
 		$statement:=Replace string:C233($statement; ":"+$para; String:C10($query.para[$para]))

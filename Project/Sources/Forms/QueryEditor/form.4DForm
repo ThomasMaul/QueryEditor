@@ -156,12 +156,12 @@
 					"enterable": false,
 					"dataSource": "Form:C1466.preview",
 					"sizingY": "move",
-					"visibility": "hidden"
+					"visibility": "visible"
 				}
 			}
 		}
 	],
-	"geometryStamp": 87,
+	"geometryStamp": 89,
 	"method": "method.4dm",
 	"editor": {
 		"activeView": "View 1",
@@ -169,6 +169,5 @@
 		"views": {
 			"View 1": {}
 		}
-	},
-	"formSizeAnchor": "bottom.b.query"
+	}
 }

@@ -63,17 +63,25 @@ tableselection	current selection to define start table and
 	allow automatic usage of operation (and/or/contains)
 	then $query.resultselection contains ready useable result
 
-missing:
-naming list/collection
+### WIP:
+fieldlist = collection
 structure name	localized name 
 
 "structure";"invoicedate";"display";"invoice date"
-"structure";"client.name";"display";"Kundenname"
+"structure";"invoices";"display";"Invoices"  // allow relation   
+"structure";"client.name";"display";"Kundenname"  // limit field list for relation 
+
+not specified fields/relations are not displayed/hidden
+when unpassed/not used, all fields of all related tables, up to 3 level
 
 
-ds		remote ds, host ds if unused
+
+dialogType, form/dialog type from Open Form Window, default sheet form window
+
+ds		remote ds, host ds if unused/not passed
 
 queryTarget preset target popup
 	// 1 = query in table, 2 = query in selection, 
 	// 3 = add to selection, 4 = remove from selection
 	// 0 = disable popup, don't allow user to choose
+	
