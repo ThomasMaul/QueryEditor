@@ -17,18 +17,20 @@ Else
 	End use 
 End if 
 
-If (This:C1470.tableselection#Null:C1517)  // run the query here and return result in Form.query
+If (Form:C1466.tableselection#Null:C1517)  // run the query here and return result in Form.query
+	$settings:=New object:C1471("parameters"; Form:C1466.query.para)
+	
 	Case of 
-		: ((This:C1470.queryTarget=1) | (This:C1470.queryTarget=0))  // in table
-			Form:C1466.query.resultselection:=This:C1470.table.query($query.query_statement; $settings)
-		: (This:C1470.queryTarget=2)  // in selection
-			Form:C1466.query.resultselection:=This:C1470.tableselection.query($query.query_statement; $settings)
-		: (This:C1470.queryTarget=3)  // add to selection
-			$result:=This:C1470.table.query($query.query_statement; $settings)
-			Form:C1466.query.resultselection:=This:C1470.tableselection.or($result)
-		: (This:C1470.queryTarget=3)  // remove from selection
-			$result:=This:C1470.table.query($query.query_statement; $settings)
-			Form:C1466.query.resultselection:=This:C1470.tableselection.minus($result)
+		: ((Form:C1466.queryTarget=1) | (Form:C1466.queryTarget=0))  // in table
+			Form:C1466.query.resultselection:=Form:C1466.editor.table.query(Form:C1466.query.query_statement; $settings)
+		: (Form:C1466.queryTarget=2)  // in selection
+			Form:C1466.query.resultselection:=Form:C1466.tableselection.query(Form:C1466.query.query_statement; $settings)
+		: (Form:C1466.queryTarget=3)  // add to selection
+			$result:=Form:C1466.editor.table.query(Form:C1466.query.query_statement; $settings)
+			Form:C1466.query.resultselection:=Form:C1466.tableselection.or($result)
+		: (Form:C1466.queryTarget=3)  // remove from selection
+			$result:=Form:C1466.editor.table.query(Form:C1466.query.query_statement; $settings)
+			Form:C1466.query.resultselection:=Form:C1466.tableselection.minus($result)
 	End case 
 End if 
 ACCEPT:C269

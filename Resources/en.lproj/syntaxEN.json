@@ -19,11 +19,11 @@
 	},
 	"queryEditor": {
 		"new()": {
-			"Syntax": "**.new**(*class* : 4D.DataClass)",
+			"Syntax": "**.new**(*form* : Object)",
 			"Params": [
 				[
-					"class",
-					"4D.DataClass",
+					"form",
+					"Object",
 					"->"
 				]
 			],
@@ -63,8 +63,13 @@
 			"Summary": ""
 		},
 		"createQueryObject()": {
-			"Syntax": "**.createQueryObject**()->object : Variant",
+			"Syntax": "**.createQueryObject**(*clearText* : Boolean)->object : Variant",
 			"Params": [
+				[
+					"clearText",
+					"Boolean",
+					"->"
+				],
 				[
 					"object",
 					"Variant",
@@ -189,11 +194,16 @@
 			"Summary": ""
 		},
 		"createQueryStatement()": {
-			"Syntax": "**.createQueryStatement**(*para* : Object)->statement : Text",
+			"Syntax": "**.createQueryStatement**(*para* : Object; *clearText* : Boolean)->statement : Text",
 			"Params": [
 				[
 					"para",
 					"Object",
+					"->"
+				],
+				[
+					"clearText",
+					"Boolean",
 					"->"
 				],
 				[
@@ -211,28 +221,6 @@
 		},
 		"getOperatorIndex()": {
 			"Syntax": "**.getOperatorIndex**()->index : Integer",
-			"Params": [
-				[
-					"index",
-					"Integer",
-					"<-"
-				]
-			],
-			"Summary": ""
-		},
-		"setOperator()": {
-			"Syntax": "**.setOperator**(*value* : Integer)",
-			"Params": [
-				[
-					"value",
-					"Integer",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"getCombo2()": {
-			"Syntax": "**.getCombo2**()->index : Integer",
 			"Params": [
 				[
 					"index",
@@ -264,6 +252,28 @@
 			],
 			"Summary": ""
 		},
+		"getCombo2()": {
+			"Syntax": "**.getCombo2**()->index : Integer",
+			"Params": [
+				[
+					"index",
+					"Integer",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"setOperator()": {
+			"Syntax": "**.setOperator**(*value* : Integer)",
+			"Params": [
+				[
+					"value",
+					"Integer",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
 		"setPopup2()": {
 			"Syntax": "**.setPopup2**(*value* : Integer)",
 			"Params": [
@@ -275,8 +285,19 @@
 			],
 			"Summary": ""
 		},
+		"setValue()": {
+			"Syntax": "**.setValue**(*value* : Variant)",
+			"Params": [
+				[
+					"value",
+					"Variant",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
 		"getRelationField()": {
-			"Syntax": "**.getRelationField**(*base* : 4D.DataClass; *name* : Text)->field : Object",
+			"Syntax": "**.getRelationField**(*base* : 4D.DataClass; *name* : Text; *commingFromTable* : Text)->field : Object",
 			"Params": [
 				[
 					"base",
@@ -289,20 +310,14 @@
 					"->"
 				],
 				[
+					"commingFromTable",
+					"Text",
+					"->"
+				],
+				[
 					"field",
 					"Object",
 					"<-"
-				]
-			],
-			"Summary": ""
-		},
-		"setValue()": {
-			"Syntax": "**.setValue**(*value* : Variant)",
-			"Params": [
-				[
-					"value",
-					"Variant",
-					"->"
 				]
 			],
 			"Summary": ""
@@ -340,17 +355,17 @@
 			],
 			"Summary": ""
 		},
-		"renderObjects()": {
-			"Syntax": "**.renderObjects**(*data* : Object)->objects : Object",
+		"findVirtualName()": {
+			"Syntax": "**.findVirtualName**(*virtName* : Text)->displayName : Text",
 			"Params": [
 				[
-					"data",
-					"Object",
+					"virtName",
+					"Text",
 					"->"
 				],
 				[
-					"objects",
-					"Object",
+					"displayName",
+					"Text",
 					"<-"
 				]
 			],
@@ -362,6 +377,22 @@
 				[
 					"Txt_filter",
 					"Text",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"renderObjects()": {
+			"Syntax": "**.renderObjects**(*data* : Object)->objects : Object",
+			"Params": [
+				[
+					"data",
+					"Object",
+					"->"
+				],
+				[
+					"objects",
+					"Object",
 					"<-"
 				]
 			],

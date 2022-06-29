@@ -17,8 +17,8 @@ Rewritten as class, created for usage with ORDA
 
 ### Missing features compared with build in
 
-- translate field list (virtual structure)
-- support picture keywords (ACI0103009)
+- translate field list (virtual structure)  ## coded, needs more testing
+- support picture keywords (waiting ACI0103009)
 - support loading saved queries from build in editor
 - Query with formula
 - enterable field names with type ahead, check for wrong field names when entered
@@ -63,7 +63,7 @@ tableselection	current selection to define start table and
 	allow automatic usage of operation (and/or/contains)
 	then $query.resultselection contains ready useable result
 
-### WIP:
+
 fieldlist = collection
 structure name	localized name 
 
