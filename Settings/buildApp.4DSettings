@@ -30,7 +30,7 @@
       <HardLink></HardLink>
     </CS>
     <BuildApplicationName>QueryEditor</BuildApplicationName>
-    <BuildMacDestFolder>::Sucheditor_Build:</BuildMacDestFolder>
+    <BuildMacDestFolder>:build:</BuildMacDestFolder>
     <ArrayExcludedPluginName>
       <ItemsCount>0</ItemsCount>
     </ArrayExcludedPluginName>
@@ -51,7 +51,7 @@
     </Licenses>
     <SignApplication>
       <MacSignature>True</MacSignature>
-      <MacCertificate>Apple Development: Thomas Maul</MacCertificate>
+      <MacCertificate>Developer ID</MacCertificate>
       <AdHocSign>True</AdHocSign>
     </SignApplication>
   </BuildApp>

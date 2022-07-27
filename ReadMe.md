@@ -7,7 +7,6 @@ Work in process - unfinished...
 Rewritten as class, created for usage with ORDA
 
 ### Additional features compared with build in
-
 - direct useable with ORDA
 - support of ORDA relations (using names, parallel relations, etc)
 - support for calculated attributes and alias
@@ -16,10 +15,8 @@ Rewritten as class, created for usage with ORDA
 - support for Remote Datastore
 
 ### Missing features compared with build in
-
-- translate field list (virtual structure)  ## coded, needs more testing
 - support picture keywords (waiting ACI0103009)
-- support loading saved queries from build in editor
+- support loading saved queries from build in editor (partly done. Direct fields works, related fields not. Unclear how to detect which relation to use)
 - Query with formula
 - enterable field names with type ahead, check for wrong field names when entered
 - allow to select fields with up/down cursor key
@@ -30,7 +27,7 @@ Rewritten as class, created for usage with ORDA
 ### Missing new features (planned, but not coded yet)
 - overwrite Load/Save, to get object to store in record instead of file
 - enhanced object field support, query in attribute
-- support grouping (field = 5 or field = 6) and (otherfield=4 or otherfield=7)
+- support grouping aka (field = 5 or field = 6) and (otherfield=4 or otherfield=7)
 
 
 ## Usage

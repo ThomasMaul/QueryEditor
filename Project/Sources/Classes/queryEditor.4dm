@@ -439,10 +439,70 @@ Function useSaveObject($object)
 	This:C1470.table:=$class
 	This:C1470.counter:=0
 	This:C1470.fieldlist:=This:C1470._getDSClassDetails(This:C1470.table)
+	If (This:C1470.fieldlist.length=0)
+		ALERT:C41(Get localized string:C991("Errors_anErrorOccurredWhileOpeningTheFile"))
+		This:C1470.reset()
+		return 
+	End if 
 	This:C1470.popupsubmenu:=New collection:C1472
 	This:C1470.popupmenu:=This:C1470._getTableMenu(This:C1470.fieldlist)
 	For each ($line; $object.lines)
 		This:C1470.querylines.push(cs:C1710.queryLine.new($line))
 	End for each 
 	This:C1470.renderForm(This:C1470.sub)
+	
+Function useOldSaveObject($object)  // use original 4DF format, only available for local data store
+	// clear existing query, start new one
+	This:C1470.querylines:=New collection:C1472
+	
+	If (Num:C11($object.version)#3)
+		ALERT:C41(Get localized string:C991("Errors_fileVersionUnhandled"))
+		return 
+	End if 
+	
+	// check all used table numbers
+	$invalid:=False:C215
+	$maxtable:=Get last table number:C254
+	If ((Num:C11($object.mainTable)<1) || (Num:C11($object.mainTable)>$maxtable))
+		$invalid:=True:C214
+	End if 
+	For each ($line; $object.lines)
+		If ((Num:C11($line.tableNumber)<1) || (Num:C11($line.tableNumber)>$maxtable))
+			$invalid:=True:C214
+		End if 
+	End for each 
+	If ($invalid)
+		ALERT:C41(Get localized string:C991("Alerts_theQueryContainsATableThatDoesNotExist"))
+		return 
+	End if 
+	
+	$class:=ds:C1482[Table name:C256(Num:C11($object.mainTable))]
+	This:C1470.table:=$class
+	This:C1470.counter:=0
+	This:C1470.fieldlist:=This:C1470._getDSClassDetails(This:C1470.table)
+	If (This:C1470.fieldlist.length=0)
+		ALERT:C41(Get localized string:C991("Errors_anErrorOccurredWhileOpeningTheFile"))
+		This:C1470.reset()
+		return 
+	End if 
+	This:C1470.popupsubmenu:=New collection:C1472
+	This:C1470.popupmenu:=This:C1470._getTableMenu(This:C1470.fieldlist)
+	For each ($line; $object.lines)
+		$line_translated:=New object:C1471
+		$line_translated.field:=Field name:C257(Num:C11($line.tableNumber); Num:C11($line.fieldNumber))  // handle relations missing #####
+		$line_translated.operator:=Num:C11($line.lineOperator)
+		$line_translated.compare:=Num:C11($line.criterion)
+		$line_translated.value1:=String:C10($line.oneBox)+String:C10($line.firstOfTwoBoxes)+String:C10($line.oneBoxWithUnits)
+		$line_translated.value2:=String:C10($line.secondOfTwoBoxes)
+		$line_translated.compare2:=Num:C11($line.units)-1
+		If ($line_translated.compare2<0)
+			$line_translated.compare2:=0
+		End if 
+		This:C1470.querylines.push(cs:C1710.queryLine.new($line_translated))
+	End for each 
+	This:C1470.renderForm(This:C1470.sub)
+	
+	//missing
+	// querydestination
+	// japanese
 	

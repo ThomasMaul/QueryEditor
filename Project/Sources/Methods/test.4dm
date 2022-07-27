@@ -21,7 +21,7 @@ Else
 	$fieldcol.push(New object:C1471("structure"; "invoices.Feld_3"; "display"; "Nr"))
 End if 
 
-$queryIn.fieldlist:=$fieldcol
+//$queryIn.fieldlist:=$fieldcol
 $queryIn.dialogType:=0
 
 $query:=RunQuery($queryIn)

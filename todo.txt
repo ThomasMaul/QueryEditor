@@ -1,22 +1,0 @@
-
-picture keywords
-ALL RECORDS([CLIENTS])NEXT RECORD([CLIENTS])$picture:=[CLIENTS]LogoARRAY TEXT($arrTkeywords; 2)$arrTkeywords{1}:="Frankreich"$arrTkeywords{2}:="Europa"SET PICTURE METADATA($picture; IPTC keywords; $arrTkeywords)[CLIENTS]Logo:=$pictureSAVE RECORD([CLIENTS])
-
-field list - translation? virtual?
-
-Overwrite Load/Save (store in record, etc)
-
-Query with formula
-
-Objectfield = query in attribute?
-
-build groups with and/or/except and ()
-
-
-
-## fields are none enterable. To make them enterable,
-check entry for correct field name, if correct, change type/etc (similar to popup)
-allow cursor up/down to scroll through field list, set field name in red background
-for part entry, find fitting field, display missing characters with red background
-
-
