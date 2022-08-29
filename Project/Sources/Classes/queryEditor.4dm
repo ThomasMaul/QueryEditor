@@ -489,7 +489,14 @@ Function useOldSaveObject($object)  // use original 4DF format, only available f
 	This:C1470.popupmenu:=This:C1470._getTableMenu(This:C1470.fieldlist)
 	For each ($line; $object.lines)
 		$line_translated:=New object:C1471
-		$line_translated.field:=Field name:C257(Num:C11($line.tableNumber); Num:C11($line.fieldNumber))  // handle relations missing #####
+		If (Num:C11($line.tableNumber)=Num:C11($object.mainTable))
+			$line_translated.field:=Field name:C257(Num:C11($line.tableNumber); Num:C11($line.fieldNumber))
+		Else   // related table
+			$relation:=This:C1470._ORDA_FindRelationPath(Table name:C256(Num:C11($object.mainTable)); Table name:C256(Num:C11($line.tableNumber)); 5)
+			If ($relation#"")
+				$line_translated.field:=Substring:C12($relation; 2)+"."+Field name:C257(Num:C11($line.tableNumber); Num:C11($line.fieldNumber))
+			End if 
+		End if 
 		$line_translated.operator:=Num:C11($line.lineOperator)
 		$line_translated.compare:=Num:C11($line.criterion)
 		$line_translated.value1:=String:C10($line.oneBox)+String:C10($line.firstOfTwoBoxes)+String:C10($line.oneBoxWithUnits)
@@ -506,3 +513,43 @@ Function useOldSaveObject($object)  // use original 4DF format, only available f
 	// querydestination
 	// japanese
 	
+	
+Function _ORDA_FindRelationPath($FromClassName : Text; $ToClassName : Text; $MaxDepth : Integer)->$pathout : Text
+	// find path between two classes
+	// $1 = classFrom, $2 = classTo, $3 = maxdepth
+	// $0 := path
+	// not public
+	
+	C_OBJECT:C1216($field)
+	C_TEXT:C284($name)
+	$pathout:=""
+	
+	ASSERT:C1129($FromClassName#""; "$1 must not be empty")
+	ASSERT:C1129($ToClassName#""; "$2 must not be empty")
+	ASSERT:C1129(($MaxDepth>=0) & ($MaxDepth<10); "$3 must be in range 0..9")
+	ASSERT:C1129(ds:C1482[$FromClassName]#Null:C1517; "$1 must be the name of a data class")
+	ASSERT:C1129(ds:C1482[$ToClassName]#Null:C1517; "$1 must be the name of a data class")
+	
+	For each ($name; ds:C1482[$FromClassName]) Until ($pathout#"")
+		$field:=ds:C1482[$FromClassName][$name]
+		If (($field.kind="relatedEntity") | ($field.kind="relatedEntities"))
+			If ($field.relatedDataClass=$ToClassName)  // hit
+				$pathout:="."+$field.name
+			End if 
+		End if 
+	End for each 
+	
+	// if no, for all properties of kind = relatedEntity or relatedEntities run recursive to find To
+	If ($pathout="")  // not found
+		If ($MaxDepth>0)
+			For each ($name; ds:C1482[$FromClassName]) While ($pathout="")
+				$field:=ds:C1482[$FromClassName][$name]
+				If (($field.kind="relatedEntity") | ($field.kind="relatedEntities"))
+					$pathout:=This:C1470._ORDA_FindRelationPath($field.relatedDataClass; $ToClassName; $MaxDepth-1)
+					If ($pathout#"")
+						$pathout:="."+$field.name+$pathout
+					End if 
+				End if 
+			End for each 
+		End if 
+	End if 

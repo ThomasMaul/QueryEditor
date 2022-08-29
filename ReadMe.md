@@ -16,7 +16,7 @@ Rewritten as class, created for usage with ORDA
 
 ### Missing features compared with build in
 - support picture keywords (waiting ACI0103009)
-- support loading saved queries from build in editor (partly done. Direct fields works, related fields not. Unclear how to detect which relation to use)
+
 - Query with formula
 - enterable field names with type ahead, check for wrong field names when entered
 - allow to select fields with up/down cursor key
