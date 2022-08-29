@@ -31,6 +31,13 @@ Class constructor($form : Object)
 		This:C1470.virt_fieldllist:=$form.fieldlist
 	End if 
 	
+	If ($form.queryLoad#Null:C1517)
+		This:C1470.queryLoad:=$form.queryLoad
+	End if 
+	If ($form.querySave#Null:C1517)
+		This:C1470.querySave:=$form.querySave
+	End if 
+	
 	This:C1470.reset()
 	This:C1470.popupsubmenu:=New collection:C1472
 	This:C1470.popupmenu:=This:C1470._getTableMenu(This:C1470.fieldlist)

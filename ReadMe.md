@@ -13,19 +13,21 @@ Rewritten as class, created for usage with ORDA
 - limited support for object field (empty, not empty)
 - support for scrollbar (many query lines on small screen)
 - support for Remote Datastore
+- overwrite Load/Save, to get object to store in record instead of file
 
 ### Missing features compared with build in
 - support picture keywords (waiting ACI0103009)
 
-- Query with formula
+- Query with formula (does this make sense? require a formula editor, allow to select syntax as this.name or this.invoice.items.name and how to pass parameters? Security?)
 - enterable field names with type ahead, check for wrong field names when entered
-- allow to select fields with up/down cursor key
+-- does that make sense for syntax such as invoice.items.article.supplier at all? Will people type or is the popup better?
+- allow to select fields with up/down cursor key (in combination with above)
 - localisation in languages other than English/German (based on build in)
 - support for Japanese (language and different form object order)
 
 
 ### Missing new features (planned, but not coded yet)
-- overwrite Load/Save, to get object to store in record instead of file
+
 - enhanced object field support, query in attribute
 - support grouping aka (field = 5 or field = 6) and (otherfield=4 or otherfield=7)
 

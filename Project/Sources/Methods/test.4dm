@@ -24,6 +24,9 @@ End if
 //$queryIn.fieldlist:=$fieldcol
 $queryIn.dialogType:=0
 
+$queryIn.queryLoad:=Formula:C1597(CustomLoadQuery)
+$queryIn.querySave:=Formula:C1597(CustomStoreQuery)
+
 $query:=RunQuery($queryIn)
 If (OK=1)
 	$settings:=New object:C1471("parameters"; $query.para)
