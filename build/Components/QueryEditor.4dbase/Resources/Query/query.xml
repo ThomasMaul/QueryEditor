@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rsrc>
+
+  <criteria>
+
+    <!-- Query dialog criteria definitions :
+      
+      # "type" = how the line will be displayed
+      0 = no box (example "[ is today ]")
+      1 = one box (example " =  [ 20 ]")
+      2 = two box (example "between [__] & [__]")
+      3 = one box + one popup (example "[ 2 ] [Months]) 
+      4 = only 1 popup
+      5 = one box + button edit list
+      
+      -1 to display a line in the popup menu
+      
+      # "id" = the operator
+      _____________________________________ common
+      1 : is (=)
+      2 : is not (#)
+      3 : bigger or equal (>=)
+      4 : bigger (>)
+      5 : lower or equal (<=)
+      6 : lower (<)
+      7 : is between - included (<= =>)
+      8 : is between - excluded (< >)
+      15 : is in list - values separated by semicolons
+      
+      -8 : synonym of 8 (Japanese)
+      
+      _____________________________________ text
+      9 : starts with
+      10 : ends with
+      11 : contains
+      12 : does not contain
+      13 : contains keywords
+      14 : does not contain keywords
+      
+      -13 : synonym of 13 & all (Japanese)
+      -14 : synonym of 14 & all (Japanese)
+      
+      _____________________________________ date
+      11 : today
+      12 : within current
+      21 : yesterday
+      22 : within last <unit>
+      31 : tomorrow
+      32 : with next <unit>
+      
+      120 -> 125 : synonyms of 12 (Japanese)
+      220 -> 225 : synonyms of 22 (Japanese)
+      320 -> 325 : synonyms of 32 (Japanese)
+      
+      _____________________________________ time
+      -3 : synonym of 3 for durations
+      -4 : synonym of 4 for durations
+      -5 : synonym of 5 for durations
+      -6 : synonym of 6 for durations
+      
+      _____________________________________ boolean
+      0 : false
+      1 : true
+      
+      _____________________________________ picture
+      13 : contains keywords
+      14 : does not contain keywords 
+      
+      _____________________________________ date & time
+      23 : within the last <n>
+      33 : with the next <n>
+      
+      _____________________________________ text & picture & blob
+      41 = is empty
+      42 : is not empty
+-->
+
+    <type id="1"> <!-- NUM -->
+      <criterion id="1" label="criteria_NumIsEqual" type="1"/>
+      <criterion id="2" label="criteria_NumIsNotEqual" type="1"/>
+      <criterion type="-1"/>
+      <criterion id="15" label="criteria_TextIsInList" type="5"/>
+      <criterion type="-1"/>
+      <criterion id="3" label="criteria_NumIsBiggerOrEqual" type="1"/>
+      <criterion id="4" label="criteria_NumIsBigger" type="1"/>
+      <criterion type="-1"/>
+      <criterion id="5" label="criteria_NumIsLowerOrEqual" type="1"/>
+      <criterion id="6" label="criteria_NumIsLower" type="1"/>
+      <criterion type="-1"/>
+      <criterion id="7" label="criteria_NumIsBetweenIncluded" type="2"/>
+      <criterion id="8" label="criteria_NumIsBetweenExcluded" type="2"/>      
+    </type>
+    
+    <type id="2"> <!-- TEXT -->
+      <criterion id="1" label="criteria_TextIsEqual" type="1"/>
+      <criterion id="2" label="criteria_TextIsNotEqual" type="1"/>
+      <criterion type="-1"/>
+      <criterion id="15" label="criteria_TextIsInList" type="5"/>
+      <criterion type="-1"/>
+      <criterion id="11" label="criteria_TextContains" type="1"/>
+      <criterion id="12" label="criteria_TextDoesNotContain" type="1"/>
+      <criterion type="-1"/>
+      <criterion id="9" label="criteria_TextStartsWith" type="1"/>
+      <criterion id="10" label="criteria_TextEndsWith" type="1"/>
+      <criterion type="-1"/>
+      <criterion id="41" label="criteria_TextIsEmpty" type="0"/>
+      <criterion id="42" label="criteria_TextIsNotEmpty" type="0"/>
+      <criterion type="-1"/>
+      <criterion id="13" label="criteria_TextContainsWords" type="3"/>
+      <criterion id="14" label="criteria_TextDoesNotContainWords" type="3"/>
+      <criterion type="-1"/>
+      <criterion id="3" label="criteria_TextIsBiggerOrEqual" type="1"/>
+      <criterion id="4" label="criteria_TextIsBigger" type="1"/>
+      <criterion type="-1"/>
+      <criterion id="5" label="criteria_TextIsLowerOrEqual" type="1"/>
+      <criterion id="6" label="criteria_TextIsLower" type="1"/>
+      <criterion type="-1"/>
+      <criterion id="7" label="criteria_TextIsBetweenIncluded" type="2"/>
+      <criterion id="8" label="criteria_TextIsBetweenExcluded" type="2"/>
+    </type>
+
+    <type id="3"> <!-- PICT -->
+      <criterion id="41" label="criteria_PictIsEmpty" type="0"/>
+      <criterion id="42" label="criteria_PictIsNotEmpty" type="0"/>
+      <criterion type="-1"/>    
+      <criterion id="13" label="criteria_PictContainsWords" type="3"/>
+      <criterion id="14" label="criteria_PictDoesNotContainWords" type="3"/>
+      <criterion type="-1"/>    
+      <criterion id="3" label="criteria_PictIsBiggerOrEqual" type="3"/>
+      <criterion id="5" label="criteria_PictIsLowerOrEqual" type="3"/>
+    </type>
+
+    <type id="4"> <!-- DATE -->
+      <criterion id="1" label="criteria_DateIsEqual" type="1"/>
+      <criterion id="2" label="criteria_DateIsNotEqual" type="1"/>
+      <criterion type="-1"/>   
+      <criterion id="11" label="criteria_DateIsToday" type="0"/>
+      <criterion id="12" label="criteria_DateIsWithinCurrent" type="4"/>
+      <criterion type="-1"/>   
+      <criterion id="21" label="criteria_DateIsYesterday" type="0"/>
+      <criterion id="22" label="criteria_DateIsWithinLast" type="4"/>
+      <criterion id="23" label="criteria_DateIsWithinTheLast" type="3"/>
+      <criterion type="-1"/>
+      <criterion id="31" label="criteria_DateIsTomorrow" type="0"/>
+      <criterion id="32" label="criteria_DateIsWithinNext" type="4"/>
+      <criterion id="33" label="criteria_DateIsWithinTheNext" type="3"/>
+      <criterion type="-1"/>   
+      <criterion id="5" label="criteria_DateIsLowerOrEqual" type="1"/>
+      <criterion id="6" label="criteria_DateIsLower" type="1"/>
+      <criterion type="-1"/>   
+      <criterion id="3" label="criteria_DateIsBiggerOrEqual" type="1"/>
+      <criterion id="4" label="criteria_DateIsBigger" type="1"/>
+      <criterion type="-1"/>   
+      <criterion id="7" label="criteria_DateIsBetweenIncluded" type="2"/>
+      <criterion id="8" label="criteria_DateIsBetweenExcluded" type="2"/>
+    </type>
+
+    <type id="6"> <!-- BOOLEAN -->
+      <criterion id="1" label="criteria_BoolIsTrue" type="0"/>
+      <criterion id="0" label="criteria_BoolIsFalse" type="0"/>
+    </type>
+
+    <type id="11"> <!-- TIME -->
+      <criterion id="1" label="criteria_TimeIsEqual" type="1"/>
+      <criterion id="2" label="criteria_TimeIsNotEqual" type="1"/>
+      <criterion type="-1"/>
+      <criterion id="7" label="criteria_TimeIsBetweenIncluded" type="2"/>
+      <criterion id="8" label="criteria_TimeIsBetweenExcluded" type="2"/>
+      <criterion type="-1"/>
+      <criterion id="23" label="criteria_TimeIsWithinTheLast" type="3"/>
+      <criterion id="33" label="criteria_TimeIsWithinTheNext" type="3"/>
+      <criterion type="-1"/>
+      <criterion id="3" label="criteria_TimeIsBiggerOrEqual" type="1"/>
+      <criterion id="4" label="criteria_TimeIsBigger" type="1"/>
+      <criterion type="-1"/>
+      <criterion id="5" label="criteria_TimeIsLowerOrEqual" type="1"/>
+      <criterion id="6" label="criteria_TimeIsLower" type="1"/>
+      <criterion type="-1"/>    <!--Durations (negative ids)-->
+      <criterion id="-1" label="criteria_DurationIsEqual" type="3"/>
+      <criterion id="-2" label="criteria_DurationIsNotEqual" type="3"/>
+      <criterion type="-1"/>
+      <criterion id="-3" label="criteria_DurationIsLongerOrEqual" type="3"/>
+      <criterion id="-4" label="criteria_DurationIsLonger" type="3"/>
+      <criterion type="-1"/>
+      <criterion id="-5" label="criteria_DurationIsShorterOrEqual" type="3"/>
+      <criterion id="-6" label="criteria_DurationIsShorter" type="3"/>
+    </type>
+
+    <type id="30"> <!-- BLOB -->
+      <criterion id="41" label="criteria_BlobIsEmpty" type="0"/>
+      <criterion id="42" label="criteria_BlobIsNotEmpty" type="0"/>
+      <criterion type="-1"/>
+      <criterion id="3" label="criteria_BlobIsBiggerOrEqual" type="3"/>
+      <criterion id="5" label="criteria_BlobIsLowerOrEqual" type="3"/>      
+    </type>
+
+    <type id="38"> <!-- object -->
+      <criterion id="41" label="criteria_BlobIsEmpty" type="0"/>
+      <criterion id="42" label="criteria_BlobIsNotEmpty" type="0"/>
+      <criterion type="-1"/>    
+    </type>
+  </criteria>
+
+  <ope id="128" theme="Op_stringOperators">
+    <item icon="310" label="Op_assignment" operator=":=" options="0"/>
+    <item icon="311" label="Op_concatenation" operator="+" options="-1"/>
+    <item icon="312" label="Op_repetition" operator="*" options="-1"/>
+    <item icon="329" label="Op_indexes" operator="[[]]" options="-1"/>
+    <item icon="328" label="Op_emptyString" operator="&quot;&quot;" options="-1"/>
+  </ope>
+
+  <ope id="129" theme="Op_numericOperators">
+    <item icon="310" label="Op_assignment" operator=":=" options="0"/>
+    <item icon="311" label="Op_addition" operator="+" options="-1"/>
+    <item icon="313" label="Op_subtraction" operator="-" options="-1"/>
+    <item icon="312" label="Op_multiplication" operator="*" options="-1"/>
+    <item icon="314" label="Op_division" operator="/" options="-1"/>
+    <item icon="315" label="Op_integerDivision" operator="\" options="-1"/>
+    <item icon="316" label="Op_modulo" operator="%" options="-1"/>
+    <item icon="317" label="Op_exponentiation" operator="^" options="-1"/>
+  </ope>
+
+  <ope id="130" theme="Op_dateOperators">
+    <item icon="310" label="Op_assignment" operator=":=" options="0"/>
+    <item icon="311" label="Op_addition" operator="+" options="-1"/>
+    <item icon="313" label="Op_difference" operator="-" options="-1"/>
+    <item icon="318" label="Op_blankDate" operator="!00/00/00!" options="-1"/>
+  </ope>
+
+  <ope id="131" theme="Op_timeOperators">
+    <item icon="310" label="Op_assignment" operator=":=" options="0"/>
+    <item icon="311" label="Op_addition" operator="+" options="-1"/>
+    <item icon="313" label="Op_subtraction" operator="-" options="-1"/>
+    <item icon="312" label="Op_multiplication" operator="*" options="-1"/>
+    <item icon="314" label="Op_division" operator="/" options="-1"/>
+    <item icon="315" label="Op_integerDivision" operator="\" options="-1"/>
+    <item icon="316" label="Op_modulo" operator="%" options="-1"/>
+    <item icon="319" label="Op_blankHour" operator="?00:00:00?" options="-1"/>
+  </ope>
+
+  <ope id="132" theme="Op_comparisonOperators">
+    <item icon="320" label="Op_equal" operator="=" options="-1"/>
+    <item icon="321" label="Op_notEqual" operator="#" options="-1"/>
+    <item icon="322" label="Op_greaterThan" operator=">" options="-1"/>
+    <item icon="323" label="Op_greaterThanOrEqualTo" operator=">=" options="-1"/>
+    <item icon="324" label="Op_lessThan" operator="&lt;" options="-1"/>
+    <item icon="325" label="Op_lessThanOrEqualTo" operator="&lt;=" options="-1"/>
+  </ope>
+
+  <ope id="133" theme="Op_logicalOperators">
+    <item icon="326" label="Op_and" operator="&amp;" options="-1"/>
+    <item icon="327" label="Op_or" operator="|" options="-1"/>
+  </ope>
+
+</rsrc>

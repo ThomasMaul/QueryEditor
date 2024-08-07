@@ -9,9 +9,9 @@
 // return your stored query as object...
 
 
-$doc:=Select document:C905(System folder:C487(Documents folder:K41:18)+"Query.4QE"; "4qe"; "Select a query document"; Use sheet window:K24:11)
+var $doc:=Select document:C905(System folder:C487(Documents folder:K41:18)+"Query.4QE"; "4qe"; "Select a query document"; Use sheet window:K24:11)
 If (OK=1)
-	$text:=Document to text:C1236(document)
+	var $text:=Document to text:C1236(document)
 	If ($text="{@}")
 		$load:=JSON Parse:C1218($text)
 	Else 

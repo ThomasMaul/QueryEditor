@@ -18,7 +18,7 @@ Class constructor($data : Object)  // $ID
 	// line content storage
 	If (String:C10($data.field)#"")
 		This:C1470.setValue($data.field)
-		$oPop:=New object:C1471
+		var $oPop:=New object:C1471
 		$oPop.values:=Form:C1466.editor.operators.copy()
 		$oPop.index:=This:C1470.operator
 		This:C1470._operator:=$oPop
@@ -36,19 +36,19 @@ Class constructor($data : Object)  // $ID
 	
 	
 Function renderObjects($data : Object)->$objects : Object
-	$counter:=Num:C11($data.counter)
+	var $counter:=Num:C11($data.counter)
 	
 	$objects:=New object:C1471
-	$subcounter:=0
+	var $subcounter:=0
 	
 	This:C1470.listentry:=$counter
 	
-	$x:=80
-	$y:=10+(($counter-1)*This:C1470.height)
+	var $x:=80
+	var $y : Integer:=10+(($counter-1)*This:C1470.height)
 	
 	// static text or And/Or/Except popup
 	If ($counter=1)  // first line
-		$object:=New object:C1471
+		var $object:=New object:C1471
 		$object.type:="text"
 		$object.fontSize:=10
 		$object.text:=Get localized string:C991("label_Find")
@@ -68,7 +68,7 @@ Function renderObjects($data : Object)->$objects : Object
 		$object.height:=19
 		$subcounter+=1
 		$objects["ob_"+String:C10($counter)+"_operator"]:=$object
-		$oPop:=New object:C1471
+		var $oPop:=New object:C1471
 		$oPop.values:=Form:C1466.editor.operators.copy()
 		$oPop.index:=This:C1470.operator
 		This:C1470._operator:=$oPop
@@ -128,7 +128,7 @@ Function renderObjects($data : Object)->$objects : Object
 	
 	Case of 
 		: (This:C1470.combotype=0)
-			$width1:=0
+			var $width1:=0
 		: (This:C1470.combotype=1)
 			$width1:=270
 		: (This:C1470.combotype=2)
@@ -146,9 +146,9 @@ Function renderObjects($data : Object)->$objects : Object
 	If ($width1#0)
 		$object:=New object:C1471
 		$object.type:="input"
-		$fieldtype:=This:C1470.fieldtype
-		$valuetype:=Value type:C1509(This:C1470._value1)
-		$id:=Abs:C99(This:C1470.comboid)  // negative values for time
+		var $fieldtype : Integer:=This:C1470.fieldtype
+		var $valuetype:=Value type:C1509(This:C1470._value1)
+		var $id:=Abs:C99(This:C1470.comboid)  // negative values for time
 		Case of 
 				// numeric fields but search in list: text entry!
 			: (($fieldtype=Is alpha field:K8:1) | ($fieldtype=Is text:K8:3) | ($id=15))
@@ -171,7 +171,7 @@ Function renderObjects($data : Object)->$objects : Object
 				If ($valuetype#Is text:K8:3)
 					This:C1470._value1:=String:C10(Current time:C178)
 				Else 
-					$time:=Time:C179(This:C1470._value1)
+					var $time:=Time:C179(This:C1470._value1)
 					If (This:C1470._value1#Time string:C180($time))
 						This:C1470._value1:=String:C10(Current time:C178)
 					End if 
@@ -190,11 +190,11 @@ Function renderObjects($data : Object)->$objects : Object
 				End if 
 		End case 
 		$object.dataSource:="Form:C1466.editor.querylines["+String:C10($counter-1)+"]._value1"
-		$filter:=This:C1470.getTextFilter()
+		var $filter:=This:C1470.getTextFilter()
 		If ($filter#"")
 			$object.entryFilter:=$filter
 		End if 
-		$placeholder:=This:C1470.getPlaceholder()
+		var $placeholder:=This:C1470.getPlaceholder()
 		If ($placeholder#"")
 			$object.placeholder:=$placeholder
 		End if 
@@ -220,7 +220,7 @@ Function renderObjects($data : Object)->$objects : Object
 			$subcounter+=1
 			$objects["ob_"+String:C10($counter)+"_text1"]:=$object
 			
-			$width2:=120
+			var $width2:=120
 			$x+=($width1+40)
 			$object:=New object:C1471
 			$object.type:="input"
@@ -385,7 +385,7 @@ Function renderObjects($data : Object)->$objects : Object
 	$objects["ob_"+String:C10($counter)+"_+"]:=$object
 	
 Function getPlaceholder()->$Txt_placeholder : Text
-	$Lon_criteriaID:=Abs:C99(This:C1470.comboid)  // negative values for time
+	var $Lon_criteriaID:=Abs:C99(This:C1470.comboid)  // negative values for time
 	Case of 
 		: ($Lon_criteriaID=13) | ($Lon_criteriaID=14)
 			$Txt_placeholder:=Get localized string:C991("Placeholder_valuesSeparatedBySpaces")
@@ -397,7 +397,8 @@ Function getPlaceholder()->$Txt_placeholder : Text
 	
 Function getTextFilter()->$Txt_filter : Text
 	$Txt_filter:=""
-	$Lon_criteriaID:=This:C1470.comboid
+	var $Txt_buffer : Text
+	var $Lon_criteriaID : Integer:=This:C1470.comboid
 	
 	Case of 
 		: (This:C1470.fieldtype=Is date:K8:7)
@@ -423,12 +424,12 @@ Function getTextFilter()->$Txt_filter : Text
 	End case 
 	
 Function getRelationField($base : 4D:C1709.DataClass; $name : Text; $commingFromTable : Text)->$field : Object
-	$pos:=Position:C15("."; $name)
+	var $pos:=Position:C15("."; $name)
 	If ($pos>0)
-		$relation:=Substring:C12($name; 1; $pos-1)
-		$fieldname:=Substring:C12($name; $pos+1)
-		$table:=ds:C1482[$base[$relation].relatedDataClass]
-		$pos2:=Position:C15("."; $fieldname)
+		var $relation:=Substring:C12($name; 1; $pos-1)
+		var $fieldname:=Substring:C12($name; $pos+1)
+		var $table : 4D:C1709.DataClass:=ds:C1482[$base[$relation].relatedDataClass]
+		var $pos2:=Position:C15("."; $fieldname)
 		If ($pos2>0)
 			$field:=This:C1470.getRelationField($table; $fieldname; $relation+".")
 			//$field.table:=$relation
@@ -441,10 +442,10 @@ Function getRelationField($base : 4D:C1709.DataClass; $name : Text; $commingFrom
 	End if 
 	
 Function findVirtualName($virtName : Text)->$displayName : Text
-	$virtnames:=Form:C1466.editor.virt_fieldllist.query("structure=:1"; $virtName)
+	var $virtnames : Collection:=Form:C1466.editor.virt_fieldllist.query("structure=:1"; $virtName)
 	If ($virtnames.length>0)
 		$displayName:=$virtnames[0].display
-		$pos:=This:C1470._lastPosition("."; $virtName)
+		var $pos:=This:C1470._lastPosition("."; $virtName)
 		If ($pos>0)  // relation  
 			$displayName:=This:C1470.findVirtualName(Substring:C12($virtName; 1; $pos-1))+"."+$displayName
 		End if 
@@ -455,10 +456,10 @@ Function findVirtualName($virtName : Text)->$displayName : Text
 Function setValue($value : Variant)
 	If (Value type:C1509($value)=Is text:K8:3)
 		This:C1470._field:=$value
-		$pos:=Position:C15("."; $value)
+		var $pos:=Position:C15("."; $value)
 		If ($pos>0)  // relation  
-			$field:=This:C1470.getRelationField(Form:C1466.editor.table; $value)
-			$fieldname:=$field.name
+			var $field:=This:C1470.getRelationField(Form:C1466.editor.table; $value)
+			//var $fieldname:=$field.name
 			If (Form:C1466.editor.virt_fieldllist#Null:C1517)
 				This:C1470.displayName:=This:C1470.findVirtualName($value)
 				
@@ -486,7 +487,7 @@ Function setValue($value : Variant)
 			End if 
 			This:C1470.fieldtype:=$field.fieldType
 		Else 
-			$fields:=Form:C1466.editor.fieldlist.query("name=:1"; $value)
+			var $fields : Collection:=Form:C1466.editor.fieldlist.query("name=:1"; $value)
 			If ($fields.length>0)
 				$field:=$fields[0]
 			Else 
@@ -514,7 +515,7 @@ Function setValue($value : Variant)
 		: ((This:C1470.fieldtype=24) | (This:C1470.fieldtype=0))
 			This:C1470.fieldtype:=2
 	End case 
-	$oPop:=New object:C1471
+	var $oPop:=New object:C1471
 	$oPop.values:=Form:C1466.conditionpopup[String:C10(This:C1470.fieldtype)].extract("text")
 	$oPop.index:=0
 	This:C1470._cond_combo:=$oPop
@@ -525,9 +526,9 @@ Function setCondition($value : Integer)
 	This:C1470.comboid:=Form:C1466.conditionpopup[String:C10(This:C1470.fieldtype)][$value].id
 	
 Function buildConditionPopup($value : Integer)
-	$oPop:=New object:C1471
+	var $oPop:=New object:C1471
 	$oPop.values:=Form:C1466.conditionpopup[String:C10(This:C1470.fieldtype)].extract("text")
-	$indices:=Form:C1466.conditionpopup[String:C10(This:C1470.fieldtype)].indices("id=:1"; $value)
+	var $indices : Collection:=Form:C1466.conditionpopup[String:C10(This:C1470.fieldtype)].indices("id=:1"; $value)
 	$oPop.index:=($indices.length>0) ? $indices[0] : 1
 	This:C1470._cond_combo:=$oPop
 	This:C1470.setCondition($oPop.index)
@@ -550,9 +551,9 @@ Function getOperatorIndex()->$index : Integer
 Function _calculateDatePreview($data : Object)->$preview : Text
 	var $dat_1; $dat_2; $dat_3 : Date
 	
-	$Lon_popup_3:=This:C1470.popup2
-	$Lon_criteriaID:=This:C1470.comboid
-	$Lon_value:=This:C1470._value1
+	var $Lon_popup_3 : Integer:=This:C1470.popup2
+	var $Lon_criteriaID : Integer:=This:C1470.comboid
+	var $Lon_value : Integer:=This:C1470._value1
 	Case of 
 		: ($Lon_criteriaID=11)  // today
 			$Dat_1:=Current date:C33
@@ -562,10 +563,10 @@ Function _calculateDatePreview($data : Object)->$preview : Text
 			$Dat_1:=Current date:C33+1
 		: (($Lon_criteriaID=12) | ($Lon_criteriaID=22) | ($Lon_criteriaID=32))
 			//"is within current" or "is within last" or "is within next"  + (week/month/quarter/year)"
-			$Lon_dayNumber:=Day number:C114(Current date:C33)-1  //1 to 7, 1 stands for sunday, so $daynumber = 0 = sunday
-			$Lon_day:=Day of:C23(Current date:C33)  //
-			$Lon_month:=Month of:C24(Current date:C33)
-			$Lon_year:=Year of:C25(Current date:C33)
+			var $Lon_dayNumber:=Day number:C114(Current date:C33)-1  //1 to 7, 1 stands for sunday, so $daynumber = 0 = sunday
+			var $Lon_day:=Day of:C23(Current date:C33)  //
+			var $Lon_month:=Month of:C24(Current date:C33)
+			var $Lon_year:=Year of:C25(Current date:C33)
 			Case of 
 				: ($Lon_popup_3<=2)  //"Week ( "sun-sat" or "mon-sat" or "mon-fri"
 					Case of   // which part of the week
@@ -691,9 +692,9 @@ Function createQueryStatement($para : Object; $clearText : Boolean)->$statement 
 	Else 
 		$statement:=This:C1470.name+" "
 	End if 
-	$comperator:=""
-	$id:=Abs:C99(This:C1470.comboid)  // negative values for time
-	$type:=This:C1470.fieldtype
+	var $comperator:=""
+	var $id:=Abs:C99(This:C1470.comboid)  // negative values for time
+	var $type : Integer:=This:C1470.fieldtype
 	
 	
 	// exceptions first for empty/not empty
@@ -705,8 +706,8 @@ Function createQueryStatement($para : Object; $clearText : Boolean)->$statement 
 			
 		: ((($id=3) | ($id=5)) && (($type=Is picture:K8:10) | ($type=Is BLOB:K8:12)))  // size > or <
 			// need to create formula, value * unit
-			$size:=Num:C11(This:C1470._value1)
-			$unit:=This:C1470.popup2
+			var $size:=Num:C11(This:C1470._value1)
+			var $unit : Integer:=This:C1470.popup2
 			Case of 
 				: ($unit=1)
 					$size*=1024
@@ -754,7 +755,7 @@ Function createQueryStatement($para : Object; $clearText : Boolean)->$statement 
 			
 			$statement+=($comperator+" :value_"+String:C10(This:C1470.id))
 			If ($id=14)
-				$not:=Get localized string:C991("QueryNot")
+				var $not:=Get localized string:C991("QueryNot")
 				$statement:=$not+"("+$statement+")"
 			End if 
 			Case of 
@@ -782,8 +783,8 @@ Function createQueryStatement($para : Object; $clearText : Boolean)->$statement 
 				: ((($id=41) | ($id=42)) && (($type=Is alpha field:K8:1) | ($type=Is text:K8:3)))  // contains
 					$value:=""
 				: ((($id=11) | ($id=21) | ($id=31)) && ($type=Is date:K8:7))  // contains
-					$data:=New object:C1471
-					$preview:=This:C1470._calculateDatePreview($data)
+					var $data:=New object:C1471
+					var $preview:=This:C1470._calculateDatePreview($data)
 					$value:=$data.dat1
 				: ((($id=12) | ($id=22) | ($id=32) | ($id=23) | ($id=33)) && ($type=Is date:K8:7))  // date in
 					$data:=New object:C1471
@@ -814,7 +815,7 @@ Function createQueryStatement($para : Object; $clearText : Boolean)->$statement 
 				: ((($id=23) | ($id=33)) && ($type=Is time:K8:8))
 					$statement:="("+$statement+")&("+This:C1470.name+" <="
 					$statement+=(" :value2_"+String:C10(This:C1470.id))+")"
-					$time:=Num:C11($value)
+					var $time:=Num:C11($value)
 					Case of 
 						: (This:C1470.popup2=0)  //  hour
 							$time*=3600
@@ -841,7 +842,7 @@ Function createQueryStatement($para : Object; $clearText : Boolean)->$statement 
 	End case 
 	
 	If (($id=13) | ($id=14))  // exception keyword search, needs to be expanded
-		$or:=(This:C1470._combo2.index=1)
+		var $or : Boolean:=(This:C1470._combo2.index=1)
 		Case of 
 			: ($value.length=0)
 				$para["value_"+String:C10(This:C1470.id)]:=""
@@ -849,10 +850,11 @@ Function createQueryStatement($para : Object; $clearText : Boolean)->$statement 
 				$para["value_"+String:C10(This:C1470.id)]:=$value[0]
 			Else 
 				// we need to add one statement per line
-				$orig_statement:=$statement
+				var $orig_statement:=$statement
 				$statement:="("
-				$subcounter:=0
+				var $subcounter:=0
 				OB REMOVE:C1226($para; "value_"+String:C10(This:C1470.id))
+				var $word : Text
 				For each ($word; $value)
 					$subcounter+=1
 					If ($subcounter>1)
@@ -862,7 +864,7 @@ Function createQueryStatement($para : Object; $clearText : Boolean)->$statement 
 							$statement+=" and "
 						End if 
 					End if 
-					$newstatement:="("+Replace string:C233($orig_statement; "value_"+String:C10(This:C1470.id); "value"+String:C10($subcounter)+"_"+String:C10(This:C1470.id))
+					var $newstatement : Text:="("+Replace string:C233($orig_statement; "value_"+String:C10(This:C1470.id); "value"+String:C10($subcounter)+"_"+String:C10(This:C1470.id))
 					$para["value"+String:C10($subcounter)+"_"+String:C10(This:C1470.id)]:=$word
 					$statement+=($newstatement+")")
 				End for each 
@@ -873,7 +875,8 @@ Function createQueryStatement($para : Object; $clearText : Boolean)->$statement 
 Function itemlist_entrywindow()
 	// opens a popup window with text entry
 	//  needs to execute in subform
-	$old:=Replace string:C233(This:C1470._value1; ";"; Char:C90(13))
+	var $old:=Replace string:C233(This:C1470._value1; ";"; Char:C90(13))
+	var $result : Text
 	EXECUTE METHOD IN SUBFORM:C1085("sub"; Formula:C1597(QE_Subformmethod).source; $result; "popup"; "ob_"+String:C10(This:C1470.id)+"_value1"; $old)
 	This:C1470._value1:=Replace string:C233($result; Char:C90(13); ";")
 	
@@ -891,13 +894,13 @@ Function createSaveObject()->$object
 	
 Function _lastPosition($whatChar : Text; $in : Text)->$where : Integer
 	ASSERT:C1129(Length:C16($in)>0; "Internal Error: Search Text must not be empty")
-	$pos:=Length:C16($in)
-	$length:=Length:C16($whatChar)
+	var $pos:=Length:C16($in)
+	var $length:=Length:C16($whatChar)
 	While ($pos>0)
 		If (Substring:C12($in; $pos; $length)=$whatChar)
 			return $pos
 		End if 
 		$pos-=1
 	End while 
-	$were:=-1
+	$where:=-1
 	

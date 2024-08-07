@@ -1,4 +1,4 @@
-$event:=FORM Event:C1606.code
+var $event : Integer:=FORM Event:C1606.code
 Case of 
 	: ($event=On Load:K2:1)
 		If (Form:C1466.queryTarget=Null:C1517)
@@ -24,7 +24,7 @@ Case of
 		End if 
 		
 		
-		$oPop:=New object:C1471
+		var $oPop:=New object:C1471
 		$oPop.values:=Form:C1466.conditionpopup[String:C10(1)].extract("text")
 		$oPop.index:=0
 		Form:C1466.test:=$oPop

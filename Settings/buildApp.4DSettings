@@ -51,8 +51,8 @@
     </Licenses>
     <SignApplication>
       <MacSignature>True</MacSignature>
-      <MacCertificate>Developer ID</MacCertificate>
-      <AdHocSign>True</AdHocSign>
+      <MacCertificate>Developer ID Application: 4D Deutschland GmbH (4789QA2D2W)</MacCertificate>
+      <AdHocSign>False</AdHocSign>
     </SignApplication>
   </BuildApp>
 

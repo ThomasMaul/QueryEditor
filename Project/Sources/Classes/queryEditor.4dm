@@ -18,7 +18,7 @@ Class constructor($form : Object)
 			This:C1470.tableselection:=$form.tableselection
 			
 		Else 
-			$col:=OB Keys:C1719(This:C1470.ds)
+			var $col:=OB Keys:C1719(This:C1470.ds)
 			If ($col.length>0)
 				This:C1470.table:=This:C1470.ds[$col[0]]
 			Else 
@@ -55,6 +55,7 @@ Function reset()
 	This:C1470.fieldlist:=This:C1470._getDSClassDetails(This:C1470.table)
 	
 Function close()
+	var $sub : Text
 	For each ($sub; This:C1470.popupsubmenu)
 		RELEASE MENU:C978($sub)
 	End for each 
@@ -68,7 +69,7 @@ Function addQueryLine($pos : Integer; $lineobject : cs:C1710.queryLine)
 	If ($lineobject#Null:C1517)
 		This:C1470.querylines.insert($pos; $lineobject)
 	Else 
-		$counter:=This:C1470.getNextCounter()
+		var $counter:=This:C1470.getNextCounter()
 		This:C1470.querylines.insert($counter; cs:C1710.queryLine.new(New object:C1471("id"; $counter)))
 	End if 
 	
@@ -76,33 +77,35 @@ Function deleteQueryLine($pos : Integer)
 	This:C1470.querylines.remove($pos)
 	
 Function findQueryLine($line : Integer)->$queryline : cs:C1710.queryLine
-	$col:=This:C1470.querylines.query("listentry=:1"; $line)
+	var $col : Collection:=This:C1470.querylines.query("listentry=:1"; $line)
 	$queryline:=$col.length=1 ? $col[0] : Null:C1517
 	
 Function renderForm($subformname : Text)
 	This:C1470.sub:=$subformname
-	$form:=New object:C1471
-	$objects:=New object:C1471()
-	$counter:=0
-	$max_y:=0
+	var $form:=New object:C1471
+	var $objects:=New object:C1471()
+	var $counter:=0
+	var $max_y:=0
+	var $line : Object
 	For each ($line; This:C1470.querylines)
 		$counter+=1
-		$lineobjects:=$line.renderObjects(New object:C1471("counter"; $counter))
+		var $lineobjects : Object:=$line.renderObjects(New object:C1471("counter"; $counter))
+		var $object : Text
 		For each ($object; $lineobjects)
 			$objects[$object]:=$lineobjects[$object]
-			$y:=Num:C11($objects[$object].top)+Num:C11($objects[$object].height)
+			var $y:=Num:C11($objects[$object].top)+Num:C11($objects[$object].height)
 			If ($y>$max_y)
 				$max_y:=$y
 			End if 
 		End for each 
 		$objects[$line.id]:=$object
 	End for each 
-	$page1:=New object:C1471("objects"; $objects)
+	var $page1:=New object:C1471("objects"; $objects)
 	$form.pages:=New collection:C1472(Null:C1517; $page1)
 	//TODO: check 2nd screen height - where is the window?
-	$maxlines:=(Screen height:C188-300)/This:C1470.height
+	var $maxlines : Real:=(Screen height:C188-300)/This:C1470.height
 	If (This:C1470.querylines.length<$maxlines)
-		$newheight:=This:C1470.querylines.length-Form:C1466.height
+		var $newheight : Real:=This:C1470.querylines.length-Form:C1466.height
 		Form:C1466.height:=This:C1470.querylines.length
 		RESIZE FORM WINDOW:C890(0; $newheight*This:C1470.height)
 		OBJECT SET SCROLLBAR:C843(*; $subformname; False:C215; False:C215)
@@ -113,17 +116,17 @@ Function renderForm($subformname : Text)
 	OBJECT SET SUBFORM:C1138(*; $subformname; $form)
 	
 Function handleFormEvent($event : Object)
-	$name:=$event.objectName
+	var $name : Text:=$event.objectName
 	If ($name="ob_@")
-		$sub:=Substring:C12($Name; 4)
-		$pos:=Position:C15("_"; $sub)
-		$line:=Num:C11(Substring:C12($sub; 1; $pos-1))
-		$item:=Substring:C12($sub; $pos+1)
+		var $sub:=Substring:C12($Name; 4)
+		var $pos:=Position:C15("_"; $sub)
+		var $line:=Num:C11(Substring:C12($sub; 1; $pos-1))
+		var $item:=Substring:C12($sub; $pos+1)
 		
 		If (($line#0) & ($item#""))
 			Case of 
 				: ($item="+")
-					$counter:=This:C1470.getNextCounter()
+					var $counter:=This:C1470.getNextCounter()
 					This:C1470.addQueryLine($line; cs:C1710.queryLine.new(New object:C1471("id"; $counter; "name"; String:C10(Current time:C178))))
 					This:C1470.renderForm(This:C1470.sub)
 					
@@ -135,7 +138,7 @@ Function handleFormEvent($event : Object)
 					End if 
 					
 				: (($item="1") | ($item="fieldlist"))
-					$paramRef:=Dynamic pop up menu:C1006(This:C1470.popupmenu)
+					var $paramRef:=Dynamic pop up menu:C1006(This:C1470.popupmenu)
 					If ($paramRef#"")
 						var $queryline : cs:C1710.queryLine
 						$queryline:=This:C1470.findQueryLine($line)
@@ -145,7 +148,7 @@ Function handleFormEvent($event : Object)
 					
 				: ($item="condition")
 					$queryline:=This:C1470.findQueryLine($line)
-					$index:=$queryline.getCondCombo()
+					var $index : Integer:=$queryline.getCondCombo()
 					$queryline.setCondition($index)
 					This:C1470.renderForm(This:C1470.sub)
 					
@@ -181,11 +184,12 @@ Function getQueryLine($pos : Integer)->$object : cs:C1710.queryLine
 	End if 
 	
 Function _getDSClassDetails($class : 4D:C1709.DataClass; $relatedTableName : Text)->$fields : Collection
-	$fieldnames:=OB Keys:C1719($class)
+	var $fieldnames:=OB Keys:C1719($class)
 	$fields:=New collection:C1472
+	var $field : Text
 	For each ($field; $fieldnames)
-		$f:=$class[$field]
-		$data:=New object:C1471("name"; $field; \
+		var $f : Object:=$class[$field]
+		var $data:=New object:C1471("name"; $field; \
 			"kind"; $f.kind; \
 			"type"; $f.fieldType; \
 			"indexed"; $f.indexed; \
@@ -193,11 +197,11 @@ Function _getDSClassDetails($class : 4D:C1709.DataClass; $relatedTableName : Tex
 		
 		If (This:C1470.virt_fieldllist#Null:C1517)
 			If ($relatedTableName#"")
-				$searchforName:=$relatedTableName+"."+$field
+				var $searchforName:=$relatedTableName+"."+$field
 			Else 
 				$searchforName:=$field
 			End if 
-			$virt:=This:C1470.virt_fieldllist.query("structure=:1"; $searchforName)
+			var $virt : Collection:=This:C1470.virt_fieldllist.query("structure=:1"; $searchforName)
 			If ($virt.length>0)
 				$data.displayName:=$virt[0].display
 				$fields.push($data)
@@ -209,12 +213,13 @@ Function _getDSClassDetails($class : 4D:C1709.DataClass; $relatedTableName : Tex
 	End for each 
 	
 Function _getTableMenu($fieldlist : Collection; $level : Integer; $tablename : Text; $structureTablename : Text)->$menuref : Text
-	$txt_suffix:=Choose:C955((FORM Get color scheme:C1761="dark"); "_dark"; "")
+	var $txt_suffix:=Choose:C955((FORM Get color scheme:C1761="dark"); "_dark"; "")
 	$menuref:=Create menu:C408
+	var $field : Object
 	For each ($field; $fieldlist)
 		Case of 
 			: ($field.type=Is alpha field:K8:1)
-				$id:=1
+				var $id:=1
 			: ($field.type=Is text:K8:3)
 				$id:=2
 			: ($field.type=Is date:K8:7)
@@ -239,7 +244,7 @@ Function _getTableMenu($fieldlist : Collection; $level : Integer; $tablename : T
 				If ($level<3)
 					$id:=13
 				Else 
-					$i:=-1
+					$id:=-1
 				End if 
 			: ($field.type=Is object:K8:27)
 				$id:=14
@@ -257,15 +262,15 @@ Function _getTableMenu($fieldlist : Collection; $level : Integer; $tablename : T
 				If (($field.relatedDataClass.getInfo().name#This:C1470.table.getInfo().name) && \
 					($field.relatedDataClass.getInfo().name#$structureTablename))  // not going back to ourself...
 					If ($tablename#"")
-						$subfieldlist:=This:C1470._getDSClassDetails($field.relatedDataClass; $tablename+"."+$field.name)
+						var $subfieldlist:=This:C1470._getDSClassDetails($field.relatedDataClass; $tablename+"."+$field.name)
 					Else 
 						$subfieldlist:=This:C1470._getDSClassDetails($field.relatedDataClass; $field.name)
 					End if 
-					$subname:=$field.name  //displayName
+					var $subname : Text:=$field.name  //displayName
 					If ($tablename#"")
 						$subname:=$tablename+"."+$subname
 					End if 
-					$submenu:=This:C1470._getTableMenu($subfieldlist; $level+1; $subname; $field.relatedDataClass.getInfo().name)
+					var $submenu:=This:C1470._getTableMenu($subfieldlist; $level+1; $subname; $field.relatedDataClass.getInfo().name)
 					This:C1470.popupsubmenu.push($submenu)
 					INSERT MENU ITEM:C412($menuref; -1; $field.displayName; $submenu)
 				End if 
@@ -288,32 +293,33 @@ Function _getConditionMenu()->$object
 	// creates object für Query editions, as used in popup
 	// reads file query.xml, delivered in 4D for standard query editor
 	C_TEXT:C284($childName; $childValue; $name; $childName2; $id2; $type; $label)
-	$path:=Get 4D folder:C485(Current resources folder:K5:16)+"query"+Folder separator:K24:12+"query.xml"
+	var $path : Text:=Get 4D folder:C485(Current resources folder:K5:16)+"query"+Folder separator:K24:12+"query.xml"
 	$object:=New object:C1471
 	
-	$xml:=DOM Parse XML source:C719($path)
+	var $xml:=DOM Parse XML source:C719($path)
 	
-	$criteria:=DOM Find XML element:C864($xml; "/rsrc/criteria")
+	var $criteria:=DOM Find XML element:C864($xml; "/rsrc/criteria")
 	
 	If (OK=1)
-		$xml_Child_Ref:=DOM Get first child XML element:C723($criteria; $childName)
+		var $xml_Child_Ref:=DOM Get first child XML element:C723($criteria; $childName)
 		If ($childName="type")
 			
+			var $id : Text
 			Repeat 
 				DOM GET XML ATTRIBUTE BY NAME:C728($xml_Child_Ref; "id"; $id)
 				$object[$id]:=New collection:C1472
 				
-				$xml_Child2_Ref:=DOM Get first child XML element:C723($xml_Child_Ref; $childName2)
+				var $xml_Child2_Ref:=DOM Get first child XML element:C723($xml_Child_Ref; $childName2)
 				If (OK=1)
 					Repeat 
-						$subobject:=New object:C1471
+						var $subobject:=New object:C1471
 						DOM GET XML ATTRIBUTE BY NAME:C728($xml_Child2_Ref; "type"; $type)
 						If ($type="-1")
 							$object[$id].push(New object:C1471("type"; Num:C11($type); "text"; "-"))
 						Else 
 							DOM GET XML ATTRIBUTE BY NAME:C728($xml_Child2_Ref; "label"; $label)
 							DOM GET XML ATTRIBUTE BY NAME:C728($xml_Child2_Ref; "id"; $id2)
-							$string:=Get localized string:C991($label)
+							var $string:=Get localized string:C991($label)
 							$object[$id].push(New object:C1471("type"; Num:C11($type); "label"; $label; "id"; Num:C11($id2); "text"; $string))
 						End if 
 						
@@ -330,7 +336,7 @@ Function _getConditionMenu()->$object
 	DOM CLOSE XML:C722($xml)
 	
 Function _buildListContents()
-	$Lists:=New object:C1471
+	var $Lists:=New object:C1471
 	
 	$lists.operators:=New collection:C1472
 	$lists.operators.push(Get localized string:C991("operator_and"))
@@ -387,8 +393,10 @@ Function createQueryObject($clearText : Boolean)->$object
 	// builds the real query operation
 	
 	$object:=New object:C1471
-	$statement:=""
-	$para:=New object:C1471
+	var $statement:=""
+	var $para:=New object:C1471
+	var $line : Object
+	var $operator : Text
 	
 	For each ($line; This:C1470.querylines)
 		If ($line.listentry=1)
@@ -410,19 +418,21 @@ Function createQueryObject($clearText : Boolean)->$object
 	$object.query_statement:=$statement
 	$object.para:=$para
 	
-Function clearTextQueryLine()->$statement
-	$query:=This:C1470.createQueryObject(True:C214)
+Function clearTextQueryLine()->$statement : Text
+	var $query : Object:=This:C1470.createQueryObject(True:C214)
 	$statement:=$query.query_statement
+	var $para : Text
 	For each ($para; $query.para)
 		$statement:=Replace string:C233($statement; ":"+$para; String:C10($query.para[$para]))
 	End for each 
 	
-Function createSaveObject()->$object
+Function createSaveObject()->$object : Object
 	// builds an object to save the current query
 	$object:=New object:C1471
 	$object.table:=This:C1470.table.getInfo().name
 	$object.version:=1
 	$object.lines:=New collection:C1472
+	var $line : Object
 	For each ($line; This:C1470.querylines)
 		$object.lines.push($line.createSaveObject())
 	End for each 
@@ -438,7 +448,7 @@ Function useSaveObject($object)
 	
 	// check if table and fields exists
 	If (This:C1470.ds[$object.table]#Null:C1517)
-		$class:=This:C1470.ds[$object.table]
+		var $class : 4D:C1709.DataClass:=This:C1470.ds[$object.table]
 	Else 
 		ALERT:C41(Get localized string:C991("Alerts_theQueryContainsATableThatDoesNotExist"))
 		return 
@@ -453,6 +463,7 @@ Function useSaveObject($object)
 	End if 
 	This:C1470.popupsubmenu:=New collection:C1472
 	This:C1470.popupmenu:=This:C1470._getTableMenu(This:C1470.fieldlist)
+	var $line : Object
 	For each ($line; $object.lines)
 		This:C1470.querylines.push(cs:C1710.queryLine.new($line))
 	End for each 
@@ -468,8 +479,8 @@ Function useOldSaveObject($object)  // use original 4DF format, only available f
 	End if 
 	
 	// check all used table numbers
-	$invalid:=False:C215
-	$maxtable:=Get last table number:C254
+	var $invalid:=False:C215
+	var $maxtable:=Get last table number:C254
 	If ((Num:C11($object.mainTable)<1) || (Num:C11($object.mainTable)>$maxtable))
 		$invalid:=True:C214
 	End if 
@@ -483,7 +494,7 @@ Function useOldSaveObject($object)  // use original 4DF format, only available f
 		return 
 	End if 
 	
-	$class:=ds:C1482[Table name:C256(Num:C11($object.mainTable))]
+	var $class : 4D:C1709.DataClass:=ds:C1482[Table name:C256(Num:C11($object.mainTable))]
 	This:C1470.table:=$class
 	This:C1470.counter:=0
 	This:C1470.fieldlist:=This:C1470._getDSClassDetails(This:C1470.table)
@@ -494,12 +505,13 @@ Function useOldSaveObject($object)  // use original 4DF format, only available f
 	End if 
 	This:C1470.popupsubmenu:=New collection:C1472
 	This:C1470.popupmenu:=This:C1470._getTableMenu(This:C1470.fieldlist)
+	var $line : Object
 	For each ($line; $object.lines)
-		$line_translated:=New object:C1471
+		var $line_translated:=New object:C1471
 		If (Num:C11($line.tableNumber)=Num:C11($object.mainTable))
 			$line_translated.field:=Field name:C257(Num:C11($line.tableNumber); Num:C11($line.fieldNumber))
 		Else   // related table
-			$relation:=This:C1470._ORDA_FindRelationPath(Table name:C256(Num:C11($object.mainTable)); Table name:C256(Num:C11($line.tableNumber)); 5)
+			var $relation : Text:=This:C1470._ORDA_FindRelationPath(Table name:C256(Num:C11($object.mainTable)); Table name:C256(Num:C11($line.tableNumber)); 5)
 			If ($relation#"")
 				$line_translated.field:=Substring:C12($relation; 2)+"."+Field name:C257(Num:C11($line.tableNumber); Num:C11($line.fieldNumber))
 			End if 

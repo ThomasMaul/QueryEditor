@@ -47,7 +47,7 @@
 			</editor_table_info>
 		</table_extra>
 	</table>
-	<relation uuid="DB4739A5AE6F4D188DBF48D3A47609CA" name_Nto1="customer" name_1toN="invoices" auto_load_Nto1="false" auto_load_1toN="false" foreign_key="false" state="1">
+	<relation uuid="DB4739A5AE6F4D188DBF48D3A47609CA" name_Nto1="customer" name_1toN="invoices" state="1">
 		<related_field kind="source">
 			<field_ref uuid="B1B5AC99F06142C1B26229E4AFD5811C" name="Customer_ID">
 				<table_ref uuid="CC05B369D7A84907A8CEA5BDB32F3F7F" name="Invoice"/>
@@ -64,7 +64,7 @@
 			</editor_relation_info>
 		</relation_extra>
 	</relation>
-	<relation uuid="EF13DBCD3D384521AEFBF325F78E5D9E" name_Nto1="test" name_1toN="customers" auto_load_Nto1="false" auto_load_1toN="false" foreign_key="false" state="1">
+	<relation uuid="EF13DBCD3D384521AEFBF325F78E5D9E" name_Nto1="test" name_1toN="customers" state="1">
 		<related_field kind="source">
 			<field_ref uuid="D3E8CEE5DA974582AF6DCD6EB37B932C" name="test_ID">
 				<table_ref uuid="95CC337403BC47F38FD7797D6F597274" name="Customer"/>
@@ -101,7 +101,7 @@
 			<table_ref uuid="95CC337403BC47F38FD7797D6F597274" name="Customer"/>
 		</field_ref>
 	</index>
-	<base_extra __stringCompHash="icu:68.1.0" __keywordBuildingHash="icu:68.1.0">
+	<base_extra>
 		<journal_file journal_file_enabled="true"/>
 	</base_extra>
 </base>

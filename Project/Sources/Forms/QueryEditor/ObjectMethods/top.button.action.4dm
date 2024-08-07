@@ -1,4 +1,4 @@
-$Mnu_main:=Create menu:C408
+var $Mnu_main:=Create menu:C408
 APPEND MENU ITEM:C411($Mnu_main; Get localized string:C991("bLoad"))
 SET MENU ITEM PARAMETER:C1004($Mnu_main; -1; "bload")
 APPEND MENU ITEM:C411($Mnu_main; Get localized string:C991("bSave"))
@@ -9,12 +9,12 @@ SET MENU ITEM PARAMETER:C1004($Mnu_main; -1; "bReset")
 //APPEND MENU ITEM($Mnu_main; "-")
 //APPEND MENU ITEM($Mnu_main; Get localized string("bCopy"))
 //SET MENU ITEM PARAMETER($Mnu_main; -1; "bCopy")
-$Mnu_choice:=Dynamic pop up menu:C1006($Mnu_main)
+var $Mnu_choice:=Dynamic pop up menu:C1006($Mnu_main)
 RELEASE MENU:C978($Mnu_main)
 
 Case of 
 	: ($Mnu_choice="bCopy")
-		$object:=Form:C1466.editor.createQueryObject()
+		var $object : Object:=Form:C1466.editor.createQueryObject()
 		SET TEXT TO PASTEBOARD:C523(JSON Stringify:C1217($object; *))
 		
 	: ($Mnu_choice="bSave")
@@ -22,8 +22,8 @@ Case of
 		If (Form:C1466.editor.querySave#Null:C1517)
 			Form:C1466.editor.querySave($object)
 		Else 
-			$text:=JSON Stringify:C1217($object; *)
-			$doc:=Select document:C905(System folder:C487(Documents folder:K41:18)+"Query.4QE"; "4qe"; Get localized string:C991("QE_SaveMessage"); File name entry:K24:17+Use sheet window:K24:11)
+			var $text:=JSON Stringify:C1217($object; *)
+			var $doc:=Select document:C905(System folder:C487(Documents folder:K41:18)+"Query.4QE"; "4qe"; Get localized string:C991("QE_SaveMessage"); File name entry:K24:17+Use sheet window:K24:11)
 			If (OK=1)
 				TEXT TO DOCUMENT:C1237(document; $text)
 			End if 

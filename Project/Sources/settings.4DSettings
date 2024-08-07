@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><preferences stamp="2">
+<?xml version="1.0" encoding="UTF-8"?><preferences stamp="4">
 	<com.4d>
 		<compiler>
-			<options syntax_file="true"/>
+			<options compilation_path="3" syntax_file="true" target="all"/>
 		</compiler>
 		<general component_classStore_name="QueryEditor"/>
 	</com.4d>
